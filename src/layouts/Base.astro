@@ -12,7 +12,9 @@ interface Props {
   noindex?: boolean;
 }
 
-const { title, description, jsonLd = [], ogType = 'website', noindex = false } = Astro.props;
+const { title, description, jsonLd = [], ogType = 'website', noindex: noindexProp = false } = Astro.props;
+// Forhåndsvisning i undermappe (GitHub Pages uten eget domene) skal ikke indekseres
+const noindex = noindexProp || import.meta.env.BASE_URL !== '/';
 const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url).href;
 const fullTitle = title.includes('BoligButler') ? title : `${title} | BoligButler`;
 

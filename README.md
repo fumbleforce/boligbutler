@@ -50,3 +50,16 @@ Kartet over Vestfold er tegnet fra Kartverkets data (CC BY 4.0) og ligger i `src
 - [ ] Faglig gjennomlesing av guidene, særlig regelverk (SAK10-grenser for terrasse/støttemur, førerkort/tilhenger) og tall
 - [ ] Bekreft innholdet i Basis / Prosjekt / Pluss og hvilket utstyr som faktisk leies ut
 - [ ] Registrer Google Business-profil og Search Console
+
+## Publisering (GitHub Pages)
+
+`.github/workflows/pages.yml` bygger og publiserer siden ved hver push.
+
+1. **Første gang:** GitHub → repoet → *Settings* → *Pages* → *Source*: velg **GitHub Actions**.
+2. Siden ligger da på https://fumbleforce.github.io/boligbutler/. Den er merket `noindex`, så Google indekserer ikke forhåndsvisningen.
+
+**Eget domene (www.boligbutler.no):**
+1. Legg filen `public/CNAME` med innholdet `www.boligbutler.no`.
+2. Fjern `env`-blokken (SITE_URL og BASE_PATH) i `.github/workflows/pages.yml`.
+3. Hos domeneleverandøren: `www` → CNAME til `fumbleforce.github.io`, og rotdomenet → A-postene til GitHub Pages (185.199.108.153, 185.199.109.153, 185.199.110.153, 185.199.111.153).
+4. I *Settings* → *Pages*: skriv inn domenet og huk av **Enforce HTTPS**.
