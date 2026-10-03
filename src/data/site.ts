@@ -2,7 +2,7 @@
 export const site = {
   name: 'BoligButler',
   url: 'https://www.boligbutler.no',
-  tagline: 'Prosjektet er ditt. BoligButler sørger for at det går.',
+  tagline: 'Veiledning og utstyr til ditt prosjekt',
   vision: 'BoligButler skal gjøre det enklere og tryggere å lykkes med prosjekter på kundens egen eiendom.',
   description:
     'BoligButler leier ut utstyr med en erfaren rådgiver på kjøpet, for deg som vil gjøre drenering, terrasse, plen, maling og gravearbeid selv. Levering i hele Vestfold.',
