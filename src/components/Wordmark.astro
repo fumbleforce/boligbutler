@@ -1,21 +1,18 @@
 ---
-// Midlertidig ordmerke. Bytt ut med den faktiske logoen (SVG) når den foreligger.
+// Logo: emblemet fra BoligButlers logo (public/logo-emblem.png) og navnet satt i profilskriften.
+// Den fullstendige logoen ligger i public/logo.png.
 interface Props { inverse?: boolean }
 const { inverse = false } = Astro.props;
 ---
 <span class:list={['wordmark', { inverse }]}>
-  <svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true">
-    <rect width="32" height="32" rx="7" class="tile" />
-    <path d="M7 16 16 9l9 7" fill="none" class="ln" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round" />
-    <path d="M10 15v9h12v-9" fill="none" class="ln" stroke-width="2.4" stroke-linejoin="round" />
-  </svg>
+  <span class="mark"><img src="/logo-emblem.webp" alt="" width="38" height="46" /></span>
   <span>BoligButler</span>
 </span>
 <style>
   .wordmark { display: inline-flex; align-items: center; gap: 0.55rem; font-weight: 750; font-size: 1.3rem; letter-spacing: -0.025em; line-height: 1; color: var(--ink); }
-  .tile { fill: var(--green); }
-  .ln { stroke: #fff; }
+  .mark { display: grid; place-items: center; }
+  .mark img { width: 38px; height: auto; }
   .inverse { color: #fff; }
-  .inverse .tile { fill: #fff; }
-  .inverse .ln { stroke: var(--green); }
+  .inverse .mark { background: #fff; border-radius: var(--r); padding: 5px 7px; }
+  .inverse .mark img { width: 30px; }
 </style>

@@ -58,7 +58,7 @@ const jsonLd = [
         <p class="call">Vil du heller snakke med noen? <a href={tel}>Ring {site.phoneDisplay}</a></p>
       </div>
       <div class="hero-media">
-        <Photo name="hero" class="hero-photo" alt="Tilhenger lastes med pukk fra hjullaster" hint="BoligButler leverer utstyr på en tomt i Vestfold" ratio="560 / 345" eager />
+        <Photo name="hero" class="hero-photo" alt="Ferdig uteområde med murte bed, trapp og blomster ved et hus i Vestfold" hint="et ferdig prosjekt i Vestfold" ratio="1006 / 734" position="60% 50%" eager />
         <ProjectStarter class="hero-starter" />
       </div>
     </div>
@@ -86,7 +86,7 @@ const jsonLd = [
         {projects.map((p, i) => (
           <li class:list={{ wide: i < 2 }}>
             <a href={`/prosjekter/${p.id}/`}>
-              <Photo name={`prosjekt-${p.id}`} fit={p.id === 'gravearbeid' ? 'contain' : 'cover'} alt={`${p.data.navTitle}: prosjekt i Vestfold`} hint={`${p.data.navTitle.toLowerCase()} i Vestfold`} ratio={i < 2 || i >= 5 ? '16 / 10' : '4 / 3'} />
+              <Photo name={`prosjekt-${p.id}`} alt={`${p.data.navTitle}: prosjekt i Vestfold`} hint={`${p.data.navTitle.toLowerCase()} i Vestfold`} ratio={i < 2 || i >= 5 ? '16 / 10' : '4 / 3'} />
               <span class="p-body">
                 <span class="p-title">{p.data.navTitle}</span>
                 <span class="p-eq">{p.data.equipment.slice(0, 3).map((e) => e.name).join(', ')}</span>
@@ -125,6 +125,7 @@ const jsonLd = [
           <div class="must"><dt><Icon name="warning" size={18} /> Instruksjon</dt><dd>alltid når sikkerheten krever det. Grøftekant, stillasforankring og maskinbruk er ikke valgfritt.</dd></div>
         </dl>
         <p class="sign"><strong>{site.founder.name}</strong><br /><span class="muted">{site.founder.role}, BoligButler</span></p>
+        <p class="more-work"><a href="/om/">Se bilder fra tidligere prosjekter</a></p>
       </div>
     </div>
   </section>
@@ -250,6 +251,7 @@ const jsonLd = [
   .levels dd { margin: 0; color: var(--ink-2); }
   .levels .must dt { color: var(--amber-ink); }
   .sign { margin: 0; line-height: 1.4; }
+  .more-work { margin: 1rem 0 0; font-weight: 600; }
 
   .local-grid { display: grid; grid-template-columns: 1fr 0.85fr; gap: clamp(2rem, 1rem + 4vw, 5rem); align-items: center; }
   .local h2 { font-size: var(--step-4); }
@@ -258,7 +260,7 @@ const jsonLd = [
   .kommuner li { display: flex; gap: 0.5rem; align-items: center; font-weight: 600; font-size: 1.05rem; color: #fff; }
   .kommuner :global(svg) { color: #9fd0b2; }
   .local-note { color: var(--on-green-2); margin: 0; }
-  .local :global(.local-map) { --map-land: #2f6a52; --map-edge: var(--green); --map-hover: #3b7d62; --map-dot: #fff; --map-text: #fff; --map-halo: var(--green); --map-caption: var(--on-green-2); max-width: 26rem; justify-self: center; width: 100%; }
+  .local :global(.local-map) { --map-land: #1f7d48; --map-edge: var(--green); --map-hover: #2b8e56; --map-dot: #fff; --map-text: #fff; --map-halo: var(--green); --map-caption: var(--on-green-2); max-width: 26rem; justify-self: center; width: 100%; }
   .local :global(.local-map .towns circle) { stroke: var(--green); }
 
   .pkgs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; align-items: start; }

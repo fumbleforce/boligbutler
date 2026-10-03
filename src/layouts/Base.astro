@@ -55,8 +55,11 @@ const ld = [org, ...jsonLd];
     <meta property="og:url" content={canonical} />
     <meta property="og:locale" content="nb_NO" />
     <meta property="og:site_name" content="BoligButler" />
-    <meta name="theme-color" content="#1e4d3a" />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" content="#00652f" />
+    <link rel="icon" href="/icon-32.png" sizes="32x32" type="image/png" />
+    <link rel="icon" href="/icon-64.png" sizes="64x64" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta property="og:image" content={new URL('/logo.png', Astro.site ?? site.url).href} />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="alternate" type="text/plain" title="LLM-oversikt" href="/llms.txt" />
     {ld.map((d) => <script type="application/ld+json" set:html={JSON.stringify(d)} />)}

@@ -2,9 +2,9 @@
 name: BoligButler
 description: Utstyr med rådgiver for hjemmeprosjekter i hele Vestfold
 colors:
-  spruce: "#1e4d3a"
-  spruce-deep: "#153a2b"
-  spruce-tint: "#e6eee9"
+  spruce: "#00652f"
+  spruce-deep: "#004a22"
+  spruce-tint: "#e4efe7"
   on-spruce: "#f4f8f5"
   on-spruce-muted: "#d2e7da"
   ink: "#15201a"
@@ -117,9 +117,9 @@ Chosen by the owner on 2026-10-03 over two more expressive directions. Rejected:
 A restrained palette: neutrals tinted toward green, one committed brand colour, one functional warning colour.
 
 ### Primary
-- **Spruce** (#1e4d3a): buttons, links, focus rings, the top strip, the Vestfold band, step numerals, check icons.
-- **Spruce Deep** (#153a2b): hover on primary actions; footer ground.
-- **Spruce Tint** (#e6eee9): "Kort svar" boxes, advice callouts, the project-kit panel, card hover.
+- **Spruce** (#00652f, matched to the logo's green): buttons, links, focus rings, the top strip, the Vestfold band, step numerals, check icons.
+- **Spruce Deep** (#004a22): hover on primary actions; footer ground.
+- **Spruce Tint** (#e4efe7): "Kort svar" boxes, advice callouts, the project-kit panel, card hover.
 
 ### Functional
 - **Safety Amber** (#8a4300 on #fff5e8, line #efc896): only for "Instruksjon" callouts, the "Når du bør overlate det til fagfolk" box and the Instruksjon row. Never decorative.
@@ -169,6 +169,8 @@ Mostly flat with borders. Two soft shadows exist:
 8px radius on controls, photos and the starter panel; 12px on cards and panels; pills for chips. Icons are authored 24px line icons (1.75 stroke, round caps) in `src/components/Icon.astro`.
 
 ## Components
+
+- **Logo**: the owner's logo (`public/logo.png`, hand holding a house with plants, green #006a34 and brown #925a42). The header uses the cropped emblem (`public/logo-emblem.webp`) beside the name set in Schibsted Grotesk; the full logo appears on the About page and as og:image. Favicons are generated from the emblem.
 
 - **Project starter** (`ProjectStarter.astro`): GET form to `/kontakt/` with `prosjekt` and `kommune`; works without JavaScript. Floating shadow, no border.
 - **Photo slot** (`Photo.astro`): uses `public/bilder/<name>.(webp|jpg|png)` when present, otherwise a clearly labelled placeholder naming the file to add.

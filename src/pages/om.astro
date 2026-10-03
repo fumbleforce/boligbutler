@@ -13,6 +13,15 @@ const principles = [
   { t: 'Reell verdi, ingen unødvendige kostnader', d: 'Du skal leie det prosjektet ditt trenger, ikke mer. Hvis en jobb bør gjøres av fagfolk, får du vite det.' },
   { t: 'Tenkt gjennom på forhånd', d: 'Jo mer BoligButler har forberedt, desto enklere blir prosjektet for deg. Det er derfor prosjektkassen og sjekklistene finnes.' },
 ];
+const work = [
+  { name: 'arbeid-hage', alt: 'Uteområde med murte bed, trapp og beplantning', cap: 'Bed, trapp og murer ved inngangsparti' },
+  { name: 'arbeid-terrasse', alt: 'Terrasse i grå royalimpregnert tre med trapp og utsikt mot fjorden', cap: 'Terrasse med trapp og fjordutsikt' },
+  { name: 'arbeid-benk', alt: 'Murt benk i tegl med treseter og ny terrasse', cap: 'Murt benk og terrassegulv' },
+  { name: 'arbeid-skiferheller', alt: 'Skiferheller lagt i uregelmessig mønster', cap: 'Skiferheller' },
+  { name: 'arbeid-belegningsstein', alt: 'Innkjørsel med belegningsstein og kantstein', cap: 'Belegningsstein i innkjørsel' },
+  { name: 'arbeid-veranda', alt: 'Innglasset veranda med teglvegg, fliser og benk', cap: 'Innglasset veranda' },
+];
+
 const jsonLd = [{
   '@context': 'https://schema.org',
   '@type': 'AboutPage',
@@ -44,6 +53,20 @@ const jsonLd = [{
     </div>
   </section>
 
+  <section class="section--tight section">
+    <div class="wrap">
+      <div class="head">
+        <h2>Fra tidligere prosjekter</h2>
+        <p>Et utvalg av jobber på hus og uteområder. Slik ser det ut når grunnarbeidet er gjort skikkelig.</p>
+      </div>
+      <ul class="work">
+        {work.map((w) => (
+          <li><figure><Photo name={w.name} alt={w.alt} hint={w.cap} ratio="4 / 3" /><figcaption>{w.cap}</figcaption></figure></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
   <section class="section section--band">
     <div class="wrap">
       <div class="head"><h2>Slik jobber BoligButler</h2></div>
@@ -57,6 +80,7 @@ const jsonLd = [{
         <h2>Hele Vestfold</h2>
         <p class="lead">Levering, henting og befaring i alle seks kommunene.</p>
         <ul class="kommuner">{site.areas.map((a) => <li><Icon name="pin" size={18} /> {a}</li>)}</ul>
+        <img class="logo" src="/logo.png" alt="BoligButlers logo: en hånd som holder et hus med planter" width="669" height="552" loading="lazy" />
         <p class="muted">Kjenner du noen utenfor fylket som trenger hjelp? Ring og spør, så finner dere en løsning.</p>
       </div>
       <VestfoldMap class="om-map" />
@@ -76,6 +100,12 @@ const jsonLd = [{
   .vision { margin: clamp(2.5rem, 2rem + 2vw, 4rem) 0 0; padding: clamp(1.5rem, 1rem + 2vw, 2.5rem); background: var(--green); color: #fff; border-radius: 12px; }
   .vision p { font-size: var(--step-3); font-weight: 650; letter-spacing: -0.02em; line-height: 1.3; margin: 0 0 1rem; max-width: 26em; }
   .vision footer { color: var(--on-green-2); font-size: var(--step--1); }
+  .work { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem 1.25rem; }
+  .work figure { margin: 0; display: grid; gap: 0.55rem; }
+  .work figcaption { font-weight: 600; font-size: 0.97rem; }
+  .logo { width: 9rem; height: auto; margin: 0 0 1.25rem; }
+  @media (max-width: 860px) { .work { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px) { .work { grid-template-columns: 1fr; } }
   .pr { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
   .pr li { display: flex; gap: 0.9rem; background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 1.5rem; }
   .pr li > :global(svg) { color: var(--green); flex: none; margin-top: 0.1rem; }

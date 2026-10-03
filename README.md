@@ -44,7 +44,7 @@ Kartet over Vestfold er tegnet fra Kartverkets data (CC BY 4.0) og ligger i `src
 
 - [ ] Telefon, e-post, org.nr., adresse og grunnleggerens navn i `src/data/site.ts`
 - [ ] Endelig domene i `astro.config.mjs` og `src/data/site.ts`
-- [ ] Ekte logo i `src/components/Wordmark.astro` og `public/favicon.svg`
+- [x] Logo lagt inn (emblem i header, full logo på Om-siden)
 - [ ] Koble kontaktskjemaet til en skjematjeneste (nå åpner det e-postprogrammet)
 - [ ] Ekte bilder i `public/bilder/` (se listen over)
 - [ ] Faglig gjennomlesing av guidene, særlig regelverk (SAK10-grenser for terrasse/støttemur, førerkort/tilhenger) og tall

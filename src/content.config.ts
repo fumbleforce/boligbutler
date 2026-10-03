@@ -2,7 +2,7 @@ import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 
-export const projectSlugs = ['drenering', 'terrasse', 'plen', 'male-huset', 'stottemur', 'gravearbeid', 'traer'] as const;
+export const projectSlugs = ['drenering', 'terrasse', 'plen', 'male-huset', 'stottemur', 'belegningsstein', 'gravearbeid', 'traer'] as const;
 
 const faq = z.array(z.object({ q: z.string(), a: z.string() })).default([]);
 

@@ -1,7 +1,7 @@
 ---
 title: "Slik komprimerer du grus og pukk med vibroplate"
 description: "Lagtykkelser, antall overfarter, riktig fuktighet og valg mellom forovergående og reversibel vibroplate. Med de vanligste feilene ved komprimering."
-project: stottemur
+project: belegningsstein
 updated: 2026-10-03
 difficulty: Enkel
 timeEstimate: "1–2 timer per 20 m² og lag"

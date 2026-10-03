@@ -1,7 +1,7 @@
 ---
 title: "Gravearbeid på egen tomt – minigraver, dumper og masser"
 navTitle: Gravearbeid
-order: 6
+order: 7
 description: "Lei minigraver og dumper med levering og innføring fra BoligButler. Hjelp med kabelpåvisning, masseberegning, tilhenger og bortkjøring for gravearbeid på egen tomt."
 lead: "Grøft for kabel, planering, oppkjørsel eller tomt til garasje. Gravearbeid er sjelden vanskelig, men det er lett å bomme på påvisning, mengden masser og hvor de skal gjøres av."
 customerSays: "Jeg skal grave på tomta."

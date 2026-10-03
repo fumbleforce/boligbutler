@@ -19,7 +19,7 @@ const projects = (await getCollection('prosjekter')).sort((a, b) => a.data.order
         {projects.map((p) => (
           <li>
             <a href={`/prosjekter/${p.id}/`}>
-              <Photo name={`prosjekt-${p.id}`} fit={p.id === 'gravearbeid' ? 'contain' : 'cover'} alt={`${p.data.navTitle} i Vestfold`} hint={`${p.data.navTitle.toLowerCase()} i Vestfold`} ratio="16 / 10" />
+              <Photo name={`prosjekt-${p.id}`} alt={`${p.data.navTitle} i Vestfold`} hint={`${p.data.navTitle.toLowerCase()} i Vestfold`} ratio="16 / 10" />
               <span class="t">{p.data.navTitle}</span>
               <span class="l">{p.data.lead}</span>
               <span class="e">Utstyr: {p.data.equipment.map((e) => e.name).join(', ')}</span>

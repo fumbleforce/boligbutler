@@ -1,7 +1,7 @@
 ---
 title: "Beskjære og felle trær i hagen – lift, flishugger og fagråd"
 navTitle: Trær og beskjæring
-order: 7
+order: 8
 description: "Beskjær trær trygt fra lift i stedet for stige. BoligButler leier ut lift, flishugger og tilhenger, og sier ifra når et tre bør overlates til fagfolk."
 lead: "Beskjæring fra stige er en av de vanligste årsakene til fallulykker i hagen. Med lift står du stødig og har begge hender fri, og med flishugger forsvinner kvistene på et par timer."
 customerSays: "Jeg må ta ned noen trær og beskjære resten."
