@@ -1,12 +1,13 @@
 ---
 // Tilbakemeldingsknapp. Vises bare i forhåndsvisningen (bygg med BASE_PATH), aldri på det offentlige domenet.
-// Knappen åpner et ferdig utfylt GitHub-issue. En fast rutine plukker opp issues fra eieren og gjør endringene.
+// Knappen åpner tilbakemeldingssiden på claude.ai (krever innlogging og deling). Siden du står på sendes
+// med som #anker (f.eks. #prosjekter.drenering), så den er forhåndsvalgt i skjemaet.
 const show = import.meta.env.BASE_URL !== '/';
-const repo = 'https://github.com/fumbleforce/boligbutler/issues/new';
-const page = new URL(Astro.url.pathname, Astro.site).href;
-const title = `Tilbakemelding: ${Astro.url.pathname.replace(import.meta.env.BASE_URL, '/') || '/'}`;
-const body = `**Side:** ${page}\n\n**Hva bør endres?**\n\n`;
-const href = `${repo}?${new URLSearchParams({ title, body, labels: 'tilbakemelding' }).toString()}`;
+const FEEDBACK_URL = 'https://claude.ai/artifact/HXyMJAUPpKTeFAgaTWZ4xk';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const path = Astro.url.pathname.startsWith(base) ? Astro.url.pathname.slice(base.length) || '/' : Astro.url.pathname;
+const token = path === '/' ? 'forside' : path.replace(/^\/|\/$/g, '').split('/').join('.');
+const href = `${FEEDBACK_URL}#${token}`;
 ---
 {show && (
   <a class="fb" href={href} target="_blank" rel="noopener">
