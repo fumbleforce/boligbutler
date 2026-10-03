@@ -9,7 +9,7 @@ export const site = {
   legalName: 'Boligbutler Eri',
   phone: '+4791800200',
   phoneDisplay: '918 00 200',
-  email: 'post@boligbutler.no', // TODO
+  email: 'erling@boligbutler.no',
   orgnr: '934 181 549',
   address: { street: 'Mullers gate 8', postalCode: '3181', city: 'Horten', region: 'Vestfold' },
   region: 'Vestfold',
