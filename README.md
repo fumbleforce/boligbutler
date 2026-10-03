@@ -25,8 +25,8 @@ npm run build    # statiske filer i dist/
 
 Alle fotoplasser viser en merket plassholder til et ekte bilde legges inn. Legg filene i `public/bilder/` med disse navnene (`.jpg`, `.webp` eller `.png`):
 
-- `hero`: levering av utstyr på en tomt i Vestfold, gjerne med grunnleggeren
-- `grunnlegger`: portrett (stående, 4:5)
+- `hero`: levering av utstyr (nå: henger med pukk, 560 px bred, bør byttes til høyere oppløsning)
+- `grunnlegger`: portrett (stående, 4:5) ✓
 - `prosjektkasse`: kassen åpnet med innholdet utover
 - `prosjekt-drenering`, `prosjekt-terrasse`, `prosjekt-plen`, `prosjekt-male-huset`, `prosjekt-stottemur`, `prosjekt-gravearbeid`, `prosjekt-traer`
 

@@ -58,7 +58,7 @@ const jsonLd = [
         <p class="call">Vil du heller snakke med noen? <a href={tel}>Ring {site.phoneDisplay}</a></p>
       </div>
       <div class="hero-media">
-        <Photo name="hero" class="hero-photo" alt="BoligButler leverer utstyr til en bolig i Vestfold" hint="BoligButler leverer en minigraver på en tomt i Vestfold, gjerne med grunnleggeren i bildet" ratio="20 / 17" eager />
+        <Photo name="hero" class="hero-photo" alt="Tilhenger lastes med pukk fra hjullaster" hint="BoligButler leverer utstyr på en tomt i Vestfold" ratio="560 / 345" eager />
         <ProjectStarter class="hero-starter" />
       </div>
     </div>
@@ -86,7 +86,7 @@ const jsonLd = [
         {projects.map((p, i) => (
           <li class:list={{ wide: i < 2 }}>
             <a href={`/prosjekter/${p.id}/`}>
-              <Photo name={`prosjekt-${p.id}`} alt={`${p.data.navTitle}: prosjekt i Vestfold`} hint={`${p.data.navTitle.toLowerCase()} i Vestfold`} ratio={i < 2 || i >= 5 ? '16 / 10' : '4 / 3'} />
+              <Photo name={`prosjekt-${p.id}`} fit={p.id === 'gravearbeid' ? 'contain' : 'cover'} alt={`${p.data.navTitle}: prosjekt i Vestfold`} hint={`${p.data.navTitle.toLowerCase()} i Vestfold`} ratio={i < 2 || i >= 5 ? '16 / 10' : '4 / 3'} />
               <span class="p-body">
                 <span class="p-title">{p.data.navTitle}</span>
                 <span class="p-eq">{p.data.equipment.slice(0, 3).map((e) => e.name).join(', ')}</span>
@@ -115,7 +115,7 @@ const jsonLd = [
 
   <section class="section">
     <div class="wrap person">
-      <Photo name="grunnlegger" alt={`${site.founder.name}, ${site.founder.role.toLowerCase()} i BoligButler`} hint="portrett av grunnleggeren, gjerne ute ved utstyret" ratio="4 / 5" />
+      <Photo name="grunnlegger" alt={`${site.founder.name}, ${site.founder.role.toLowerCase()} i BoligButler`} hint="portrett av grunnleggeren, gjerne ute ved utstyret" ratio="4 / 5" position="50% 35%" />
       <div class="person-text">
         <h2>Den som leverer, er den du kan ringe</h2>
         <p class="lead">BoligButler er en lokal virksomhet i Vestfold. Den som leverer utstyret og viser deg hvordan det brukes, er den samme du ringer når du står midt i grøfta med et spørsmål.</p>
@@ -204,11 +204,10 @@ const jsonLd = [
   .promises :global(svg) { color: var(--green); flex: none; }
   .call { color: var(--ink-2); margin: 0; }
   .call a { font-weight: 650; white-space: nowrap; }
-  .hero-media { position: relative; padding-bottom: 14rem; }
-  .hero-media :global(.hero-photo) { object-position: 70% 30%; }
+  .hero-media { position: relative; }
   .hero-media :global(.hero-photo.photo--empty) { place-content: start end; justify-items: end; text-align: right; }
   .hero-media :global(.hero-photo.photo--empty span) { max-width: 16rem; }
-  :global(.hero-starter) { position: absolute; left: -2.5rem; bottom: 0; width: min(21rem, 70%); }
+  :global(.hero-starter) { position: relative; margin: -4.5rem 0 0 -2.5rem; width: min(22rem, 75%); }
 
   .assure { border-block: 1px solid var(--line); background: #fff; }
   .assure-row { list-style: none; margin-inline: auto; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); }
@@ -297,7 +296,7 @@ const jsonLd = [
     .hero-media { order: 3; padding-bottom: 0; display: flex; flex-direction: column-reverse; gap: 1.25rem; }
     .promises { order: 4; margin: 0.5rem 0 0; }
     .call { order: 5; }
-    :global(.hero-starter) { position: static; width: auto; }
+    :global(.hero-starter) { position: static; width: auto; margin: 0; }
     .hero-media :global(.hero-photo) { aspect-ratio: 16 / 10 !important; }
     .hero-media :global(.hero-photo.photo--empty) { place-content: center; justify-items: center; text-align: center; }
     .pkgs { grid-template-columns: 1fr; gap: 1.75rem; }

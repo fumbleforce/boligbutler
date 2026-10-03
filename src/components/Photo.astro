@@ -4,14 +4,14 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-interface Props { name: string; alt: string; hint: string; ratio?: string; class?: string; eager?: boolean }
-const { name, alt, hint, ratio = '4 / 3', class: cls, eager = false } = Astro.props;
+interface Props { name: string; alt: string; hint: string; ratio?: string; class?: string; eager?: boolean; fit?: 'cover' | 'contain'; position?: string }
+const { name, alt, hint, ratio = '4 / 3', class: cls, eager = false, fit = 'cover', position = 'center' } = Astro.props;
 
 const dir = path.join(process.cwd(), 'public', 'bilder');
 const file = ['webp', 'jpg', 'jpeg', 'png'].map((e) => `${name}.${e}`).find((f) => fs.existsSync(path.join(dir, f)));
 ---
 {file ? (
-  <img class:list={['photo', cls]} src={`/bilder/${file}`} alt={alt} style={`aspect-ratio:${ratio}`} loading={eager ? 'eager' : 'lazy'} decoding="async" />
+  <img class:list={['photo', { 'photo--contain': fit === 'contain' }, cls]} src={`/bilder/${file}`} alt={alt} style={`aspect-ratio:${ratio};object-position:${position}`} loading={eager ? 'eager' : 'lazy'} decoding="async" />
 ) : (
   <div class:list={['photo', 'photo--empty', cls]} style={`aspect-ratio:${ratio}`} role="img" aria-label={alt}>
     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 7.5h4l1.5-2h6l1.5 2h4v11h-17z" /><circle cx="12" cy="13" r="3.5" /></svg>
@@ -21,6 +21,7 @@ const file = ['webp', 'jpg', 'jpeg', 'png'].map((e) => `${name}.${e}`).find((f) 
 )}
 <style>
   .photo { width: 100%; height: auto; object-fit: cover; border-radius: var(--r); background: var(--band); }
+  .photo--contain { object-fit: contain; background: #fff; border: 1px solid var(--line); padding: 4%; }
   .photo--empty {
     display: grid; place-content: center; justify-items: center; gap: 0.5rem; padding: 1.5rem; text-align: center;
     color: var(--ink-3); font-size: var(--step--1); line-height: 1.4;

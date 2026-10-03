@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import Crumbs from '../components/Crumbs.astro';
 import CtaBand from '../components/CtaBand.astro';
+import Photo from '../components/Photo.astro';
 
 const projects = (await getCollection('prosjekter')).sort((a, b) => a.data.order - b.data.order);
 const map = new Map<string, { note: string; projects: { id: string; name: string }[] }>();
@@ -19,9 +20,12 @@ const items = [...map.entries()].sort((a, b) => b[1].projects.length - a[1].proj
   <section class="section--tight section">
     <div class="wrap">
       <Crumbs items={[{ href: '', label: 'Utstyr' }]} />
+      <div class="top">
       <div class="head">
         <h1>Utstyr</h1>
         <p>Listen er kort med vilje. BoligButler har utstyr som brukes i prosjektene huseiere faktisk gjør, og som en privatperson kan bruke trygt etter en innføring. Alt leveres og hentes i hele Vestfold, med prosjektkasse.</p>
+      </div>
+        <Photo name="utstyr-dumper" fit="contain" alt="Beltedumper Kubota KC70VSL-4" hint="utstyr fra BoligButler" ratio="1094 / 930" eager />
       </div>
       <table>
         <thead><tr><th scope="col">Utstyr</th><th scope="col">Brukes til</th><th scope="col">Prosjekter</th></tr></thead>
@@ -41,6 +45,10 @@ const items = [...map.entries()].sort((a, b) => b[1].projects.length - a[1].proj
   <CtaBand />
 </Base>
 <style>
+  .top { display: grid; grid-template-columns: 1.4fr 1fr; gap: 3rem; align-items: center; margin-bottom: 2.5rem; }
+  .top .head { margin-bottom: 0; }
+  .top :global(.photo) { max-width: 24rem; justify-self: end; }
+  @media (max-width: 760px) { .top { grid-template-columns: 1fr; } .top :global(.photo) { justify-self: start; max-width: 18rem; } }
   table { width: 100%; border-collapse: collapse; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
   th, td { text-align: left; padding: 1rem 1.1rem; border-bottom: 1px solid var(--line); vertical-align: top; }
   tbody tr:last-child th, tbody tr:last-child td { border-bottom: 0; }

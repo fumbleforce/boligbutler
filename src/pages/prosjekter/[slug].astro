@@ -61,7 +61,7 @@ const jsonLd = [
           {guides[0] && <p class="read">Vil du forstå jobben først? <a href={`/guider/${guides[0].id}/`}>Les guiden: {guides[0].data.title}</a></p>}
         </div>
         <div class="intro-media">
-          <Photo name={`prosjekt-${project.id}`} alt={`${d.navTitle} i Vestfold`} hint={`${d.navTitle.toLowerCase()}, fra et ekte prosjekt i Vestfold`} ratio="4 / 3" eager />
+          <Photo name={`prosjekt-${project.id}`} fit={project.id === 'gravearbeid' ? 'contain' : 'cover'} alt={`${d.navTitle} i Vestfold`} hint={`${d.navTitle.toLowerCase()}, fra et ekte prosjekt i Vestfold`} ratio="4 / 3" eager />
         </div>
       </div>
     </div>
