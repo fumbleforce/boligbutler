@@ -58,7 +58,7 @@ const jsonLd = [
         <p class="call">Vil du heller snakke med noen? <a href={tel}>Ring {site.phoneDisplay}</a></p>
       </div>
       <div class="hero-media">
-        <Photo name="hero" class="hero-photo" alt="Ferdig uteområde med murte bed, trapp og blomster ved et hus i Vestfold" hint="et ferdig prosjekt i Vestfold" ratio="1006 / 734" position="60% 50%" eager />
+        <Photo name="hero" class="hero-photo" alt="Grunnleggeren av BoligButler ved en nylagt innkjørsel med belegningsstein og vibroplate" hint="et prosjekt i Vestfold" ratio="4 / 3" position="40% 40%" eager />
         <ProjectStarter class="hero-starter" />
       </div>
     </div>
@@ -86,7 +86,7 @@ const jsonLd = [
         {projects.map((p, i) => (
           <li class:list={{ wide: i < 2 }}>
             <a href={`/prosjekter/${p.id}/`}>
-              <Photo name={`prosjekt-${p.id}`} alt={`${p.data.navTitle}: prosjekt i Vestfold`} hint={`${p.data.navTitle.toLowerCase()} i Vestfold`} ratio={i < 2 || i >= 5 ? '16 / 10' : '4 / 3'} />
+              <Photo name={`prosjekt-${p.id}`} position={p.id === "plen" ? "50% 35%" : "center"} alt={`${p.data.navTitle}: prosjekt i Vestfold`} hint={`${p.data.navTitle.toLowerCase()} i Vestfold`} ratio={i < 2 || i >= 5 ? '16 / 10' : '4 / 3'} />
               <span class="p-body">
                 <span class="p-title">{p.data.navTitle}</span>
                 <span class="p-eq">{p.data.equipment.slice(0, 3).map((e) => e.name).join(', ')}</span>

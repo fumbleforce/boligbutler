@@ -23,12 +23,11 @@ npm run build    # statiske filer i dist/
 
 ## Bilder
 
-Alle fotoplasser viser en merket plassholder til et ekte bilde legges inn. Legg filene i `public/bilder/` med disse navnene (`.jpg`, `.webp` eller `.png`):
+Bildene ligger i `public/bilder/` som `.webp`. Fotoplasser uten fil viser en merket plassholder. Disse mangler fortsatt (`.jpg`, `.webp` eller `.png`):
 
-- `hero`: levering av utstyr (nå: henger med pukk, 560 px bred, bør byttes til høyere oppløsning)
-- `grunnlegger`: portrett (stående, 4:5) ✓
-- `prosjektkasse`: kassen åpnet med innholdet utover
-- `prosjekt-drenering`, `prosjekt-terrasse`, `prosjekt-plen`, `prosjekt-male-huset`, `prosjekt-stottemur`, `prosjekt-gravearbeid`, `prosjekt-traer`
+- `prosjekt-drenering`, `prosjekt-stottemur`, `prosjekt-traer`, `prosjektkasse`
+
+Bilder av folk eller skilt fra andre firmaer bør ikke brukes. Merkevarebilder (Ifor Williams, Kubota) bør klareres med leverandøren.
 
 Kartet over Vestfold er tegnet fra Kartverkets data (CC BY 4.0) og ligger i `src/data/vestfold-kart.json`.
 

@@ -19,6 +19,8 @@ const gear: { name: string; label: string; alt: string; fit?: 'cover' | 'contain
   { name: 'utstyr-dumper', label: 'Beltedumper', alt: 'Beltedumper, Kubota KC70VSL-4', fit: 'contain' },
   { name: 'utstyr-vibroplate', label: 'Vibroplate', alt: 'Vibroplate på avrettet settelag ved siden av belegningsstein' },
   { name: 'utstyr-maskinhenger', label: 'Maskinhenger', alt: 'Maskinhenger med ramper og minigraver' },
+  { name: 'utstyr-stillas', label: 'Fasadestillas', alt: 'Fasadestillas montert rundt et hus' },
+  { name: 'utstyr-tilhenger', label: 'Tilhenger', alt: 'Tilhenger lastes med pukk fra hjullaster' },
 ];
 const items = [...map.entries()].sort((a, b) => b[1].projects.length - a[1].projects.length || a[0].localeCompare(b[0], 'nb'));
 ---
@@ -53,7 +55,7 @@ const items = [...map.entries()].sort((a, b) => b[1].projects.length - a[1].proj
   <CtaBand />
 </Base>
 <style>
-  .gear { list-style: none; padding: 0; margin: 0 0 3rem; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; }
+  .gear { list-style: none; padding: 0; margin: 0 0 3rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem 1.25rem; }
   .gear li { display: grid; gap: 0.6rem; }
   .gear span { font-weight: 700; }
   @media (max-width: 900px) { .gear { grid-template-columns: repeat(2, 1fr); } }
