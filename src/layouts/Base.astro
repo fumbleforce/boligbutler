@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import FeedbackButton from '../components/FeedbackButton.astro';
 import { site } from '../data/site';
 
 interface Props {
@@ -78,5 +79,6 @@ const ld = [org, ...jsonLd];
       <slot />
     </main>
     <Footer />
+    <FeedbackButton />
   </body>
 </html>
