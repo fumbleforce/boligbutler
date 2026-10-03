@@ -19,6 +19,7 @@ const projects = (await getCollection('prosjekter')).sort((a, b) => a.data.order
   </label>
   <label class="field">Hvor i Vestfold?
     <select name="kommune">
+      <option value="" selected>Velg kommune</option>
       {site.areas.map((a) => <option>{a}</option>)}
       <option value="Annet">Utenfor Vestfold</option>
     </select>
@@ -27,7 +28,7 @@ const projects = (await getCollection('prosjekter')).sort((a, b) => a.data.order
   <p class="starter-note">Gratis og uforpliktende. Du får pris før du bestemmer deg.</p>
 </form>
 <style>
-  .starter { display: grid; gap: 0.9rem; background: #fff; border: 0; border-radius: 12px; padding: clamp(1.1rem, 0.9rem + 1vw, 1.6rem); box-shadow: var(--shadow-lg); }
+  .starter { display: grid; gap: 0.9rem; background: #fff; border: 0; border-radius: var(--r); padding: clamp(1.1rem, 0.9rem + 1vw, 1.6rem); box-shadow: var(--shadow-lg); }
   .starter-h { font-weight: 700; font-size: var(--step-1); margin: 0 0 0.1rem; letter-spacing: -0.01em; }
   .starter .btn { width: 100%; margin-top: 0.2rem; }
   .starter-note { margin: 0; font-size: var(--step--1); color: var(--ink-3); text-align: center; }

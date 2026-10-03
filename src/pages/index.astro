@@ -58,7 +58,7 @@ const jsonLd = [
         <p class="call">Vil du heller snakke med noen? <a href={tel}>Ring {site.phoneDisplay}</a></p>
       </div>
       <div class="hero-media">
-        <Photo name="hero" alt="BoligButler leverer utstyr til en bolig i Vestfold" hint="BoligButler leverer en minigraver på en tomt i Vestfold, gjerne med grunnleggeren i bildet" ratio="5 / 4" eager />
+        <Photo name="hero" class="hero-photo" alt="BoligButler leverer utstyr til en bolig i Vestfold" hint="BoligButler leverer en minigraver på en tomt i Vestfold, gjerne med grunnleggeren i bildet" ratio="20 / 17" eager />
         <ProjectStarter class="hero-starter" />
       </div>
     </div>
@@ -86,7 +86,7 @@ const jsonLd = [
         {projects.map((p, i) => (
           <li class:list={{ wide: i < 2 }}>
             <a href={`/prosjekter/${p.id}/`}>
-              <Photo name={`prosjekt-${p.id}`} alt={`${p.data.navTitle}: prosjekt i Vestfold`} hint={`${p.data.navTitle.toLowerCase()} i Vestfold`} ratio={i < 2 ? '16 / 10' : '4 / 3'} />
+              <Photo name={`prosjekt-${p.id}`} alt={`${p.data.navTitle}: prosjekt i Vestfold`} hint={`${p.data.navTitle.toLowerCase()} i Vestfold`} ratio={i < 2 || i >= 5 ? '16 / 10' : '4 / 3'} />
               <span class="p-body">
                 <span class="p-title">{p.data.navTitle}</span>
                 <span class="p-eq">{p.data.equipment.slice(0, 3).map((e) => e.name).join(', ')}</span>
@@ -147,13 +147,12 @@ const jsonLd = [
     <div class="wrap">
       <div class="head">
         <h2>Velg hvor mye hjelp du vil ha</h2>
-        <p>Alle oppsett inkluderer levering, henting og prosjektkasse. Prisen avhenger av prosjektet og utstyret, og du får den før du bestemmer deg.</p>
+        <p>Alle oppsett inkluderer levering, henting og prosjektkasse. Innholdet tilpasses prosjektet ditt i samtalen, og du får pris før du bestemmer deg.</p>
       </div>
       <div class="pkgs">
         {packages.map((p) => (
           <div class:list={['pkg', { 'pkg--featured': p.featured }]}>
-            {p.featured && <p class="tag">Anbefalt for større prosjekter</p>}
-            <h3>{p.name}</h3>
+                        <h3>{p.name}</h3>
             <p class="pkg-for">{p.for}</p>
             <ul>{p.items.map((i) => <li><Icon name="check" size={18} /> <span>{i}</span></li>)}</ul>
           </div>
@@ -205,9 +204,11 @@ const jsonLd = [
   .promises :global(svg) { color: var(--green); flex: none; }
   .call { color: var(--ink-2); margin: 0; }
   .call a { font-weight: 650; white-space: nowrap; }
-  .hero-media { position: relative; padding-bottom: 7rem; }
-  .hero-media > :global(.photo) { box-shadow: var(--shadow); border-radius: 12px; }
-  :global(.hero-starter) { position: absolute; left: -2.5rem; bottom: 0; width: min(23rem, 85%); }
+  .hero-media { position: relative; padding-bottom: 14rem; }
+  .hero-media :global(.hero-photo) { object-position: 70% 30%; }
+  .hero-media :global(.hero-photo.photo--empty) { place-content: start end; justify-items: end; text-align: right; }
+  .hero-media :global(.hero-photo.photo--empty span) { max-width: 16rem; }
+  :global(.hero-starter) { position: absolute; left: -2.5rem; bottom: 0; width: min(21rem, 70%); }
 
   .assure { border-block: 1px solid var(--line); background: #fff; }
   .assure-row { list-style: none; margin-inline: auto; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); }
@@ -235,14 +236,15 @@ const jsonLd = [
   .projects a:hover .p-title { color: var(--green); text-decoration: underline; text-underline-offset: 0.2em; text-decoration-thickness: 2px; }
   .p-eq { color: var(--ink-3); font-size: 0.95rem; }
 
-  .steps { list-style: none; padding: 0; margin: 0 0 2.5rem; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; counter-reset: s; }
-  .steps li { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 1.5rem; }
-  .n { display: grid; place-items: center; width: 2.25rem; height: 2.25rem; border-radius: 50%; background: var(--green); color: #fff; font-weight: 700; margin-bottom: 1rem; font-variant-numeric: tabular-nums; }
+  .steps { list-style: none; padding: 0; margin: 0 0 2.5rem; display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
+  .steps li { position: relative; }
+  .steps li:not(:last-child)::after { content: ''; position: absolute; top: 1.125rem; left: 3rem; right: -1.25rem; height: 1px; background: var(--line-2); }
+  .n { position: relative; display: grid; place-items: center; width: 2.25rem; height: 2.25rem; border-radius: 50%; background: var(--green); color: #fff; font-weight: 700; margin-bottom: 1rem; font-variant-numeric: tabular-nums; }
   .steps h3 { margin-bottom: 0.4rem; }
   .steps p { color: var(--ink-2); margin: 0; font-size: 0.97rem; }
 
   .person { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr); gap: clamp(2rem, 1rem + 4vw, 5rem); align-items: center; }
-  .person > :global(.photo) { border-radius: 12px; }
+  .person > :global(.photo) { border-radius: var(--r); }
   .levels { margin: 1.75rem 0; display: grid; gap: 0; border-top: 1px solid var(--line); }
   .levels > div { display: grid; grid-template-columns: 9rem 1fr; gap: 1rem; padding: 0.9rem 0; border-bottom: 1px solid var(--line); }
   .levels dt { font-weight: 700; display: flex; align-items: center; gap: 0.4rem; }
@@ -263,8 +265,7 @@ const jsonLd = [
   .pkgs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; align-items: start; }
   .pkg { border: 1px solid var(--line); background: #fff; padding: 1.75rem; border-radius: 12px; position: relative; }
   .pkg--featured { border: 2px solid var(--green); }
-  .tag { position: absolute; top: -0.8rem; left: 1.5rem; margin: 0; background: var(--green); color: #fff; font-size: 0.78rem; font-weight: 600; padding: 0.2rem 0.65rem; border-radius: 999px; }
-  .pkg h3 { font-size: var(--step-2); margin-bottom: 0.3rem; }
+    .pkg h3 { font-size: var(--step-2); margin-bottom: 0.3rem; }
   .pkg-for { color: var(--ink-2); }
   .pkg ul { list-style: none; padding: 0; margin: 1.25rem 0 0; display: grid; gap: 0.6rem; }
   .pkg li { display: flex; gap: 0.55rem; align-items: flex-start; font-size: 0.97rem; line-height: 1.45; }
@@ -285,11 +286,20 @@ const jsonLd = [
     .assure li:nth-child(n + 3) { border-top: 1px solid var(--line); }
     .guides { grid-template-columns: repeat(2, 1fr); }
     .steps { grid-template-columns: repeat(2, 1fr); }
+    .steps li::after { display: none; }
   }
   @media (max-width: 900px) {
     .hero-grid, .person, .local-grid { grid-template-columns: 1fr; }
-    .hero-media { padding-bottom: 0; }
-    :global(.hero-starter) { position: relative; left: auto; width: auto; margin: -3rem 1rem 0; }
+    .hero-grid { gap: 1.25rem; }
+    .hero-text { display: contents; }
+    .hero h1 { order: 1; margin-bottom: 0; }
+    .hero .lead { order: 2; margin-bottom: 0; font-size: 1.08rem; }
+    .hero-media { order: 3; padding-bottom: 0; display: flex; flex-direction: column-reverse; gap: 1.25rem; }
+    .promises { order: 4; margin: 0.5rem 0 0; }
+    .call { order: 5; }
+    :global(.hero-starter) { position: static; width: auto; }
+    .hero-media :global(.hero-photo) { aspect-ratio: 16 / 10 !important; }
+    .hero-media :global(.hero-photo.photo--empty) { place-content: center; justify-items: center; text-align: center; }
     .pkgs { grid-template-columns: 1fr; gap: 1.75rem; }
     .projects { grid-template-columns: repeat(2, 1fr); }
     .projects li, .projects li.wide, .projects li:nth-child(n + 6) { grid-column: span 1; }

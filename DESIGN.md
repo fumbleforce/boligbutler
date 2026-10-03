@@ -158,7 +158,7 @@ Centred container (`.wrap`, max 74rem, fluid gutter) and a reading column (`.nar
 ## Elevation & Depth
 
 Mostly flat with borders. Two soft shadows exist:
-- **Raised** (`0 1px 2px rgb(21 32 26 / .06), 0 8px 24px -6px rgb(21 32 26 / .14)`): hero and project photos.
+- **Raised** (`0 1px 2px rgb(21 32 26 / .06), 0 8px 24px -6px rgb(21 32 26 / .14)`): reserved; photos sit flat.
 - **Floating** (`0 2px 4px rgb(21 32 26 / .08), 0 16px 32px -10px rgb(21 32 26 / .26)`): the project starter overlapping the hero photo, and the mobile menu.
 
 ### Named Rules
@@ -166,7 +166,7 @@ Mostly flat with borders. Two soft shadows exist:
 
 ## Shapes
 
-8px radius on controls and photos in prose, 12px on cards, panels and section photos, pills for chips and the "Anbefalt" tag. Icons are authored 24px line icons (1.75 stroke, round caps) in `src/components/Icon.astro`.
+8px radius on controls, photos and the starter panel; 12px on cards and panels; pills for chips. Icons are authored 24px line icons (1.75 stroke, round caps) in `src/components/Icon.astro`.
 
 ## Components
 
@@ -174,7 +174,7 @@ Mostly flat with borders. Two soft shadows exist:
 - **Photo slot** (`Photo.astro`): uses `public/bilder/<name>.(webp|jpg|png)` when present, otherwise a clearly labelled placeholder naming the file to add.
 - **Vestfold map** (`VestfoldMap.astro`): Kartverket municipality outlines (CC BY 4.0) with town markers; themable through `--map-*` custom properties (light on white, inverted on the green band).
 - **Callouts** in guides: `> **Instruksjon:**` renders amber with a warning icon; `> **Råd:**` renders spruce tint with an info icon.
-- **Cards** (guides, steps, packages): white, 1px line, 12px radius; the recommended package gets a 2px spruce border and a pill tag.
+- **Cards** (guides, steps, packages): white, 1px line, 12px radius; the featured package gets a 2px spruce border.
 
 ## Do's and Don'ts
 
