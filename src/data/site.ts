@@ -14,7 +14,7 @@ export const site = {
   region: 'Vestfold',
   // Kommunene i Vestfold fylke (2024), nord til sør
   areas: ['Holmestrand', 'Horten', 'Tønsberg', 'Færder', 'Sandefjord', 'Larvik'],
-  founder: { name: 'Navn Etternavn', role: 'Grunnlegger og rådgiver' }, // TODO: ekte navn
+  founder: { name: 'Erling Eri', role: 'Grunnlegger og rådgiver' },
 };
 
 // Sett til true når eier har bekreftet innholdet i oppsettene. Da fremheves «Prosjekt».
