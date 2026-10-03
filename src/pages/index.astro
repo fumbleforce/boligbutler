@@ -86,7 +86,7 @@ const jsonLd = [
         {projects.map((p, i) => (
           <li class:list={{ wide: i < 2 }}>
             <a href={`/prosjekter/${p.id}/`}>
-              <Photo name={`prosjekt-${p.id}`} position={p.id === "plen" ? "50% 35%" : "center"} alt={`${p.data.navTitle}: prosjekt i Vestfold`} hint={`${p.data.navTitle.toLowerCase()} i Vestfold`} ratio={i < 2 || i >= 5 ? '16 / 10' : '4 / 3'} />
+              <Photo name={`prosjekt-${p.id}`} position={p.id === "plen" ? "50% 35%" : p.id === "drenering" ? "50% 62%" : "center"} alt={`${p.data.navTitle}: prosjekt i Vestfold`} hint={`${p.data.navTitle.toLowerCase()} i Vestfold`} ratio={i < 2 || i >= 5 ? '16 / 10' : '4 / 3'} />
               <span class="p-body">
                 <span class="p-title">{p.data.navTitle}</span>
                 <span class="p-eq">{p.data.equipment.slice(0, 3).map((e) => e.name).join(', ')}</span>

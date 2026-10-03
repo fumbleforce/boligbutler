@@ -25,7 +25,7 @@ npm run build    # statiske filer i dist/
 
 Bildene ligger i `public/bilder/` som `.webp`. Fotoplasser uten fil viser en merket plassholder. Disse mangler fortsatt (`.jpg`, `.webp` eller `.png`):
 
-- `prosjekt-drenering`, `prosjekt-stottemur`, `prosjekt-traer`, `prosjektkasse`
+- `prosjekt-stottemur`, `prosjekt-traer`, `prosjektkasse`
 
 Bilder av folk eller skilt fra andre firmaer bør ikke brukes. Merkevarebilder (Ifor Williams, Kubota) bør klareres med leverandøren.
 
