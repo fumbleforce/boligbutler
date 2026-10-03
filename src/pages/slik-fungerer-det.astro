@@ -1,6 +1,8 @@
 ---
 import Base from '../layouts/Base.astro';
 import Crumbs from '../components/Crumbs.astro';
+import Icon from '../components/Icon.astro';
+import Photo from '../components/Photo.astro';
 import CtaBand from '../components/CtaBand.astro';
 import Faq from '../components/Faq.astro';
 import { packages, standardKit, beforeStart, beforeReturn } from '../data/site';
@@ -19,26 +21,25 @@ const faq = [
   { q: 'Hva skjer hvis noe går i stykker?', a: 'Si fra med en gang. Mye kan løses på telefon, og BoligButler kommer ut hvis det trengs. Det er bedre å stoppe enn å fortsette med utstyr som ikke fungerer som det skal.' },
 ];
 ---
-<Base title="Slik fungerer BoligButler" description="Fra du beskriver prosjektet til utstyret hentes igjen: forslag, befaring, levering med innføring, prosjektkasse og en rådgiver du kan ringe. Du bestemmer hvor mye hjelp du vil ha.">
+<Base title="Slik fungerer BoligButler" description="Fra du beskriver prosjektet til utstyret hentes igjen: forslag, befaring, levering med innføring, prosjektkasse og en rådgiver du kan ringe. Levering i hele Vestfold.">
   <section class="section--tight section">
     <div class="wrap">
       <Crumbs items={[{ href: '', label: 'Slik fungerer det' }]} />
-      <div class="section-head">
+      <div class="head">
         <h1>Slik fungerer det</h1>
         <p>BoligButler selger ikke maskiner. BoligButler hjelper deg med å gjennomføre et prosjekt, og utstyret er en del av det.</p>
       </div>
       <ol class="steps">
         {steps.map((s, i) => (
-          <li><span class="n">{i + 1}</span><h2>{s.t}</h2><p>{s.d}</p></li>
+          <li><span class="n" aria-hidden="true">{i + 1}</span><div><h2>{s.t}</h2><p>{s.d}</p></div></li>
         ))}
       </ol>
     </div>
   </section>
 
-  <section class="section section--paper2">
+  <section class="section section--band">
     <div class="wrap">
-      <div class="section-head">
-        <p class="label">Tre oppsett</p>
+      <div class="head">
         <h2>Basis, Prosjekt eller Pluss</h2>
         <p>Velg etter hvor mye du kan fra før, og hvor mye som står på spill hvis noe blir feil.</p>
       </div>
@@ -47,7 +48,7 @@ const faq = [
           <div class:list={['pkg', { 'pkg--featured': p.featured }]}>
             <h3>{p.name}</h3>
             <p>{p.for}</p>
-            <ul>{p.items.map((i) => <li>{i}</li>)}</ul>
+            <ul>{p.items.map((i) => <li><Icon name="check" size={18} /> <span>{i}</span></li>)}</ul>
           </div>
         ))}
       </div>
@@ -57,61 +58,64 @@ const faq = [
   <section class="section">
     <div class="wrap kit">
       <div>
-        <p class="label">Prosjektkassen</p>
-        <h2>Småtingene som ellers gir en ekstra tur til butikken</h2>
+        <h2>Prosjektkassen</h2>
         <p class="lead">Kassen følger med alle utleier. Den inneholder det erfaring viser at folk mangler midt i en jobb. Til de største prosjektene kommer en tilleggskasse tilpasset akkurat det prosjektet.</p>
-        <p class="lead">Savner du noe, si fra. Kanskje blir det med i neste versjon.</p>
+        <p class="muted">Savner du noe, si fra. Kanskje blir det med i neste versjon.</p>
+        <Photo name="prosjektkasse" alt="Innholdet i BoligButlers prosjektkasse" hint="prosjektkassen åpnet, med innholdet lagt utover" ratio="3 / 2" />
       </div>
       <div class="kit-list">
         {standardKit.map((g) => (
-          <div><p class="label">{g.group}</p><ul>{g.items.map((i) => <li>{i}</li>)}</ul></div>
+          <div><h3>{g.group}</h3><ul>{g.items.map((i) => <li>{i}</li>)}</ul></div>
         ))}
       </div>
     </div>
   </section>
 
-  <section class="section--tight section section--paper2">
+  <section class="section--tight section section--band">
     <div class="wrap lists">
       <div class="sheet">
-        <p class="label label--signal">Laminert ark 1</p>
         <h2>Før du starter</h2>
-        <ul>{beforeStart.map((i) => <li>{i}</li>)}</ul>
+        <ul>{beforeStart.map((i) => <li><span class="box" aria-hidden="true"></span>{i}</li>)}</ul>
       </div>
       <div class="sheet">
-        <p class="label label--signal">Laminert ark 2</p>
         <h2>Før du leverer tilbake</h2>
-        <ul>{beforeReturn.map((i) => <li>{i}</li>)}</ul>
+        <ul>{beforeReturn.map((i) => <li><span class="box" aria-hidden="true"></span>{i}</li>)}</ul>
       </div>
     </div>
+    <p class="wrap sheet-note muted">Begge sjekklistene følger med som laminerte ark.</p>
   </section>
 
   <section class="section"><div class="narrow"><Faq items={faq} /></div></section>
   <CtaBand />
 </Base>
 <style>
-  h1 { font-size: var(--step-4); }
-  .steps { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.5rem 2rem; }
-  .steps li { border-top: 1.5px solid var(--ink); padding-top: 1rem; }
-  .n { font-family: var(--serif); font-size: var(--step-3); color: var(--signal-ink); line-height: 1; }
-  .steps h2 { font-size: var(--step-1); margin: 0.6rem 0 0.4rem; }
-  .steps p { color: var(--ink-2); margin: 0; }
-  .pkgs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
-  .pkg { border: 1px solid var(--line); background: var(--card); padding: 1.6rem; border-radius: var(--radius); }
-  .pkg--featured { border-color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
-  .pkg h3 { font-family: var(--serif); font-size: var(--step-2); font-weight: 500; }
+  .steps { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+  .steps li { display: flex; gap: 1rem; padding: 1.5rem; border: 1px solid var(--line); border-radius: 12px; }
+  .n { flex: none; display: grid; place-items: center; width: 2.25rem; height: 2.25rem; border-radius: 50%; background: var(--green); color: #fff; font-weight: 700; }
+  .steps h2 { font-size: var(--step-1); margin: 0.35rem 0 0.4rem; }
+  .steps p { color: var(--ink-2); margin: 0; font-size: 0.97rem; }
+  .pkgs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; align-items: start; }
+  .pkg { border: 1px solid var(--line); background: #fff; padding: 1.75rem; border-radius: 12px; }
+  .pkg--featured { border: 2px solid var(--green); }
+  .pkg h3 { font-size: var(--step-2); margin-bottom: 0.3rem; }
   .pkg > p { color: var(--ink-2); }
-  .pkg ul { padding-left: 1.1rem; margin: 0; }
-  .pkg li + li { margin-top: 0.4rem; }
-  .kit { display: grid; grid-template-columns: 1fr 1.2fr; gap: 3rem; }
-  .kit h2 { font-size: var(--step-3); }
-  .kit-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem 2rem; }
-  .kit-list > div { border-top: 1px solid var(--ink); padding-top: 0.6rem; }
-  .kit-list ul { list-style: none; padding: 0; margin: 0.4rem 0 0; color: var(--ink-2); }
-  .lists { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
-  .sheet { background: #fffdf7; border: 1px solid var(--line); border-radius: 10px; padding: 1.6rem 1.8rem; box-shadow: 0 16px 30px -22px rgb(0 0 0 / 0.35); }
+  .pkg ul { list-style: none; padding: 0; margin: 1rem 0 0; display: grid; gap: 0.55rem; }
+  .pkg li { display: flex; gap: 0.55rem; align-items: flex-start; font-size: 0.97rem; line-height: 1.45; }
+  .pkg li :global(svg) { color: var(--green); flex: none; margin-top: 0.12rem; }
+  .kit { display: grid; grid-template-columns: 1fr 1.1fr; gap: clamp(2rem, 1rem + 4vw, 4.5rem); align-items: start; }
+  .kit :global(.photo) { margin-top: 1.5rem; }
+  .kit-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
+  .kit-list > div { border: 1px solid var(--line); border-radius: 12px; padding: 1.1rem 1.25rem; }
+  .kit-list h3 { font-size: 1rem; margin-bottom: 0.4rem; }
+  .kit-list ul { list-style: none; padding: 0; margin: 0; color: var(--ink-2); font-size: 0.95rem; display: grid; gap: 0.2rem; }
+  .lists { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .sheet { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 1.6rem 1.8rem; }
   .sheet h2 { font-size: var(--step-2); }
   .sheet ul { list-style: none; padding: 0; margin: 0; }
-  .sheet li { padding: 0.45rem 0 0.45rem 1.6rem; border-bottom: 1px dashed var(--line); position: relative; }
-  .sheet li::before { content: ''; position: absolute; left: 0; top: 0.75rem; width: 12px; height: 12px; border: 1.5px solid var(--ink); border-radius: 2px; }
-  @media (max-width: 860px) { .steps, .pkgs, .kit, .lists { grid-template-columns: 1fr; } }
+  .sheet li { display: flex; gap: 0.75rem; align-items: center; padding: 0.55rem 0; border-bottom: 1px solid var(--line); }
+  .sheet li:last-child { border-bottom: 0; }
+  .box { flex: none; width: 1.1rem; height: 1.1rem; border: 1.5px solid var(--green); border-radius: 4px; }
+  .sheet-note { margin-top: 1.25rem; font-size: var(--step--1); }
+  @media (max-width: 900px) { .steps, .pkgs, .kit, .lists { grid-template-columns: 1fr; } }
+  @media (max-width: 480px) { .kit-list { grid-template-columns: 1fr; } }
 </style>

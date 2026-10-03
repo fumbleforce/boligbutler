@@ -25,7 +25,7 @@ faq:
 
 De fleste terrasser på bakkeplan kan bygges uten søknad. Vilkårene står i byggesaksforskriften (SAK10), og de gjelder bare hvis tiltaket også stemmer med reguleringsplanen for eiendommen. Søknadsfritt betyr ikke regelfritt. Du har selv ansvaret for at terrassen følger plan- og bygningsloven, TEK17 og planen.
 
-Det som står her er hovedreglene. Reguleringsplanen for din eiendom kan stramme dem inn, og kommunen (Horten, Holmestrand eller Tønsberg, som også omfatter tidligere Re) har siste ord.
+Det som står her er hovedreglene. Reguleringsplanen for din eiendom kan stramme dem inn, og kommunen har siste ord.
 
 ## Vilkårene for terrasse uten søknad
 

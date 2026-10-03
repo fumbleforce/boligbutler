@@ -1,17 +1,26 @@
 ---
 import { getCollection } from 'astro:content';
 import Wordmark from './Wordmark.astro';
+import Icon from './Icon.astro';
 import { site } from '../data/site';
 
 const projects = (await getCollection('prosjekter')).sort((a, b) => a.data.order - b.data.order);
 const path = Astro.url.pathname;
+const tel = `tel:${site.phone.replace(/\s/g, '')}`;
 const main = [
-  { href: '/guider/', label: 'Guider' },
+  { href: '/prosjekter/', label: 'Prosjekter' },
   { href: '/slik-fungerer-det/', label: 'Slik fungerer det' },
+  { href: '/guider/', label: 'Guider' },
   { href: '/utstyr/', label: 'Utstyr' },
   { href: '/om/', label: 'Om BoligButler' },
 ];
 ---
+<div class="strip">
+  <div class="wrap strip-row">
+    <p><Icon name="pin" size={16} /> Lokal i Vestfold. Levering i hele fylket, fra Holmestrand til Larvik.</p>
+    <a href={tel}><Icon name="phone" size={16} /> {site.phoneDisplay}</a>
+  </div>
+</div>
 <header class="hdr">
   <div class="wrap top">
     <a href="/" class="home" aria-label="BoligButler, til forsiden"><Wordmark /></a>
@@ -22,24 +31,25 @@ const main = [
         ))}
       </ul>
     </nav>
-    <a class="call" href={`tel:${site.phone.replace(/\s/g, '')}`}>{site.phoneDisplay}</a>
     <a class="btn cta" href="/kontakt/">Start et prosjekt</a>
     <details class="mobile">
-      <summary aria-label="Meny"><span></span><span></span></summary>
+      <summary aria-label="Åpne meny"><span></span><span></span><span></span></summary>
       <nav aria-label="Mobilmeny">
         <ul>
-          <li><a href="/prosjekter/">Alle prosjekter</a></li>
           {main.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
           <li><a href="/kontakt/">Kontakt</a></li>
-          <li><a href={`tel:${site.phone.replace(/\s/g, '')}`}>Ring {site.phoneDisplay}</a></li>
         </ul>
+        <p class="m-label">Prosjekter</p>
+        <ul class="m-projects">
+          {projects.map((p) => <li><a href={`/prosjekter/${p.id}/`}>{p.data.navTitle}</a></li>)}
+        </ul>
+        <a class="btn m-cta" href={tel}><Icon name="phone" size={18} /> Ring {site.phoneDisplay}</a>
       </nav>
     </details>
   </div>
   <nav class="projects" aria-label="Prosjekter">
-    <div class="wrap row">
-      <a href="/prosjekter/" class="ask">Hva skal du gjøre?</a>
-      <ul>
+    <div class="wrap">
+      <ul class="row">
         {projects.map((p) => (
           <li><a href={`/prosjekter/${p.id}/`} aria-current={path.startsWith(`/prosjekter/${p.id}/`) ? 'page' : undefined}>{p.data.navTitle}</a></li>
         ))}
@@ -49,42 +59,50 @@ const main = [
 </header>
 
 <style>
-  .hdr { background: var(--paper); border-bottom: 1px solid var(--line); position: relative; z-index: 10; }
-  .top { display: flex; align-items: center; gap: 1.5rem; min-height: 4.25rem; }
-  .home { text-decoration: none; color: var(--ink); margin-right: auto; }
-  .main ul, .projects ul, .mobile ul { list-style: none; margin: 0; padding: 0; }
-  .main ul { display: flex; gap: 1.5rem; }
-  .main a, .projects a { text-decoration: none; font-size: 0.95rem; font-weight: 500; }
-  .main a:hover, .main a[aria-current] { text-decoration: underline; text-decoration-color: var(--signal); }
-  .call { font-weight: 600; text-decoration: none; font-variant-numeric: tabular-nums; }
-  .cta { padding: 0.65em 1em; font-size: 0.92rem; }
+  .strip { background: var(--green); color: var(--on-green); font-size: var(--step--1); }
+  .strip-row { display: flex; justify-content: space-between; align-items: center; gap: 1rem; min-height: 2.4rem; }
+  .strip p { margin: 0; display: flex; align-items: center; gap: 0.45rem; }
+  .strip a { color: #fff; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.4rem; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .strip a:hover { text-decoration: underline; }
 
-  .projects { border-top: 1px solid var(--line); background: var(--paper-2); }
-  .row { display: flex; align-items: center; gap: 1.25rem; min-height: 2.75rem; overflow-x: auto; scrollbar-width: none; }
+  .hdr { background: #fff; border-bottom: 1px solid var(--line); position: relative; z-index: 10; }
+  .top { display: flex; align-items: center; gap: 2rem; min-height: 4.5rem; }
+  .home { text-decoration: none; margin-right: auto; }
+  ul { list-style: none; margin: 0; padding: 0; }
+  .main ul { display: flex; gap: 1.6rem; }
+  .main a { color: var(--ink); text-decoration: none; font-weight: 550; font-size: 0.98rem; padding-block: 0.4rem; }
+  .main a:hover, .main a[aria-current] { color: var(--green); box-shadow: inset 0 -2px 0 var(--green); }
+  .cta { min-height: 2.75rem; padding: 0.6em 1.1em; font-size: 0.95rem; }
+
+  .projects { border-top: 1px solid var(--line); }
+  .row { display: flex; gap: 1.6rem; overflow-x: auto; scrollbar-width: none; }
   .row::-webkit-scrollbar { display: none; }
-  .ask { font-family: var(--serif); font-style: italic; color: var(--ink-2); white-space: nowrap; font-size: 1rem !important; }
-  .projects ul { display: flex; gap: 1.25rem; }
-  .projects li a { white-space: nowrap; position: relative; padding-block: 0.7rem; display: block; }
-  .projects li a:hover, .projects li a[aria-current] { color: var(--ink); box-shadow: inset 0 -2px 0 var(--signal); }
+  .projects a { display: block; white-space: nowrap; padding: 0.7rem 0; color: var(--ink-2); text-decoration: none; font-size: 0.93rem; font-weight: 500; }
+  .projects a:hover, .projects a[aria-current] { color: var(--green); box-shadow: inset 0 -2px 0 var(--green); }
 
   .mobile { display: none; position: relative; }
-  .mobile summary { list-style: none; cursor: pointer; width: 2.5rem; height: 2.5rem; display: grid; place-content: center; gap: 6px; }
+  .mobile summary { list-style: none; cursor: pointer; width: 2.75rem; height: 2.75rem; display: grid; place-content: center; gap: 5px; border: 1px solid var(--line); border-radius: var(--r); }
   .mobile summary::-webkit-details-marker { display: none; }
-  .mobile summary span { display: block; width: 22px; height: 1.5px; background: var(--ink); transition: transform 0.15s; }
-  .mobile[open] summary span:first-child { transform: translateY(3.75px) rotate(45deg); }
-  .mobile[open] summary span:last-child { transform: translateY(-3.75px) rotate(-45deg); }
-  .mobile nav { position: absolute; right: 0; top: calc(100% + 0.6rem); background: var(--card); border: 1px solid var(--line); min-width: 15rem; padding: 0.5rem 0; box-shadow: 0 12px 30px -12px rgb(0 0 0 / 0.25); }
-  .mobile a { display: block; padding: 0.7rem 1.2rem; text-decoration: none; }
-  .mobile a:hover { background: var(--paper-2); }
+  .mobile summary span { display: block; width: 20px; height: 2px; background: var(--ink); border-radius: 1px; }
+  .mobile nav { position: absolute; right: 0; top: calc(100% + 0.6rem); background: #fff; border: 0; border-radius: 12px; width: min(20rem, calc(100vw - 2rem)); padding: 0.5rem; box-shadow: var(--shadow-lg); }
+  .mobile a:not(.btn) { display: block; padding: 0.65rem 0.8rem; color: var(--ink); text-decoration: none; border-radius: 6px; font-weight: 550; }
+  .mobile a:not(.btn):hover { background: var(--band); }
+  .m-label { margin: 0.6rem 0.8rem 0.2rem; font-size: var(--step--1); color: var(--ink-3); }
+  .m-projects { display: grid; grid-template-columns: 1fr 1fr; }
+  .m-projects a { font-weight: 450 !important; font-size: 0.95rem; }
+  .m-cta { width: 100%; margin-top: 0.5rem; }
 
-  @media (max-width: 960px) {
-    .main, .call { display: none; }
+  @media (max-width: 1000px) {
+    .main { display: none; }
+    .mobile { display: block; }
   }
-  @media (max-width: 600px) {
+  @media (max-width: 640px) {
+    .strip p { font-size: 0.8rem; }
+    .strip p :global(svg) { display: none; }
     .cta { display: none; }
-    .mobile { display: block; }
+    .projects { display: none; }
   }
-  @media (min-width: 601px) and (max-width: 960px) {
-    .mobile { display: block; }
+  @media (max-width: 420px) {
+    .strip-row { flex-direction: column; align-items: flex-start; gap: 0; padding-block: 0.4rem; }
   }
 </style>

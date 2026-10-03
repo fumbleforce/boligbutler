@@ -5,13 +5,16 @@ export const site = {
   tagline: 'Prosjektet er ditt. BoligButler sørger for at det går.',
   vision: 'BoligButler skal gjøre det enklere og tryggere å lykkes med prosjekter på kundens egen eiendom.',
   description:
-    'BoligButler leier ut utstyr med en erfaren rådgiver på kjøpet, for deg som vil gjøre drenering, terrasse, plen, maling og gravearbeid selv. Horten, Holmestrand, Tønsberg og Re.',
+    'BoligButler leier ut utstyr med en erfaren rådgiver på kjøpet, for deg som vil gjøre drenering, terrasse, plen, maling og gravearbeid selv. Levering i hele Vestfold.',
   phone: '+47 000 00 000', // TODO
   phoneDisplay: '000 00 000', // TODO
   email: 'post@boligbutler.no', // TODO
   orgnr: '000 000 000', // TODO
-  address: { street: '', postalCode: '', city: 'Horten', region: 'Vestfold' }, // TODO
-  areas: ['Horten', 'Holmestrand', 'Tønsberg', 'Re'],
+  address: { street: '', postalCode: '', city: '', region: 'Vestfold' }, // TODO
+  region: 'Vestfold',
+  // Kommunene i Vestfold fylke (2024), nord til sør
+  areas: ['Holmestrand', 'Horten', 'Tønsberg', 'Færder', 'Sandefjord', 'Larvik'],
+  founder: { name: 'Navn Etternavn', role: 'Grunnlegger og rådgiver' }, // TODO: ekte navn
 };
 
 export const packages = [

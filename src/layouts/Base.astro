@@ -26,10 +26,13 @@ const org = {
   slogan: site.vision,
   telephone: site.phone,
   email: site.email,
-  areaServed: site.areas.map((a) => ({ '@type': 'City', name: a })),
+  areaServed: [
+    { '@type': 'AdministrativeArea', name: 'Vestfold' },
+    ...site.areas.map((a) => ({ '@type': 'City', name: a })),
+  ],
   address: {
     '@type': 'PostalAddress',
-    addressLocality: site.address.city,
+    ...(site.address.city ? { addressLocality: site.address.city } : {}),
     addressRegion: site.address.region,
     addressCountry: 'NO',
   },
@@ -52,7 +55,7 @@ const ld = [org, ...jsonLd];
     <meta property="og:url" content={canonical} />
     <meta property="og:locale" content="nb_NO" />
     <meta property="og:site_name" content="BoligButler" />
-    <meta name="theme-color" content="#f3efe6" />
+    <meta name="theme-color" content="#1e4d3a" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="alternate" type="text/plain" title="LLM-oversikt" href="/llms.txt" />

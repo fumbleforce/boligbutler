@@ -40,7 +40,7 @@ Før du graver på egen tomt skal du vite hva som ligger i bakken. Bestill påvi
 
 Ledningsportalen er en felles inngang der du registrerer graveområdet ditt én gang. Forespørselen sendes videre til ledningseierne i området, som netteier for strøm, kommunen for vann og avløp, og selskaper med fiber, telekabler og fjernvarme.
 
-Ikke alle ledningseiere er tilknyttet portalen i alle kommuner. Svaret du får viser hvem som har fått forespørselen. Mangler en du vet har ledninger i området, kontakt dem direkte. Er du usikker på kommunale vann- og avløpsledninger, kan kommunen (Horten, Holmestrand eller Tønsberg, som også omfatter tidligere Re) gi kartutsnitt.
+Ikke alle ledningseiere er tilknyttet portalen i alle kommuner. Svaret du får viser hvem som har fått forespørselen. Mangler en du vet har ledninger i området, kontakt dem direkte. Er du usikker på kommunale vann- og avløpsledninger, kan kommunen din gi kartutsnitt.
 
 ## Slik bestiller du påvisning
 

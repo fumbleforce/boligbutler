@@ -15,13 +15,13 @@ for (const p of projects) {
 }
 const items = [...map.entries()].sort((a, b) => b[1].projects.length - a[1].projects.length || a[0].localeCompare(b[0], 'nb'));
 ---
-<Base title="Utstyr til leie med levering og veiledning" description="Minigraver, dumper, vibroplate, stillas, tilhenger, lift, flishugger og mer. Alt leveres med prosjektkasse og innføring i Horten, Holmestrand, Tønsberg og Re.">
+<Base title="Utstyr til leie med levering og veiledning" description="Minigraver, dumper, vibroplate, stillas, tilhenger, lift, flishugger og mer. Levert i hele Vestfold, med prosjektkasse og innføring.">
   <section class="section--tight section">
     <div class="wrap">
       <Crumbs items={[{ href: '', label: 'Utstyr' }]} />
-      <div class="section-head">
+      <div class="head">
         <h1>Utstyr</h1>
-        <p>Listen er kort med vilje. BoligButler har utstyr som brukes i prosjektene huseiere faktisk gjør, og som en privatperson kan bruke trygt etter en innføring. Alt leveres med prosjektkasse.</p>
+        <p>Listen er kort med vilje. BoligButler har utstyr som brukes i prosjektene huseiere faktisk gjør, og som en privatperson kan bruke trygt etter en innføring. Alt leveres og hentes i hele Vestfold, med prosjektkasse.</p>
       </div>
       <table>
         <thead><tr><th scope="col">Utstyr</th><th scope="col">Brukes til</th><th scope="col">Prosjekter</th></tr></thead>
@@ -41,14 +41,15 @@ const items = [...map.entries()].sort((a, b) => b[1].projects.length - a[1].proj
   <CtaBand />
 </Base>
 <style>
-  h1 { font-size: var(--step-4); }
-  table { width: 100%; border-collapse: collapse; border-top: 1.5px solid var(--ink); }
-  th, td { text-align: left; padding: 1rem 1rem 1rem 0; border-bottom: 1px solid var(--line); vertical-align: top; }
-  thead th { font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-2); font-weight: 600; }
-  tbody th { font-family: var(--serif); font-size: var(--step-1); font-weight: 500; width: 28%; }
+  table { width: 100%; border-collapse: collapse; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+  th, td { text-align: left; padding: 1rem 1.1rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tbody tr:last-child th, tbody tr:last-child td { border-bottom: 0; }
+  thead th { font-size: var(--step--1); color: var(--ink-2); font-weight: 600; background: var(--band); }
+  tbody th { font-weight: 700; font-size: 1.05rem; width: 26%; }
   td { color: var(--ink-2); }
   .note { margin-top: 2rem; }
   @media (max-width: 700px) {
+    table { border: 0; }
     thead { display: none; }
     tr { display: grid; padding: 1rem 0; border-bottom: 1px solid var(--line); }
     th, td { border: 0; padding: 0.15rem 0; width: auto !important; }

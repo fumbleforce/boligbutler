@@ -1,7 +1,7 @@
 # Skriveregler for BoligButler (gjelder alt innhold)
 
 ## Hvem BoligButler er
-- BoligButler er en lokal prosjektpartner i Horten, Holmestrand, Tønsberg og Re (Vestfold).
+- BoligButler er en lokal prosjektpartner i Vestfold, med levering i hele fylket (Holmestrand, Horten, Tønsberg, Færder, Sandefjord og Larvik).
 - BoligButler selger prosjektet, ikke utstyret: leie av utstyr (stillas, minigraver, dumper, vibroplate, tilhenger, lift, flishugger, jordfres, laser m.m.) kommer med en "butler": en kompetent rådgiver som leverer, viser, og kan komme på befaring.
 - Kunden bestemmer. Råd gis når de etterspørres, veiledning når det er naturlig, INSTRUKSJON gis alltid når det trengs for å hindre personskade, materielle skader eller feil bruk av utstyr.
 - Visjon: «BoligButler skal gjøre det enklere og tryggere å lykkes med prosjekter på kundens egen eiendom.»

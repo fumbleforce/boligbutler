@@ -2,7 +2,9 @@
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import Crumbs from '../../components/Crumbs.astro';
-import ProjectIcon from '../../components/ProjectIcon.astro';
+import Icon from '../../components/Icon.astro';
+import Photo from '../../components/Photo.astro';
+import ProjectStarter from '../../components/ProjectStarter.astro';
 import Faq from '../../components/Faq.astro';
 import CtaBand from '../../components/CtaBand.astro';
 import { site, standardKit } from '../../data/site';
@@ -28,7 +30,7 @@ const jsonLd = [
     description: d.description,
     url,
     provider: { '@id': `${site.url}/#virksomhet` },
-    areaServed: site.areas.map((a) => ({ '@type': 'City', name: a })),
+    areaServed: [{ '@type': 'AdministrativeArea', name: 'Vestfold' }, ...site.areas.map((a) => ({ '@type': 'City', name: a }))],
   },
   {
     '@context': 'https://schema.org',
@@ -44,36 +46,32 @@ const jsonLd = [
     : []),
 ];
 ---
-<Base title={d.title} description={d.description} jsonLd={jsonLd}>
+<Base title={`${h1Main} i Vestfold`} description={d.description} jsonLd={jsonLd}>
   <section class="intro">
     <div class="wrap">
       <Crumbs items={[{ href: '/prosjekter/', label: 'Prosjekter' }, { href: '', label: d.navTitle }]} />
       <div class="intro-grid">
         <div>
-          <p class="say">«{d.customerSays}»</p>
           <h1>{h1Main}{h1Sub && <span class="visually-hidden"> – </span><span class="h1-sub">{h1Sub.charAt(0).toUpperCase() + h1Sub.slice(1)}</span>}</h1>
           <p class="lead">{d.lead}</p>
-          <div class="actions">
-            <a class="btn" href={`/kontakt/?prosjekt=${project.id}`}>Få forslag til oppsett <span class="arrow" aria-hidden="true">→</span></a>
-            {guides[0] && <a class="btn btn--ghost" href={`/guider/${guides[0].id}/`}>Les guiden først</a>}
-          </div>
-        </div>
-        <aside class="facts" aria-label="Fakta om prosjektet">
-          <ProjectIcon slug={project.id} size={72} />
-          <dl>
-            <dt>Sesong</dt><dd>{d.season}</dd>
-            <dt>Område</dt><dd>{site.areas.join(', ')}</dd>
+          <dl class="facts">
+            <div><dt><Icon name="pin" size={18} /> Område</dt><dd>Hele Vestfold</dd></div>
+            <div><dt><Icon name="list" size={18} /> Sesong</dt><dd>{d.season}</dd></div>
           </dl>
-        </aside>
+          {guides[0] && <p class="read">Vil du forstå jobben først? <a href={`/guider/${guides[0].id}/`}>Les guiden: {guides[0].data.title}</a></p>}
+        </div>
+        <div class="intro-media">
+          <Photo name={`prosjekt-${project.id}`} alt={`${d.navTitle} i Vestfold`} hint={`${d.navTitle.toLowerCase()}, fra et ekte prosjekt i Vestfold`} ratio="4 / 3" eager />
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="section--tight section">
+  <section class="section">
     <div class="wrap two">
-      <div>
-        <p class="label">Utstyr som brukes</p>
-        <h2>Det du trenger, levert dit du skal bruke det.</h2>
+      <div class="main-col">
+        <h2>Utstyr som brukes</h2>
+        <p class="muted">Du leier bare det prosjektet ditt faktisk trenger. Alt leveres og hentes hjemme hos deg.</p>
         <table class="eq">
           <tbody>
             {d.equipment.map((e) => (
@@ -81,23 +79,29 @@ const jsonLd = [
             ))}
           </tbody>
         </table>
-        <p class="small">Du leier bare det prosjektet ditt faktisk trenger. Ikke alle trenger alt på listen.</p>
-      </div>
-      <div class="butler">
-        <p class="label label--signal">Det BoligButler gjør</p>
-        <ul>{d.butler.map((b) => <li>{b}</li>)}</ul>
+
+        <h2 class="mt">Det BoligButler gjør</h2>
+        <ul class="ticks">{d.butler.map((b) => <li><Icon name="check" size={20} /> <span>{b}</span></li>)}</ul>
+
         <div class="kit">
-          <p class="label">I prosjektkassen for {d.navTitle.toLowerCase()}</p>
-          <ul>{d.kit.map((k) => <li>{k}</li>)}</ul>
-          <p class="small">I tillegg til standardkassen med {standardKit.map((g) => g.group.toLowerCase()).slice(0, 4).join(', ')} og mer.</p>
+          <Icon name="kit" size={28} />
+          <div>
+            <h3>Prosjektkassen for {d.navTitle.toLowerCase()}</h3>
+            <p>{d.kit.map((k, i) => (i ? k.charAt(0).toLowerCase() + k.slice(1) : k)).join(', ')}.</p>
+            <p class="muted small">I tillegg til standardkassen med {standardKit.slice(0, 4).map((g) => g.group.toLowerCase()).join(', ')} og mer.</p>
+          </div>
         </div>
       </div>
+      <aside class="side">
+        <ProjectStarter selected={project.id} heading={`Få forslag til ${d.navTitle.toLowerCase()}`} />
+        <p class="side-call">Eller ring <a href={`tel:${site.phone.replace(/\s/g, '')}`}>{site.phoneDisplay}</a></p>
+      </aside>
     </div>
   </section>
 
-  <section class="section section--paper2">
-    <div class="narrow prose">
-      <Content />
+  <section class="section section--band">
+    <div class="narrow">
+      <div class="prose"><Content /></div>
     </div>
   </section>
 
@@ -105,9 +109,8 @@ const jsonLd = [
     <section class="section--tight section">
       <div class="narrow">
         <div class="honest">
-          <p class="label">Ærlig talt</p>
           <h2>Når du bør overlate det til fagfolk</h2>
-          <ul>{d.notDiy.map((n) => <li>{n}</li>)}</ul>
+          <ul>{d.notDiy.map((n) => <li><Icon name="warning" size={20} /> <span>{n}</span></li>)}</ul>
           <p>BoligButler sier ifra hvis prosjektet ditt havner her, også om det betyr at du ikke leier noe.</p>
         </div>
       </div>
@@ -117,10 +120,10 @@ const jsonLd = [
   {guides.length > 0 && (
     <section class="section--tight section">
       <div class="wrap">
-        <p class="label">Guider for {d.navTitle.toLowerCase()}</p>
+        <h2>Guider om {d.navTitle.toLowerCase()}</h2>
         <ul class="guides">
           {guides.map((g) => (
-            <li><a href={`/guider/${g.id}/`}><span class="g-title">{g.data.title}</span><span class="g-sum">{g.data.summary}</span></a></li>
+            <li><a href={`/guider/${g.id}/`}><span class="g-title">{g.data.title}</span><span class="g-sum">{g.data.description}</span></a></li>
           ))}
         </ul>
       </div>
@@ -131,46 +134,57 @@ const jsonLd = [
     <div class="narrow"><Faq items={d.faq} /></div>
   </section>
 
-  <CtaBand heading={`Skal du i gang med ${d.navTitle.toLowerCase()}?`} />
+  <CtaBand heading={`Skal du i gang med ${d.navTitle.toLowerCase()}?`} project={project.id} />
 </Base>
 
 <style>
-  .intro { padding-block: 2rem clamp(2.5rem, 2rem + 3vw, 4.5rem); border-bottom: 1px solid var(--line); }
-  .intro-grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 3rem; align-items: end; }
-  .say { font-family: var(--serif); font-style: italic; font-size: var(--step-1); color: var(--signal-ink); margin-bottom: 0.4rem; }
-  h1 { font-size: var(--step-4); max-width: 15em; }
-  .h1-sub { display: block; font-size: 0.45em; line-height: 1.3; color: var(--ink-2); margin-top: 0.4em; }
-  .actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.8rem; }
-  .facts { border-top: 1.5px solid var(--ink); padding-top: 1.25rem; }
-  .facts dl { margin: 1.25rem 0 0; display: grid; grid-template-columns: auto 1fr; gap: 0.6rem 1rem; font-size: 0.95rem; }
-  .facts dt { font-weight: 650; }
+  .intro { padding-block: 1.75rem clamp(2.5rem, 2rem + 3vw, 4rem); background: linear-gradient(180deg, var(--band), #fff); }
+  .intro-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(2rem, 1rem + 4vw, 4.5rem); align-items: center; }
+  h1 { max-width: 15em; }
+  .h1-sub { display: block; font-size: 0.48em; line-height: 1.3; color: var(--ink-2); font-weight: 500; letter-spacing: -0.01em; margin-top: 0.5em; }
+  .facts { margin: 1.75rem 0 0; display: grid; gap: 0; border-top: 1px solid var(--line); max-width: 36rem; }
+  .facts > div { display: grid; grid-template-columns: 8rem 1fr; gap: 1rem; padding: 0.75rem 0; border-bottom: 1px solid var(--line); }
+  .facts dt { font-weight: 650; display: flex; gap: 0.45rem; align-items: center; }
+  .facts dt :global(svg) { color: var(--green); }
   .facts dd { margin: 0; color: var(--ink-2); }
+  .read { margin: 1.5rem 0 0; color: var(--ink-2); }
+  .intro-media :global(.photo) { border-radius: 12px; box-shadow: var(--shadow); }
 
-  .two { display: grid; grid-template-columns: 1.2fr 1fr; gap: clamp(2rem, 1rem + 4vw, 5rem); }
+  .two { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(18rem, 1fr); gap: clamp(2rem, 1rem + 4vw, 4.5rem); align-items: start; }
   h2 { font-size: var(--step-2); }
-  .eq { width: 100%; border-collapse: collapse; border-top: 1.5px solid var(--ink); }
-  .eq th, .eq td { text-align: left; padding: 0.85rem 0.5rem 0.85rem 0; border-bottom: 1px solid var(--line); vertical-align: top; }
-  .eq th { font-weight: 650; width: 40%; }
+  .mt { margin-top: 2.75rem; }
+  .eq { width: 100%; border-collapse: collapse; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; margin-top: 1.25rem; }
+  .eq th, .eq td { text-align: left; padding: 0.9rem 1rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .eq tr:last-child th, .eq tr:last-child td { border-bottom: 0; }
+  .eq th { font-weight: 650; width: 38%; background: var(--band); }
   .eq td { color: var(--ink-2); }
-  .small { font-size: var(--step--1); color: var(--ink-3); margin-top: 0.8rem; }
-  .butler ul { list-style: none; padding: 0; margin: 0.8rem 0 0; counter-reset: b; }
-  .butler > ul > li { counter-increment: b; padding: 0.7rem 0 0.7rem 2.2rem; position: relative; border-bottom: 1px solid var(--line); }
-  .butler > ul > li::before { content: counter(b, decimal-leading-zero); position: absolute; left: 0; top: 0.8rem; font-size: var(--step--1); color: var(--signal-ink); font-variant-numeric: tabular-nums; font-weight: 600; }
-  .kit { margin-top: 2rem; background: #fffdf7; border: 1px solid var(--line); border-radius: 8px; padding: 1.2rem 1.4rem; }
-  .kit ul { margin-top: 0.5rem; }
-  .kit li { padding: 0.3rem 0 0.3rem 1.2rem; position: relative; }
-  .kit li::before { content: ''; position: absolute; left: 0; top: 0.95rem; width: 8px; height: 1.5px; background: var(--signal); }
+  .ticks { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.75rem; }
+  .ticks li { display: flex; gap: 0.6rem; align-items: flex-start; }
+  .ticks :global(svg) { color: var(--green); flex: none; margin-top: 0.15rem; }
+  .kit { display: flex; gap: 1rem; margin-top: 2.25rem; padding: 1.4rem; border-radius: 12px; background: var(--green-tint); }
+  .kit > :global(svg) { color: var(--green); flex: none; }
+  .kit h3 { margin-bottom: 0.3rem; }
+  .kit p { margin: 0 0 0.4rem; }
+  .side { position: sticky; top: 1.5rem; }
+  .side-call { text-align: center; margin: 1rem 0 0; color: var(--ink-2); }
+  .side-call a { font-weight: 650; }
 
-  .honest { border: 1.5px solid var(--ink); padding: 1.6rem 1.8rem; }
-  .honest ul { padding-left: 1.2rem; }
-  .honest li + li { margin-top: 0.3rem; }
-  .honest p:last-child { color: var(--ink-2); margin: 1rem 0 0; }
+  .honest { border: 1px solid var(--amber-line); background: var(--amber-bg); border-radius: 12px; padding: 1.6rem 1.8rem; }
+  .honest ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.6rem; }
+  .honest li { display: flex; gap: 0.6rem; align-items: flex-start; }
+  .honest li :global(svg) { color: var(--amber-ink); flex: none; margin-top: 0.15rem; }
+  .honest p { color: var(--ink-2); margin: 1.1rem 0 0; }
 
-  .guides { list-style: none; padding: 0; margin: 0.8rem 0 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr)); gap: 0 2rem; }
-  .guides a { display: grid; gap: 0.4rem; padding: 1.2rem 0; border-top: 1px solid var(--ink); text-decoration: none; }
-  .g-title { font-family: var(--serif); font-size: var(--step-1); line-height: 1.25; }
-  .guides a:hover .g-title { text-decoration: underline; text-decoration-color: var(--signal); }
-  .g-sum { color: var(--ink-2); font-size: 0.95rem; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .guides { list-style: none; padding: 0; margin: 1.25rem 0 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr)); gap: 1.25rem; }
+  .guides a { display: grid; gap: 0.5rem; height: 100%; align-content: start; padding: 1.4rem; border: 1px solid var(--line); border-radius: 12px; text-decoration: none; color: var(--ink); transition: border-color 0.15s ease-out, background-color 0.15s ease-out; }
+  .guides a:hover { border-color: var(--green); background: var(--green-tint); }
+  .g-title { font-weight: 700; font-size: 1.1rem; line-height: 1.3; }
+  .g-sum { color: var(--ink-2); font-size: 0.93rem; }
 
-  @media (max-width: 860px) { .intro-grid, .two { grid-template-columns: 1fr; } }
+  @media (max-width: 900px) {
+    .intro-grid, .two { grid-template-columns: 1fr; }
+    .intro-media { order: -1; }
+    .side { position: static; }
+  }
+  @media (max-width: 520px) { .facts > div { grid-template-columns: 1fr; gap: 0.15rem; } }
 </style>

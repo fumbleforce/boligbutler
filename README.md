@@ -17,6 +17,20 @@ npm run build    # statiske filer i dist/
 | `src/data/site.ts` | Kontaktinfo, oppsett (Basis/Prosjekt/Pluss), prosjektkasse, sjekklister |
 | `src/pages/verktoy/massekalkulator/` | Kalkulator for pukk, grus, sand og jord |
 | `docs/WRITING.md` | Skriveregler og stemme. Les før du skriver nytt innhold |
+| `DESIGN.md` | Designsystemet: farger, typografi, komponenter og regler |
+| `PRODUCT.md` | Produktgrunnlag (hvem, hva, hvorfor) for design- og innholdsarbeid |
+| `.claude/skills/` | Skills brukt i arbeidet: `frontend-design`, `impeccable` (design), `unslop` (tekst) |
+
+## Bilder
+
+Alle fotoplasser viser en merket plassholder til et ekte bilde legges inn. Legg filene i `public/bilder/` med disse navnene (`.jpg`, `.webp` eller `.png`):
+
+- `hero`: levering av utstyr på en tomt i Vestfold, gjerne med grunnleggeren
+- `grunnlegger`: portrett (stående, 4:5)
+- `prosjektkasse`: kassen åpnet med innholdet utover
+- `prosjekt-drenering`, `prosjekt-terrasse`, `prosjekt-plen`, `prosjekt-male-huset`, `prosjekt-stottemur`, `prosjekt-gravearbeid`, `prosjekt-traer`
+
+Kartet over Vestfold er tegnet fra Kartverkets data (CC BY 4.0) og ligger i `src/data/vestfold-kart.json`.
 
 ## SEO og GEO (synlighet i søk og AI-svar)
 
@@ -28,11 +42,11 @@ npm run build    # statiske filer i dist/
 
 ## Før lansering (TODO)
 
-- [ ] Telefon, e-post, org.nr. og adresse i `src/data/site.ts`
+- [ ] Telefon, e-post, org.nr., adresse og grunnleggerens navn i `src/data/site.ts`
 - [ ] Endelig domene i `astro.config.mjs` og `src/data/site.ts`
 - [ ] Ekte logo i `src/components/Wordmark.astro` og `public/favicon.svg`
 - [ ] Koble kontaktskjemaet til en skjematjeneste (nå åpner det e-postprogrammet)
-- [ ] Bilder fra ekte prosjekter (før/etter, utstyr på tomta) og presentasjon av personen(e) bak på `/om/`
+- [ ] Ekte bilder i `public/bilder/` (se listen over)
 - [ ] Faglig gjennomlesing av guidene, særlig regelverk (SAK10-grenser for terrasse/støttemur, førerkort/tilhenger) og tall
 - [ ] Bekreft innholdet i Basis / Prosjekt / Pluss og hvilket utstyr som faktisk leies ut
 - [ ] Registrer Google Business-profil og Search Console

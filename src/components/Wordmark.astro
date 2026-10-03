@@ -1,15 +1,21 @@
 ---
 // Midlertidig ordmerke. Bytt ut med den faktiske logoen (SVG) når den foreligger.
+interface Props { inverse?: boolean }
+const { inverse = false } = Astro.props;
 ---
-<span class="wordmark">
-  <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true">
-    <path d="M3 12L13 4l10 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
-    <path d="M6 11v11h14V11" fill="none" stroke="currentColor" stroke-width="2" />
-    <path d="M10 22v-6h6v6" fill="var(--signal)" />
+<span class:list={['wordmark', { inverse }]}>
+  <svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true">
+    <rect width="32" height="32" rx="7" class="tile" />
+    <path d="M7 16 16 9l9 7" fill="none" class="ln" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round" />
+    <path d="M10 15v9h12v-9" fill="none" class="ln" stroke-width="2.4" stroke-linejoin="round" />
   </svg>
-  <span>Bolig<b>Butler</b></span>
+  <span>BoligButler</span>
 </span>
 <style>
-  .wordmark { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--serif); font-size: 1.4rem; font-weight: 500; letter-spacing: -0.01em; line-height: 1; }
-  b { font-weight: 650; }
+  .wordmark { display: inline-flex; align-items: center; gap: 0.55rem; font-weight: 750; font-size: 1.3rem; letter-spacing: -0.025em; line-height: 1; color: var(--ink); }
+  .tile { fill: var(--green); }
+  .ln { stroke: #fff; }
+  .inverse { color: #fff; }
+  .inverse .tile { fill: #fff; }
+  .inverse .ln { stroke: var(--green); }
 </style>

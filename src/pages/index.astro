@@ -1,22 +1,32 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
-import ProjectIcon from '../components/ProjectIcon.astro';
+import Icon from '../components/Icon.astro';
+import Photo from '../components/Photo.astro';
+import ProjectStarter from '../components/ProjectStarter.astro';
+import VestfoldMap from '../components/VestfoldMap.astro';
 import Faq from '../components/Faq.astro';
 import CtaBand from '../components/CtaBand.astro';
-import { site, packages, beforeStart } from '../data/site';
+import { site, packages } from '../data/site';
 
 const projects = (await getCollection('prosjekter')).sort((a, b) => a.data.order - b.data.order);
-const guides = (await getCollection('guider')).sort((a, b) => b.data.updated.valueOf() - a.data.updated.valueOf());
-const featuredSlugs = ['drenering-rundt-huset', 'bygge-terrasse', 'leie-minigraver', 'tilhenger-forerkort', 'legge-ny-plen', 'terrasse-soknadsplikt'];
+const guides = await getCollection('guider');
+const featuredSlugs = ['drenering-rundt-huset', 'bygge-terrasse', 'leie-minigraver', 'tilhenger-forerkort'];
 const featured = featuredSlugs.map((s) => guides.find((g) => g.id === s)).filter((g) => g !== undefined);
-const shown = featured.length >= 4 ? featured : guides.slice(0, 6);
+const tel = `tel:${site.phone.replace(/\s/g, '')}`;
+
+const steps = [
+  { t: 'Du forteller hva du skal gjøre', d: 'Velg prosjekt og sted, og beskriv jobben med noen setninger. Ring gjerne hvis det er enklere.' },
+  { t: 'Du får forslag og pris', d: 'Utstyr, rekkefølge og hvor mye hjelp som passer. Ved større jobber kommer BoligButler på befaring først.' },
+  { t: 'Utstyret kommer til deg', d: 'Levert dit det skal brukes, med prosjektkasse og en innføring i trygg bruk før du starter.' },
+  { t: 'Du gjør jobben, med støtte', d: 'Lurer du på noe, ringer du. Når du er ferdig, hentes utstyret igjen.' },
+];
 
 const faq = [
   { q: 'Hva er forskjellen på BoligButler og et vanlig maskinutleie?', a: 'BoligButler tar utgangspunkt i prosjektet ditt, ikke i maskinen. Du får utstyret levert, en innføring på stedet, en prosjektkasse med det som pleier å mangle, og en rådgiver du kan ringe eller få på befaring.' },
+  { q: 'Leverer dere i hele Vestfold?', a: `Ja. BoligButler leverer og henter i alle kommunene i Vestfold: ${site.areas.join(', ')}. Bor du like utenfor fylket, ta kontakt, så finner dere en løsning.` },
   { q: 'Må jeg kjøpe rådgivning for å leie utstyr?', a: 'Nei. Kunden bestemmer. Råd gir BoligButler når du spør. Instruksjon i trygg bruk av utstyret får du alltid, fordi det handler om sikkerheten din.' },
-  { q: 'Hvilke områder dekker BoligButler?', a: 'Horten, Holmestrand, Tønsberg og Re. Ta kontakt hvis du bor like utenfor, så finner dere en løsning.' },
-  { q: 'Kan BoligButler gjøre deler av jobben?', a: 'Ja, i Pluss-oppsettet kan BoligButler bistå praktisk i de kritiske fasene, for eksempel utsetting av fall og høyder, eller graving der det er tryggere at en erfaren kjører maskinen.' },
+  { q: 'Hva koster det?', a: 'Prisen avhenger av prosjektet, utstyret og hvor lenge du trenger det. Du får et konkret tilbud før du bestemmer deg, og det er gratis å spørre.' },
 ];
 
 const jsonLd = [
@@ -29,132 +39,150 @@ const jsonLd = [
 ];
 ---
 <Base
-  title="BoligButler – utstyr og rådgiver for deg som gjør prosjektet selv"
-  description={site.description}
+  title="BoligButler – utstyr med rådgiver for hjemmeprosjekter i Vestfold"
+  description="Lei minigraver, stillas, henger og mer med levering i hele Vestfold. BoligButler gir innføring på stedet og veiledning underveis, for deg som gjør prosjektet selv."
   jsonLd={jsonLd}
 >
   <section class="hero">
     <div class="wrap hero-grid">
       <div class="hero-text">
-        <p class="label label--signal">Horten · Holmestrand · Tønsberg · Re</p>
-        <h1>Prosjektet er ditt. BoligButler sørger for at det&nbsp;går.</h1>
+        <h1>Prosjektet er ditt. BoligButler sørger for at det går.</h1>
         <p class="lead">
-          Drenering, terrasse, ny plen eller maling av huset. Du gjør jobben, BoligButler stiller med utstyret, leverer det hjem og har en erfaren rådgiver tilgjengelig når du trenger en.
+          Minigraver, stillas, henger og annet utstyr levert hjem i hele Vestfold, med en erfaren rådgiver som viser deg hvordan og er tilgjengelig underveis.
         </p>
-        <div class="hero-actions">
-          <a class="btn" href="#prosjekter">Velg prosjekt <span class="arrow" aria-hidden="true">↓</span></a>
-          <a class="btn btn--ghost" href="/slik-fungerer-det/">Slik fungerer det</a>
-        </div>
-      </div>
-
-      <figure class="card" aria-label="Utdrag fra sjekklisten som følger med hvert prosjekt">
-        <div class="card-head">
-          <span class="label">Følger med prosjektkassen</span>
-          <span class="hole" aria-hidden="true"></span>
-        </div>
-        <p class="card-title">Før du starter</p>
-        <ul>
-          {beforeStart.map((item) => (
-            <li><span class="box" aria-hidden="true"></span>{item}</li>
-          ))}
+        <ul class="promises">
+          <li><Icon name="check" size={20} /> Levert og hentet hjemme hos deg</li>
+          <li><Icon name="check" size={20} /> Innføring på stedet før du starter</li>
+          <li><Icon name="check" size={20} /> Pris før du bestemmer deg</li>
         </ul>
-        <figcaption>Et laminert ark. Det viktigste i kassen er ikke verktøy.</figcaption>
-      </figure>
+        <p class="call">Vil du heller snakke med noen? <a href={tel}>Ring {site.phoneDisplay}</a></p>
+      </div>
+      <div class="hero-media">
+        <Photo name="hero" alt="BoligButler leverer utstyr til en bolig i Vestfold" hint="BoligButler leverer en minigraver på en tomt i Vestfold, gjerne med grunnleggeren i bildet" ratio="5 / 4" eager />
+        <ProjectStarter class="hero-starter" />
+      </div>
     </div>
+  </section>
+
+  <section class="assure" aria-label="Dette får du med BoligButler">
+    <ul class="wrap assure-row">
+      <li><Icon name="pin" size={26} /><div><strong>Lokal i Vestfold</strong><span>Levering fra Holmestrand til Larvik</span></div></li>
+      <li><Icon name="person" size={26} /><div><strong>En rådgiver du kan ringe</strong><span>Råd når du spør, hjelp når du trenger det</span></div></li>
+      <li><Icon name="kit" size={26} /><div><strong>Prosjektkasse følger med</strong><span>Måleutstyr, verneutstyr og småverktøy</span></div></li>
+      <li><Icon name="warning" size={26} /><div><strong>Sikkerhet er ikke valgfritt</strong><span>Alltid instruksjon i trygg bruk</span></div></li>
+    </ul>
   </section>
 
   <section id="prosjekter" class="section">
     <div class="wrap">
-      <div class="section-head">
-        <p class="label">Hva skal du gjøre?</p>
-        <h2>Start med prosjektet, ikke med maskinen.</h2>
-        <p>Velg hva du skal få til. Så ser du hvilket utstyr som brukes, hva som følger med, og hva BoligButler kan hjelpe med.</p>
+      <div class="head head--row">
+        <div>
+          <h2>Hva skal du gjøre?</h2>
+          <p>Velg prosjektet, så ser du hvilket utstyr som brukes, hva som følger med og hva BoligButler kan hjelpe med.</p>
+        </div>
+        <a class="all" href="/prosjekter/">Alle prosjekter <Icon name="arrow" size={18} /></a>
       </div>
-      <ol class="projects">
+      <ul class="projects">
         {projects.map((p, i) => (
-          <li>
+          <li class:list={{ wide: i < 2 }}>
             <a href={`/prosjekter/${p.id}/`}>
-              <span class="num">{String(i + 1).padStart(2, '0')}</span>
-              <ProjectIcon slug={p.id} size={44} class="icon" />
-              <span class="p-main">
-                <span class="say">«{p.data.customerSays}»</span>
+              <Photo name={`prosjekt-${p.id}`} alt={`${p.data.navTitle}: prosjekt i Vestfold`} hint={`${p.data.navTitle.toLowerCase()} i Vestfold`} ratio={i < 2 ? '16 / 10' : '4 / 3'} />
+              <span class="p-body">
                 <span class="p-title">{p.data.navTitle}</span>
+                <span class="p-eq">{p.data.equipment.slice(0, 3).map((e) => e.name).join(', ')}</span>
               </span>
-              <span class="p-eq">{p.data.equipment.slice(0, 3).map((e) => e.name).join(', ')}</span>
-              <span class="go" aria-hidden="true">→</span>
             </a>
           </li>
         ))}
-      </ol>
+      </ul>
     </div>
   </section>
 
-  <section class="section section--forest">
+  <section class="section section--band">
     <div class="wrap">
-      <div class="section-head">
-        <p class="label">Butleren</p>
-        <h2>Hjelp når du vil ha den. Instruksjon når det gjelder sikkerheten.</h2>
-        <p>Det er du som bestemmer hvordan prosjektet skal gjøres. BoligButler blander seg ikke inn uoppfordret, men sier tydelig ifra når noe kan skade deg, huset eller utstyret.</p>
+      <div class="head">
+        <h2>Slik fungerer det</h2>
+        <p>Fra første telefon til utstyret er hentet igjen. Du bestemmer hvor mye hjelp du vil ha.</p>
       </div>
-      <div class="levels">
-        <div class="level">
-          <span class="lvl-n">Råd</span>
-          <p class="lvl-when">Når du spør</p>
-          <p>Fundamenttype, hvilken pukk, når på året du bør så. Du får BoligButlers vurdering, og du velger.</p>
-        </div>
-        <div class="level">
-          <span class="lvl-n">Veiledning</span>
-          <p class="lvl-when">Når det er naturlig</p>
-          <p>Ved levering og befaring viser BoligButler hvordan erfarne folk løser akkurat denne delen av jobben.</p>
-        </div>
-        <div class="level level--must">
-          <span class="lvl-n">Instruksjon</span>
-          <p class="lvl-when">Alltid, når det trengs</p>
-          <p>Grøftekant, forankring av stillas, svingradius på maskin. Her er det ikke valgfritt, fordi det handler om skader på folk og eiendom.</p>
-        </div>
+      <ol class="steps">
+        {steps.map((s, i) => (
+          <li><span class="n" aria-hidden="true">{i + 1}</span><h3>{s.t}</h3><p>{s.d}</p></li>
+        ))}
+      </ol>
+      <a class="btn btn--ghost" href="/slik-fungerer-det/">Les mer om hvordan det foregår</a>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap person">
+      <Photo name="grunnlegger" alt={`${site.founder.name}, ${site.founder.role.toLowerCase()} i BoligButler`} hint="portrett av grunnleggeren, gjerne ute ved utstyret" ratio="4 / 5" />
+      <div class="person-text">
+        <h2>Den som leverer, er den du kan ringe</h2>
+        <p class="lead">BoligButler er en lokal virksomhet i Vestfold. Den som leverer utstyret og viser deg hvordan det brukes, er den samme du ringer når du står midt i grøfta med et spørsmål.</p>
+        <dl class="levels">
+          <div><dt>Råd</dt><dd>når du spør. Du får en ærlig vurdering, og du bestemmer.</dd></div>
+          <div><dt>Veiledning</dt><dd>når det er naturlig, ved levering og befaring.</dd></div>
+          <div class="must"><dt><Icon name="warning" size={18} /> Instruksjon</dt><dd>alltid når sikkerheten krever det. Grøftekant, stillasforankring og maskinbruk er ikke valgfritt.</dd></div>
+        </dl>
+        <p class="sign"><strong>{site.founder.name}</strong><br /><span class="muted">{site.founder.role}, BoligButler</span></p>
       </div>
+    </div>
+  </section>
+
+  <section class="section section--green local">
+    <div class="wrap local-grid">
+      <div class="local-text">
+        <h2>Lokal i hele Vestfold</h2>
+        <p class="local-lead">BoligButler leverer, henter og kommer på befaring i alle kommunene i fylket. Kjent med leirjorda, kystklimaet og tomtene her.</p>
+        <ul class="kommuner">
+          {site.areas.map((a) => <li><Icon name="check" size={18} /> {a}</li>)}
+        </ul>
+        <p class="local-note">Bor du like utenfor Vestfold? <a href={tel}>Ring og spør</a>.</p>
+      </div>
+      <VestfoldMap class="local-map" />
     </div>
   </section>
 
   <section class="section">
     <div class="wrap">
-      <div class="section-head">
-        <p class="label">Tre oppsett</p>
-        <h2>Like mye hjelp som du trenger. Ikke mer.</h2>
-        <p>Alle oppsett inkluderer levering og prosjektkasse. Prisen avhenger av prosjektet og utstyret, og du får den før du bestemmer deg.</p>
+      <div class="head">
+        <h2>Velg hvor mye hjelp du vil ha</h2>
+        <p>Alle oppsett inkluderer levering, henting og prosjektkasse. Prisen avhenger av prosjektet og utstyret, og du får den før du bestemmer deg.</p>
       </div>
       <div class="pkgs">
         {packages.map((p) => (
           <div class:list={['pkg', { 'pkg--featured': p.featured }]}>
+            {p.featured && <p class="tag">Anbefalt for større prosjekter</p>}
             <h3>{p.name}</h3>
             <p class="pkg-for">{p.for}</p>
-            <ul>{p.items.map((i) => <li>{i}</li>)}</ul>
+            <ul>{p.items.map((i) => <li><Icon name="check" size={18} /> <span>{i}</span></li>)}</ul>
           </div>
         ))}
       </div>
-      <p class="more"><a href="/slik-fungerer-det/">Les hvordan et prosjekt med BoligButler foregår</a></p>
     </div>
   </section>
 
-  <section class="section section--paper2">
+  <section class="section section--band">
     <div class="wrap">
-      <div class="section-head">
-        <p class="label">Guider</p>
-        <h2>Lær deg jobben før du leier noe.</h2>
-        <p>Fremgangsmåter, mål og vanlige feil, skrevet for deg som skal gjøre det selv. Gratis å lese, enten du leier av BoligButler eller ikke.</p>
+      <div class="head head--row">
+        <div>
+          <h2>Guider for deg som gjør det selv</h2>
+          <p>Slik gjør du jobben, og feilene som er verdt å unngå. Gratis å lese, enten du leier av BoligButler eller ikke.</p>
+        </div>
+        <a class="all" href="/guider/">Alle guider <Icon name="arrow" size={18} /></a>
       </div>
       <ul class="guides">
-        {shown.map((g) => (
+        {featured.map((g) => (
           <li>
             <a href={`/guider/${g.id}/`}>
-              <span class="label">{g.data.difficulty}</span>
               <span class="g-title">{g.data.title}</span>
               <span class="g-sum">{g.data.description}</span>
+              <span class="g-meta">{g.data.difficulty}{g.data.timeEstimate && `, ${g.data.timeEstimate.split(',')[0]}`}</span>
             </a>
           </li>
         ))}
       </ul>
-      <p class="more"><a href="/guider/">Alle guider</a> · <a href="/verktoy/massekalkulator/">Beregn masser</a></p>
+      <p class="tool"><Icon name="list" size={20} /> Skal du bestille pukk, grus eller jord? <a href="/verktoy/massekalkulator/">Regn ut mengden med massekalkulatoren</a>.</p>
     </div>
   </section>
 
@@ -168,77 +196,113 @@ const jsonLd = [
 </Base>
 
 <style>
-  .hero { padding-block: clamp(2.5rem, 2rem + 4vw, 6rem) clamp(3rem, 2rem + 4vw, 6rem); border-bottom: 1px solid var(--line); position: relative; isolation: isolate; }
-  .hero::before { content: ''; position: absolute; inset: 0; z-index: -1;
-    background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
-    background-size: 32px 32px; background-position: -1px -1px;
-    -webkit-mask-image: linear-gradient(100deg, transparent 35%, #000 70%); mask-image: linear-gradient(100deg, transparent 35%, #000 70%); }
-  .hero-grid { display: grid; grid-template-columns: 1.35fr 1fr; gap: clamp(2rem, 1rem + 4vw, 5rem); align-items: center; }
-  .hero h1 { margin-top: 0.6rem; max-width: 13em; }
-  .hero-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2rem; }
+  .hero { padding-block: clamp(2rem, 1.5rem + 3vw, 4.5rem) clamp(3rem, 2rem + 4vw, 5.5rem); background: linear-gradient(180deg, var(--band), #fff 85%); }
+  .hero-grid { display: grid; grid-template-columns: 1fr 1.05fr; gap: clamp(2rem, 1rem + 4vw, 4.5rem); align-items: center; }
+  .hero h1 { max-width: 13em; margin-bottom: 0.45em; }
+  .hero .lead { margin-bottom: 1.5rem; }
+  .promises { list-style: none; padding: 0; margin: 0 0 1.75rem; display: grid; gap: 0.6rem; }
+  .promises li { display: flex; gap: 0.6rem; align-items: center; font-weight: 550; }
+  .promises :global(svg) { color: var(--green); flex: none; }
+  .call { color: var(--ink-2); margin: 0; }
+  .call a { font-weight: 650; white-space: nowrap; }
+  .hero-media { position: relative; padding-bottom: 7rem; }
+  .hero-media > :global(.photo) { box-shadow: var(--shadow); border-radius: 12px; }
+  :global(.hero-starter) { position: absolute; left: -2.5rem; bottom: 0; width: min(23rem, 85%); }
 
-  .card { margin: 0; background: #fffdf7; border: 1px solid var(--line); border-radius: 10px; padding: 1.5rem 1.6rem 1.2rem;
-    box-shadow: 0 1px 0 #fff inset, 0 24px 40px -24px rgb(28 33 30 / 0.35), 0 2px 6px -2px rgb(28 33 30 / 0.12);
-    transform: rotate(1.2deg); max-width: 24rem; justify-self: end; position: relative; }
-  .card::before { content: ''; position: absolute; inset: 6px; border-radius: 6px; border: 1px solid rgb(0 0 0 / 0.04); pointer-events: none; }
-  .card-head { display: flex; justify-content: space-between; align-items: center; }
-  .hole { width: 14px; height: 14px; border-radius: 50%; background: var(--paper); box-shadow: inset 0 1px 2px rgb(0 0 0 / 0.25); }
-  .card-title { font-family: var(--serif); font-size: var(--step-2); margin: 0.6rem 0 0.8rem; }
-  .card ul { list-style: none; margin: 0; padding: 0; }
-  .card li { display: flex; gap: 0.7rem; align-items: baseline; padding: 0.42rem 0; border-bottom: 1px dashed var(--line); }
-  .box { flex: none; width: 13px; height: 13px; border: 1.5px solid var(--ink); border-radius: 2px; position: relative; top: 2px; }
-  .card li:nth-child(1) .box, .card li:nth-child(2) .box { background: linear-gradient(45deg, transparent 45%, var(--signal) 45% 60%, transparent 60%), linear-gradient(-45deg, transparent 45%, var(--signal) 45% 60%, transparent 60%); }
-  .card figcaption { font-family: var(--serif); font-style: italic; color: var(--ink-3); font-size: 0.95rem; margin-top: 1rem; }
+  .assure { border-block: 1px solid var(--line); background: #fff; }
+  .assure-row { list-style: none; margin-inline: auto; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); }
+  .assure li { display: flex; gap: 0.8rem; align-items: flex-start; padding: 1.5rem 1.25rem; }
+  .assure li + li { border-left: 1px solid var(--line); }
+  .assure li:first-child { padding-left: 0; }
+  .assure :global(svg) { color: var(--green); flex: none; margin-top: 0.1rem; }
+  .assure strong { display: block; font-weight: 650; line-height: 1.3; }
+  .assure span { display: block; font-size: var(--step--1); color: var(--ink-3); line-height: 1.4; margin-top: 0.2rem; }
 
-  .projects { list-style: none; margin: 0; padding: 0; border-top: 1.5px solid var(--ink); }
-  .projects a { display: grid; grid-template-columns: 2.5rem 44px 1.3fr 1fr 1.5rem; gap: 1.25rem; align-items: center; padding: 1.3rem 0.25rem; border-bottom: 1px solid var(--line); text-decoration: none; transition: background 0.15s, padding 0.15s; }
-  .projects a:hover { background: var(--card); padding-inline: 1rem; color: var(--ink); }
-  .num { font-variant-numeric: tabular-nums; color: var(--ink-3); font-size: var(--step--1); }
-  .projects :global(.icon) { color: var(--ink); }
-  .p-main { display: grid; }
-  .say { font-family: var(--serif); font-style: italic; color: var(--ink-3); font-size: 0.98rem; }
-  .p-title { font-family: var(--serif); font-size: var(--step-2); line-height: 1.15; }
-  .p-eq { color: var(--ink-2); font-size: 0.95rem; }
-  .go { font-size: 1.3rem; transition: transform 0.15s; }
-  .projects a:hover .go { transform: translateX(4px); color: var(--signal); }
+  .head--row { display: flex; justify-content: space-between; align-items: flex-end; gap: 2rem; max-width: none; }
+  .head--row > div { display: grid; gap: 0.75rem; max-width: 44rem; }
+  .all { display: inline-flex; align-items: center; gap: 0.4rem; font-weight: 600; text-decoration: none; white-space: nowrap; }
+  .all:hover { text-decoration: underline; }
 
-  .levels { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid rgb(234 230 219 / 0.35); }
-  .level { padding: 1.75rem 1.75rem 0.5rem 0; }
-  .level + .level { padding-left: 1.75rem; border-left: 1px solid rgb(234 230 219 / 0.2); }
-  .lvl-n { font-family: var(--serif); font-size: var(--step-3); display: block; line-height: 1; }
-  .lvl-when { font-size: var(--step--1); letter-spacing: 0.08em; text-transform: uppercase; color: #b9c2b4; margin: 0.6rem 0 1rem; font-weight: 600; }
-  .level p:last-child { color: #d7dbd0; }
-  .level--must .lvl-n { color: #f08a5d; }
-  .level--must { position: relative; }
-  .level--must::before { content: ''; position: absolute; top: -1px; left: 1.75rem; right: 0; height: 3px; background: var(--signal); }
+  .projects { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(6, 1fr); gap: 1.5rem 1.25rem; }
+  .projects li { grid-column: span 2; }
+  .projects li.wide { grid-column: span 3; }
+  .projects li:nth-child(n + 6) { grid-column: span 3; }
+  .projects a { display: grid; gap: 0.85rem; text-decoration: none; color: var(--ink); }
+  .projects a :global(.photo) { transition: filter 0.2s ease-out; }
+  .projects a:hover :global(.photo) { filter: brightness(0.95); }
+  .p-body { display: grid; gap: 0.15rem; }
+  .p-title { font-weight: 700; font-size: var(--step-1); letter-spacing: -0.01em; }
+  .projects a:hover .p-title { color: var(--green); text-decoration: underline; text-underline-offset: 0.2em; text-decoration-thickness: 2px; }
+  .p-eq { color: var(--ink-3); font-size: 0.95rem; }
 
-  .pkgs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
-  .pkg { border: 1px solid var(--line); background: var(--card); padding: 1.6rem; border-radius: var(--radius); }
-  .pkg--featured { border-color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
-  .pkg h3 { font-family: var(--serif); font-size: var(--step-2); font-weight: 500; margin-bottom: 0.3em; }
-  .pkg-for { color: var(--ink-2); min-height: 3.2em; }
-  .pkg ul { list-style: none; padding: 0; margin: 1rem 0 0; border-top: 1px solid var(--line); }
-  .pkg li { padding: 0.55rem 0 0.55rem 1.4rem; border-bottom: 1px solid var(--line); position: relative; font-size: 0.97rem; }
-  .pkg li::before { content: ''; position: absolute; left: 0.1rem; top: 1.05rem; width: 8px; height: 1.5px; background: var(--signal); }
-  .more { margin-top: 2rem; }
+  .steps { list-style: none; padding: 0; margin: 0 0 2.5rem; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; counter-reset: s; }
+  .steps li { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 1.5rem; }
+  .n { display: grid; place-items: center; width: 2.25rem; height: 2.25rem; border-radius: 50%; background: var(--green); color: #fff; font-weight: 700; margin-bottom: 1rem; font-variant-numeric: tabular-nums; }
+  .steps h3 { margin-bottom: 0.4rem; }
+  .steps p { color: var(--ink-2); margin: 0; font-size: 0.97rem; }
 
-  .guides { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 2rem; }
-  .guides a { display: grid; gap: 0.4rem; padding: 1.4rem 0; border-top: 1px solid var(--ink); text-decoration: none; height: 100%; align-content: start; }
-  .g-title { font-family: var(--serif); font-size: var(--step-1); line-height: 1.25; }
-  .guides a:hover .g-title { text-decoration: underline; text-decoration-color: var(--signal); }
-  .g-sum { color: var(--ink-2); font-size: 0.95rem; }
+  .person { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr); gap: clamp(2rem, 1rem + 4vw, 5rem); align-items: center; }
+  .person > :global(.photo) { border-radius: 12px; }
+  .levels { margin: 1.75rem 0; display: grid; gap: 0; border-top: 1px solid var(--line); }
+  .levels > div { display: grid; grid-template-columns: 9rem 1fr; gap: 1rem; padding: 0.9rem 0; border-bottom: 1px solid var(--line); }
+  .levels dt { font-weight: 700; display: flex; align-items: center; gap: 0.4rem; }
+  .levels dd { margin: 0; color: var(--ink-2); }
+  .levels .must dt { color: var(--amber-ink); }
+  .sign { margin: 0; line-height: 1.4; }
 
-  @media (max-width: 900px) {
-    .hero::before { -webkit-mask-image: linear-gradient(180deg, transparent 45%, #000 85%); mask-image: linear-gradient(180deg, transparent 45%, #000 85%); }
-    .hero-grid { grid-template-columns: 1fr; }
-    .card { justify-self: start; transform: rotate(0.6deg); }
-    .levels, .pkgs, .guides { grid-template-columns: 1fr; }
-    .level + .level { padding-left: 0; border-left: 0; border-top: 1px solid rgb(234 230 219 / 0.2); }
-    .level--must::before { left: 0; }
-    .pkg-for { min-height: 0; }
+  .local-grid { display: grid; grid-template-columns: 1fr 0.85fr; gap: clamp(2rem, 1rem + 4vw, 5rem); align-items: center; }
+  .local h2 { font-size: var(--step-4); }
+  .local-lead { font-size: var(--step-1); color: var(--on-green-2); line-height: 1.55; max-width: 32rem; }
+  .kommuner { list-style: none; padding: 0; margin: 1.75rem 0; display: grid; grid-template-columns: repeat(2, minmax(0, 14rem)); gap: 0.6rem 1.5rem; }
+  .kommuner li { display: flex; gap: 0.5rem; align-items: center; font-weight: 600; font-size: 1.05rem; color: #fff; }
+  .kommuner :global(svg) { color: #9fd0b2; }
+  .local-note { color: var(--on-green-2); margin: 0; }
+  .local :global(.local-map) { --map-land: #2f6a52; --map-edge: var(--green); --map-hover: #3b7d62; --map-dot: #fff; --map-text: #fff; --map-halo: var(--green); --map-caption: var(--on-green-2); max-width: 26rem; justify-self: center; width: 100%; }
+  .local :global(.local-map .towns circle) { stroke: var(--green); }
+
+  .pkgs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; align-items: start; }
+  .pkg { border: 1px solid var(--line); background: #fff; padding: 1.75rem; border-radius: 12px; position: relative; }
+  .pkg--featured { border: 2px solid var(--green); }
+  .tag { position: absolute; top: -0.8rem; left: 1.5rem; margin: 0; background: var(--green); color: #fff; font-size: 0.78rem; font-weight: 600; padding: 0.2rem 0.65rem; border-radius: 999px; }
+  .pkg h3 { font-size: var(--step-2); margin-bottom: 0.3rem; }
+  .pkg-for { color: var(--ink-2); }
+  .pkg ul { list-style: none; padding: 0; margin: 1.25rem 0 0; display: grid; gap: 0.6rem; }
+  .pkg li { display: flex; gap: 0.55rem; align-items: flex-start; font-size: 0.97rem; line-height: 1.45; }
+  .pkg li :global(svg) { color: var(--green); flex: none; margin-top: 0.12rem; }
+
+  .guides { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; }
+  .guides a { display: flex; flex-direction: column; gap: 0.5rem; height: 100%; padding: 1.4rem; background: #fff; border: 1px solid var(--line); border-radius: 12px; text-decoration: none; color: var(--ink); transition: border-color 0.15s ease-out, background-color 0.15s ease-out; }
+  .guides a:hover { border-color: var(--green); background: var(--green-tint); }
+  .g-title { font-weight: 700; font-size: 1.1rem; line-height: 1.3; letter-spacing: -0.01em; }
+  .g-sum { color: var(--ink-2); font-size: 0.93rem; line-height: 1.5; flex: 1; }
+  .g-meta { font-size: var(--step--1); color: var(--green); font-weight: 600; }
+  .tool { display: flex; gap: 0.6rem; align-items: center; flex-wrap: wrap; margin: 2rem 0 0; color: var(--ink-2); }
+  .tool :global(svg) { color: var(--green); }
+
+  @media (max-width: 1080px) {
+    .assure-row { grid-template-columns: repeat(2, 1fr); }
+    .assure li:nth-child(3) { border-left: 0; padding-left: 0; }
+    .assure li:nth-child(n + 3) { border-top: 1px solid var(--line); }
+    .guides { grid-template-columns: repeat(2, 1fr); }
+    .steps { grid-template-columns: repeat(2, 1fr); }
   }
-  @media (max-width: 640px) {
-    .projects a { grid-template-columns: 36px 1fr 1.2rem; gap: 0.9rem; }
-    .num, .p-eq { display: none; }
+  @media (max-width: 900px) {
+    .hero-grid, .person, .local-grid { grid-template-columns: 1fr; }
+    .hero-media { padding-bottom: 0; }
+    :global(.hero-starter) { position: relative; left: auto; width: auto; margin: -3rem 1rem 0; }
+    .pkgs { grid-template-columns: 1fr; gap: 1.75rem; }
+    .projects { grid-template-columns: repeat(2, 1fr); }
+    .projects li, .projects li.wide, .projects li:nth-child(n + 6) { grid-column: span 1; }
+    .person > :global(.photo) { max-width: 24rem; }
+    .local :global(.local-map) { max-width: 20rem; }
+  }
+  @media (max-width: 560px) {
+    .assure-row { grid-template-columns: 1fr; }
+    .assure li { border-left: 0 !important; padding-left: 0; }
+    .assure li + li { border-top: 1px solid var(--line); }
+    .head--row { flex-direction: column; align-items: flex-start; gap: 1rem; }
+    .projects, .guides, .steps { grid-template-columns: 1fr; }
+    .levels > div { grid-template-columns: 1fr; gap: 0.2rem; }
+    .kommuner { grid-template-columns: 1fr 1fr; }
   }
 </style>

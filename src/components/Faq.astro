@@ -17,11 +17,12 @@ const { items, heading = 'Spørsmål og svar' } = Astro.props;
 )}
 <style>
   .faq h2 { font-size: var(--step-2); }
-  .list { border-top: 1px solid var(--ink); }
+  .list { border-top: 1px solid var(--line-2); }
   details { border-bottom: 1px solid var(--line); }
-  summary { cursor: pointer; list-style: none; padding: 1.1rem 2.5rem 1.1rem 0; font-weight: 600; position: relative; }
+  summary { cursor: pointer; list-style: none; padding: 1.15rem 2.5rem 1.15rem 0; font-weight: 600; position: relative; font-size: 1.05rem; }
+  summary:hover { color: var(--green); }
   summary::-webkit-details-marker { display: none; }
-  summary::after { content: ''; position: absolute; right: 0.4rem; top: 50%; width: 10px; height: 10px; border-right: 1.5px solid var(--ink); border-bottom: 1.5px solid var(--ink); transform: translateY(-70%) rotate(45deg); transition: transform 0.15s; }
+  summary::after { content: ''; position: absolute; right: 0.4rem; top: 50%; width: 10px; height: 10px; border-right: 2px solid var(--green); border-bottom: 2px solid var(--green); transform: translateY(-70%) rotate(45deg); transition: transform 0.15s; }
   details[open] summary::after { transform: translateY(-30%) rotate(-135deg); }
   details p { margin: 0 0 1.2rem; color: var(--ink-2); max-width: 40rem; }
 </style>

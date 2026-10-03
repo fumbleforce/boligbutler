@@ -1,0 +1,11 @@
+{
+  "source": "DESIGN.md",
+  "shadows": {
+    "raised": "0 1px 2px rgb(21 32 26 / 0.06), 0 8px 24px -6px rgb(21 32 26 / 0.14)",
+    "floating": "0 2px 4px rgb(21 32 26 / 0.08), 0 16px 32px -10px rgb(21 32 26 / 0.26)"
+  },
+  "focus": "2px solid #1e4d3a, offset 3px",
+  "motion": { "hover": "150ms ease-out on color, background-color, border-color", "reducedMotion": "all transitions disabled" },
+  "selection": { "background": "#1e4d3a", "color": "#f4f8f5" },
+  "map": { "data": "src/data/vestfold-kart.json", "source": "Kartverket via robhop/fylker-og-kommuner, CC BY 4.0" }
+}

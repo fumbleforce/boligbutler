@@ -1,0 +1,34 @@
+---
+// Prosjektvelgeren: virker uten JavaScript (GET til /kontakt/ med valgene i adressen).
+import { getCollection } from 'astro:content';
+import Icon from './Icon.astro';
+import { site } from '../data/site';
+
+interface Props { selected?: string; heading?: string; class?: string }
+const { selected, heading = 'Start prosjektet ditt', class: cls } = Astro.props;
+const projects = (await getCollection('prosjekter')).sort((a, b) => a.data.order - b.data.order);
+---
+<form class:list={['starter', cls]} action="/kontakt/" method="get">
+  <p class="starter-h">{heading}</p>
+  <label class="field">Hva skal du gjøre?
+    <select name="prosjekt" required>
+      <option value="" disabled selected={!selected}>Velg prosjekt</option>
+      {projects.map((p) => <option value={p.id} selected={p.id === selected}>{p.data.navTitle}</option>)}
+      <option value="annet">Noe annet</option>
+    </select>
+  </label>
+  <label class="field">Hvor i Vestfold?
+    <select name="kommune">
+      {site.areas.map((a) => <option>{a}</option>)}
+      <option value="Annet">Utenfor Vestfold</option>
+    </select>
+  </label>
+  <button class="btn" type="submit">Få forslag til oppsett <Icon name="arrow" size={18} /></button>
+  <p class="starter-note">Gratis og uforpliktende. Du får pris før du bestemmer deg.</p>
+</form>
+<style>
+  .starter { display: grid; gap: 0.9rem; background: #fff; border: 0; border-radius: 12px; padding: clamp(1.1rem, 0.9rem + 1vw, 1.6rem); box-shadow: var(--shadow-lg); }
+  .starter-h { font-weight: 700; font-size: var(--step-1); margin: 0 0 0.1rem; letter-spacing: -0.01em; }
+  .starter .btn { width: 100%; margin-top: 0.2rem; }
+  .starter-note { margin: 0; font-size: var(--step--1); color: var(--ink-3); text-align: center; }
+</style>

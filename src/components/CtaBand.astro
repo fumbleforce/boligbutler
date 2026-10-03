@@ -1,28 +1,31 @@
 ---
+import Icon from './Icon.astro';
 import { site } from '../data/site';
-interface Props { heading?: string; text?: string }
+interface Props { heading?: string; text?: string; project?: string }
 const {
-  heading = 'Fortell BoligButler hva du skal gjøre.',
-  text = 'Beskriv prosjektet med noen setninger. Du får et forslag til utstyr og oppsett, og bestemmer selv hvor mye hjelp du vil ha.',
+  heading = 'Fortell BoligButler hva du skal gjøre',
+  text = 'Beskriv prosjektet med noen setninger. Du får forslag til utstyr, oppsett og pris, og bestemmer selv hvor mye hjelp du vil ha.',
+  project,
 } = Astro.props;
 ---
-<section class="section section--forest cta">
+<section class="section--tight section section--green cta">
   <div class="wrap inner">
     <div>
       <h2>{heading}</h2>
       <p>{text}</p>
     </div>
     <div class="actions">
-      <a class="btn btn--light" href="/kontakt/">Beskriv prosjektet <span class="arrow" aria-hidden="true">→</span></a>
-      <a class="phone" href={`tel:${site.phone.replace(/\s/g, '')}`}>eller ring {site.phoneDisplay}</a>
+      <a class="btn btn--light" href={project ? `/kontakt/?prosjekt=${project}` : '/kontakt/'}>Beskriv prosjektet <Icon name="arrow" size={18} /></a>
+      <a class="phone" href={`tel:${site.phone.replace(/\s/g, '')}`}><Icon name="phone" size={18} /> Ring {site.phoneDisplay}</a>
     </div>
   </div>
 </section>
 <style>
-  .inner { display: grid; grid-template-columns: 1.4fr 1fr; gap: 2rem; align-items: end; }
-  h2 { margin-bottom: 0.4em; max-width: 18em; }
-  p { color: #c9cfc3; max-width: 34rem; margin: 0; font-size: var(--step-1); line-height: 1.5; }
-  .actions { display: grid; gap: 1rem; justify-items: start; }
-  .phone { color: var(--on-forest); }
-  @media (max-width: 760px) { .inner { grid-template-columns: 1fr; } }
+  .inner { display: grid; grid-template-columns: 1.5fr 1fr; gap: 2rem; align-items: center; }
+  h2 { margin-bottom: 0.4em; max-width: 20em; }
+  p { color: var(--on-green-2); max-width: 36rem; margin: 0; font-size: var(--step-1); line-height: 1.5; }
+  .actions { display: flex; flex-wrap: wrap; gap: 1rem 1.5rem; align-items: center; justify-content: flex-end; }
+  .phone { display: inline-flex; align-items: center; gap: 0.5rem; font-weight: 600; text-decoration: none; }
+  .phone:hover { text-decoration: underline; }
+  @media (max-width: 760px) { .inner { grid-template-columns: 1fr; } .actions { justify-content: flex-start; } }
 </style>

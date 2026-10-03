@@ -3,21 +3,23 @@ import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import Crumbs from '../components/Crumbs.astro';
 import { site, packages } from '../data/site';
+import Icon from '../components/Icon.astro';
 
 const projects = (await getCollection('prosjekter')).sort((a, b) => a.data.order - b.data.order);
 ---
-<Base title="Beskriv prosjektet ditt" description="Fortell BoligButler hva du skal gjøre, så får du forslag til utstyr, oppsett og pris. Horten, Holmestrand, Tønsberg og Re.">
-  <section class="section--tight section">
+<Base title="Beskriv prosjektet ditt" description="Fortell BoligButler hva du skal gjøre, så får du forslag til utstyr, oppsett og pris. Levering i hele Vestfold.">
+  <section class="section--tight section page">
     <div class="wrap grid">
       <div class="intro">
         <Crumbs items={[{ href: '', label: 'Kontakt' }]} />
         <h1>Beskriv prosjektet ditt</h1>
         <p class="lead">Noen få opplysninger er nok. BoligButler svarer med forslag til utstyr, rekkefølge og oppsett, og pris før du bestemmer deg.</p>
-        <dl class="direct">
-          <dt>Telefon</dt><dd><a href={`tel:${site.phone.replace(/\s/g, '')}`}>{site.phoneDisplay}</a></dd>
-          <dt>E-post</dt><dd><a href={`mailto:${site.email}`}>{site.email}</a></dd>
-          <dt>Område</dt><dd>{site.areas.join(', ')}</dd>
-        </dl>
+        <ul class="direct">
+          <li><Icon name="phone" size={22} /><div><span>Telefon</span><a href={`tel:${site.phone.replace(/\s/g, '')}`}>{site.phoneDisplay}</a></div></li>
+          <li><Icon name="mail" size={22} /><div><span>E-post</span><a href={`mailto:${site.email}`}>{site.email}</a></div></li>
+          <li><Icon name="pin" size={22} /><div><span>Område</span><strong>Hele Vestfold</strong><small>{site.areas.join(', ')}</small></div></li>
+        </ul>
+        <p class="promise">Du får et forslag med utstyr, oppsett og pris. Det er gratis og forplikter deg ikke til noe.</p>
       </div>
 
       <!-- TODO: koble skjemaet til en skjematjeneste (f.eks. Formspree, Netlify Forms eller egen e-post-API). Nå åpner det e-postprogrammet med utfylt tekst. -->
@@ -56,10 +58,10 @@ const projects = (await getCollection('prosjekter')).sort((a, b) => a.data.order
                 <option>Jeg planlegger bare foreløpig</option>
               </select>
             </label>
-            <label class="field">Sted
+            <label class="field">Kommune
               <select name="kommune">
                 {site.areas.map((a) => <option>{a}</option>)}
-                <option>Annen</option>
+                <option value="Annet">Utenfor Vestfold</option>
               </select>
             </label>
           </div>
@@ -74,7 +76,7 @@ const projects = (await getCollection('prosjekter')).sort((a, b) => a.data.order
           <label class="field">E-post (valgfritt)<input name="epost" type="email" autocomplete="email" /></label>
         </fieldset>
 
-        <button class="btn" type="submit">Send forespørsel <span class="arrow" aria-hidden="true">→</span></button>
+        <button class="btn" type="submit">Send forespørsel <Icon name="arrow" size={18} /></button>
         <p class="fine">Opplysningene brukes bare til å svare deg om prosjektet.</p>
       </form>
     </div>
@@ -89,6 +91,9 @@ const projects = (await getCollection('prosjekter')).sort((a, b) => a.data.order
       const r = form.querySelector<HTMLInputElement>(`input[data-slug="${CSS.escape(pre)}"]`);
       if (r) r.checked = true;
     }
+    const kom = new URLSearchParams(location.search).get('kommune');
+    const sel = form.querySelector<HTMLSelectElement>('select[name="kommune"]');
+    if (kom && sel && [...sel.options].some((o) => o.value === kom)) sel.value = kom;
     form.addEventListener('submit', (e) => {
       e.preventDefault();
       if (!form.reportValidity()) return;
@@ -112,29 +117,35 @@ const projects = (await getCollection('prosjekter')).sort((a, b) => a.data.order
 </script>
 
 <style>
+  .page { background: linear-gradient(180deg, var(--band), #fff 60%); }
   .grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: clamp(2rem, 1rem + 4vw, 5rem); align-items: start; }
   .intro { position: sticky; top: 1.5rem; }
-  h1 { font-size: var(--step-4); }
-  .direct { display: grid; grid-template-columns: auto 1fr; gap: 0.5rem 1.2rem; margin-top: 2rem; border-top: 1.5px solid var(--ink); padding-top: 1.2rem; }
-  .direct dt { font-weight: 650; }
-  .direct dd { margin: 0; }
-  .form { background: var(--card); border: 1px solid var(--line); padding: clamp(1.25rem, 1rem + 2vw, 2.5rem); border-radius: 6px; }
+  .direct { list-style: none; padding: 0; margin: 2rem 0 0; display: grid; gap: 1.25rem; }
+  .direct li { display: flex; gap: 0.9rem; align-items: flex-start; }
+  .direct li > :global(svg) { color: var(--green); flex: none; margin-top: 0.2rem; }
+  .direct div { display: grid; line-height: 1.4; }
+  .direct span { font-size: var(--step--1); color: var(--ink-3); }
+  .direct a, .direct strong { font-size: 1.15rem; font-weight: 650; }
+  .direct small { color: var(--ink-2); font-size: 0.9rem; }
+  .promise { margin-top: 2rem; padding: 1rem 1.2rem; background: var(--green-tint); border-radius: 12px; color: var(--ink); }
+  .form { background: #fff; border: 1px solid var(--line); padding: clamp(1.25rem, 1rem + 2vw, 2.5rem); border-radius: 12px; }
   fieldset { border: 0; padding: 0; margin: 0 0 2rem; min-width: 0; }
-  legend { font-family: var(--serif); font-size: var(--step-1); margin-bottom: 0.9rem; padding: 0; }
+  legend { font-weight: 700; font-size: var(--step-1); margin-bottom: 0.9rem; padding: 0; letter-spacing: -0.01em; }
   .chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
   .chip input, .opt input { position: absolute; opacity: 0; pointer-events: none; }
-  .chip span { display: inline-block; padding: 0.55rem 0.9rem; border: 1.5px solid var(--line); border-radius: 999px; cursor: pointer; background: var(--paper); font-size: 0.95rem; }
-  .chip input:checked + span { border-color: var(--ink); background: var(--ink); color: var(--paper); }
-  .chip input:focus-visible + span, .opt input:focus-visible + span { outline: 2px solid var(--signal); outline-offset: 2px; }
+  .chip span { display: inline-block; padding: 0.6rem 1rem; border: 1px solid var(--line-2); border-radius: 999px; cursor: pointer; background: #fff; font-size: 0.95rem; transition: border-color 0.15s ease-out, background-color 0.15s ease-out; }
+  .chip span:hover { border-color: var(--green); }
+  .chip input:checked + span { border-color: var(--green); background: var(--green); color: #fff; }
+  .chip input:focus-visible + span, .opt input:focus-visible + span { outline: 2px solid var(--green); outline-offset: 2px; }
   .opts { display: grid; gap: 0.5rem; }
-  .opt span { display: block; padding: 0.8rem 1rem; border: 1.5px solid var(--line); border-radius: var(--radius); cursor: pointer; background: var(--paper); color: var(--ink-2); font-size: 0.95rem; }
+  .opt span { display: block; padding: 0.85rem 1rem; border: 1px solid var(--line-2); border-radius: var(--r); cursor: pointer; background: #fff; color: var(--ink-2); font-size: 0.95rem; }
+  .opt span:hover { border-color: var(--green); }
   .opt strong { color: var(--ink); }
-  .opt input:checked + span { border-color: var(--ink); box-shadow: inset 4px 0 0 var(--signal); }
-  .field { display: grid; gap: 0.35rem; font-weight: 600; font-size: 0.93rem; margin-bottom: 1rem; }
-  input:not([type='radio']), textarea, select { font: 400 1rem/1.4 var(--sans); padding: 0.7rem 0.8rem; border: 1.5px solid var(--line); border-radius: var(--radius); background: #fff; color: var(--ink); width: 100%; }
-  input:focus, textarea:focus, select:focus { border-color: var(--ink); outline: none; }
+  .opt input:checked + span { border-color: var(--green); background: var(--green-tint); box-shadow: inset 0 0 0 1px var(--green); }
+  .field { margin-bottom: 1rem; }
   .row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-  .fine { font-size: var(--step--1); color: var(--ink-3); margin-top: 1rem; }
+  .form .btn { width: 100%; }
+  .fine { font-size: var(--step--1); color: var(--ink-3); margin-top: 1rem; text-align: center; }
   @media (max-width: 860px) { .grid { grid-template-columns: 1fr; } .intro { position: static; } }
   @media (max-width: 520px) { .row { grid-template-columns: 1fr; } }
 </style>
