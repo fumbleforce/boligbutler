@@ -1,0 +1,56 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Crumbs from '../components/Crumbs.astro';
+import CtaBand from '../components/CtaBand.astro';
+
+const projects = (await getCollection('prosjekter')).sort((a, b) => a.data.order - b.data.order);
+const map = new Map<string, { note: string; projects: { id: string; name: string }[] }>();
+for (const p of projects) {
+  for (const e of p.data.equipment) {
+    const cur = map.get(e.name) ?? { note: e.note, projects: [] };
+    cur.projects.push({ id: p.id, name: p.data.navTitle });
+    map.set(e.name, cur);
+  }
+}
+const items = [...map.entries()].sort((a, b) => b[1].projects.length - a[1].projects.length || a[0].localeCompare(b[0], 'nb'));
+---
+<Base title="Utstyr til leie med levering og veiledning" description="Minigraver, dumper, vibroplate, stillas, tilhenger, lift, flishugger og mer. Alt leveres med prosjektkasse og innføring i Horten, Holmestrand, Tønsberg og Re.">
+  <section class="section--tight section">
+    <div class="wrap">
+      <Crumbs items={[{ href: '', label: 'Utstyr' }]} />
+      <div class="section-head">
+        <h1>Utstyr</h1>
+        <p>Listen er kort med vilje. BoligButler har utstyr som brukes i prosjektene huseiere faktisk gjør, og som en privatperson kan bruke trygt etter en innføring. Alt leveres med prosjektkasse.</p>
+      </div>
+      <table>
+        <thead><tr><th scope="col">Utstyr</th><th scope="col">Brukes til</th><th scope="col">Prosjekter</th></tr></thead>
+        <tbody>
+          {items.map(([name, v]) => (
+            <tr>
+              <th scope="row">{name}</th>
+              <td>{v.note}</td>
+              <td>{v.projects.map((p, i) => <>{i > 0 && ', '}<a href={`/prosjekter/${p.id}/`}>{p.name}</a></>)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <p class="note">Usikker på hva du trenger? Start med <a href="/prosjekter/">prosjektet</a>, så følger utstyret av det.</p>
+    </div>
+  </section>
+  <CtaBand />
+</Base>
+<style>
+  h1 { font-size: var(--step-4); }
+  table { width: 100%; border-collapse: collapse; border-top: 1.5px solid var(--ink); }
+  th, td { text-align: left; padding: 1rem 1rem 1rem 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+  thead th { font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-2); font-weight: 600; }
+  tbody th { font-family: var(--serif); font-size: var(--step-1); font-weight: 500; width: 28%; }
+  td { color: var(--ink-2); }
+  .note { margin-top: 2rem; }
+  @media (max-width: 700px) {
+    thead { display: none; }
+    tr { display: grid; padding: 1rem 0; border-bottom: 1px solid var(--line); }
+    th, td { border: 0; padding: 0.15rem 0; width: auto !important; }
+  }
+</style>

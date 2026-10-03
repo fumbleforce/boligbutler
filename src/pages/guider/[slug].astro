@@ -1,0 +1,171 @@
+---
+import { getCollection, getEntry, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Crumbs from '../../components/Crumbs.astro';
+import Faq from '../../components/Faq.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import ProjectIcon from '../../components/ProjectIcon.astro';
+import { site } from '../../data/site';
+
+export async function getStaticPaths() {
+  const guides = await getCollection('guider');
+  return guides.map((g) => ({ params: { slug: g.id }, props: { guide: g } }));
+}
+
+const { guide } = Astro.props;
+const d = guide.data;
+const { Content, headings } = await render(guide);
+const toc = headings.filter((h) => h.depth === 2);
+const project = await getEntry('prosjekter', d.project);
+const related = (await getCollection('guider'))
+  .filter((g) => g.id !== guide.id)
+  .sort((a, b) => Number(b.data.project === d.project) - Number(a.data.project === d.project))
+  .slice(0, 3);
+
+const url = `${site.url}/guider/${guide.id}/`;
+const iso = d.updated.toISOString().slice(0, 10);
+const dateText = d.updated.toLocaleDateString('nb-NO', { day: 'numeric', month: 'long', year: 'numeric' });
+
+const jsonLd: object[] = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: d.title,
+    description: d.description,
+    abstract: d.summary,
+    inLanguage: 'nb-NO',
+    dateModified: iso,
+    datePublished: iso,
+    mainEntityOfPage: url,
+    author: { '@type': 'Organization', name: 'BoligButler', url: site.url },
+    publisher: { '@id': `${site.url}/#virksomhet` },
+    about: project?.data.navTitle,
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Forside', item: `${site.url}/` },
+      { '@type': 'ListItem', position: 2, name: 'Guider', item: `${site.url}/guider/` },
+      { '@type': 'ListItem', position: 3, name: d.title, item: url },
+    ],
+  },
+];
+if (d.steps?.length) {
+  jsonLd.push({
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: d.title,
+    description: d.summary,
+    tool: d.equipment.map((e) => ({ '@type': 'HowToTool', name: e })),
+    step: d.steps.map((s, i) => ({ '@type': 'HowToStep', position: i + 1, name: s.name, text: s.text })),
+  });
+}
+if (d.faq.length) {
+  jsonLd.push({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: d.faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  });
+}
+---
+<Base title={d.title} description={d.description} jsonLd={jsonLd} ogType="article">
+  <article>
+    <header class="head">
+      <div class="narrow">
+        <Crumbs items={[{ href: '/guider/', label: 'Guider' }, { href: '', label: d.title }]} />
+        <h1>{d.title}</h1>
+        <ul class="meta">
+          <li>Vanskelighetsgrad: <strong>{d.difficulty}</strong></li>
+          {d.timeEstimate && <li>Tid: <strong>{d.timeEstimate}</strong></li>}
+          <li>Oppdatert <time datetime={iso}>{dateText}</time></li>
+        </ul>
+        <div class="answer">
+          <p class="label label--signal">Kort svar</p>
+          <p>{d.summary}</p>
+        </div>
+      </div>
+    </header>
+
+    <div class="layout wrap">
+      <aside class="side">
+        {toc.length > 2 && (
+          <nav class="toc" aria-label="Innhold i guiden">
+            <p class="label">I denne guiden</p>
+            <ol>{toc.map((h) => <li><a href={`#${h.slug}`}>{h.text}</a></li>)}</ol>
+          </nav>
+        )}
+        {project && (
+          <div class="rent">
+            <ProjectIcon slug={project.id} size={40} />
+            <p class="label">Prosjekt: {project.data.navTitle}</p>
+            {d.equipment.length > 0 && (
+              <>
+                <p class="rent-h">Utstyr til denne jobben</p>
+                <ul>{d.equipment.map((e) => <li>{e}</li>)}</ul>
+              </>
+            )}
+            <a href={`/prosjekter/${project.id}/`}>Leie med levering og veiledning</a>
+          </div>
+        )}
+      </aside>
+      <div class="prose body">
+        <Content />
+      </div>
+    </div>
+
+    <div class="narrow after">
+      <Faq items={d.faq} heading="Spørsmål folk stiller" />
+      <p class="by">Skrevet av BoligButler, som leier ut utstyr med veiledning til huseiere i Horten, Holmestrand, Tønsberg og Re. Guiden gir generelle råd. Regelverk og forhold på tomta varierer, så sjekk alltid med kommunen ved tvil.</p>
+    </div>
+  </article>
+
+  <section class="section--tight section section--paper2">
+    <div class="wrap">
+      <p class="label">Les videre</p>
+      <ul class="rel">
+        {related.map((g) => (
+          <li><a href={`/guider/${g.id}/`}><span class="r-title">{g.data.title}</span><span class="r-sum">{g.data.description}</span></a></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <CtaBand heading="Vil du ha noen å spørre underveis?" text="Med BoligButler får du utstyret levert, en innføring på stedet og en rådgiver på telefon. Du bestemmer hvor mye hjelp du vil ha." />
+</Base>
+
+<style>
+  .head { padding-block: 2rem 2.5rem; }
+  h1 { font-size: var(--step-4); }
+  .meta { list-style: none; padding: 0; margin: 1rem 0 0; display: flex; flex-wrap: wrap; gap: 0.4rem 1.5rem; font-size: var(--step--1); color: var(--ink-2); }
+  .meta strong { color: var(--ink); font-weight: 600; }
+  .answer { margin-top: 2rem; border-top: 1.5px solid var(--ink); border-bottom: 1px solid var(--line); padding: 1.2rem 0; }
+  .answer p:last-child { font-family: var(--serif); font-size: var(--step-1); line-height: 1.5; margin: 0.4rem 0 0; }
+
+  .layout { display: grid; grid-template-columns: 15rem minmax(0, 44rem); gap: clamp(2rem, 1rem + 4vw, 5rem); justify-content: center; padding-bottom: 3rem; }
+  .side { position: sticky; top: 1.5rem; align-self: start; display: grid; gap: 2rem; font-size: 0.93rem; }
+  .toc ol { list-style: none; padding: 0; margin: 0.6rem 0 0; border-left: 1px solid var(--line); }
+  .toc li a { display: block; padding: 0.3rem 0 0.3rem 0.9rem; text-decoration: none; color: var(--ink-2); line-height: 1.35; }
+  .toc li a:hover { color: var(--ink); box-shadow: inset 2px 0 0 var(--signal); }
+  .rent { background: #fffdf7; border: 1px solid var(--line); border-radius: 8px; padding: 1.1rem 1.2rem; }
+  .rent .label { margin: 0.6rem 0 0; }
+  .rent-h { font-weight: 650; margin: 0.8rem 0 0.2rem; }
+  .rent ul { padding-left: 1.1rem; margin: 0 0 0.9rem; color: var(--ink-2); }
+  .rent a { font-weight: 600; }
+
+  .after { padding-bottom: 3rem; }
+  .by { margin-top: 2.5rem; font-size: var(--step--1); color: var(--ink-3); border-top: 1px solid var(--line); padding-top: 1rem; }
+
+  .rel { list-style: none; padding: 0; margin: 0.8rem 0 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 2rem; }
+  .rel a { display: grid; gap: 0.4rem; padding: 1.2rem 0; border-top: 1px solid var(--ink); text-decoration: none; }
+  .r-title { font-family: var(--serif); font-size: var(--step-1); line-height: 1.25; }
+  .rel a:hover .r-title { text-decoration: underline; text-decoration-color: var(--signal); }
+  .r-sum { color: var(--ink-2); font-size: 0.95rem; }
+
+  @media (max-width: 960px) {
+    .layout { grid-template-columns: minmax(0, 44rem); }
+    .side { position: static; order: 2; }
+    .toc { display: none; }
+    .rel { grid-template-columns: 1fr; }
+  }
+</style>

@@ -1,0 +1,176 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Crumbs from '../../components/Crumbs.astro';
+import ProjectIcon from '../../components/ProjectIcon.astro';
+import Faq from '../../components/Faq.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { site, standardKit } from '../../data/site';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('prosjekter');
+  return projects.map((p) => ({ params: { slug: p.id }, props: { project: p } }));
+}
+
+const { project } = Astro.props;
+const d = project.data;
+const { Content } = await render(project);
+const guides = (await getCollection('guider')).filter((g) => g.data.project === project.id);
+const url = `${site.url}/prosjekter/${project.id}/`;
+const [h1Main, h1Sub] = d.title.split(' – ');
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: d.title,
+    serviceType: d.navTitle,
+    description: d.description,
+    url,
+    provider: { '@id': `${site.url}/#virksomhet` },
+    areaServed: site.areas.map((a) => ({ '@type': 'City', name: a })),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Forside', item: `${site.url}/` },
+      { '@type': 'ListItem', position: 2, name: 'Prosjekter', item: `${site.url}/prosjekter/` },
+      { '@type': 'ListItem', position: 3, name: d.navTitle, item: url },
+    ],
+  },
+  ...(d.faq.length
+    ? [{ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: d.faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) }]
+    : []),
+];
+---
+<Base title={d.title} description={d.description} jsonLd={jsonLd}>
+  <section class="intro">
+    <div class="wrap">
+      <Crumbs items={[{ href: '/prosjekter/', label: 'Prosjekter' }, { href: '', label: d.navTitle }]} />
+      <div class="intro-grid">
+        <div>
+          <p class="say">«{d.customerSays}»</p>
+          <h1>{h1Main}{h1Sub && <span class="visually-hidden"> – </span><span class="h1-sub">{h1Sub.charAt(0).toUpperCase() + h1Sub.slice(1)}</span>}</h1>
+          <p class="lead">{d.lead}</p>
+          <div class="actions">
+            <a class="btn" href={`/kontakt/?prosjekt=${project.id}`}>Få forslag til oppsett <span class="arrow" aria-hidden="true">→</span></a>
+            {guides[0] && <a class="btn btn--ghost" href={`/guider/${guides[0].id}/`}>Les guiden først</a>}
+          </div>
+        </div>
+        <aside class="facts" aria-label="Fakta om prosjektet">
+          <ProjectIcon slug={project.id} size={72} />
+          <dl>
+            <dt>Sesong</dt><dd>{d.season}</dd>
+            <dt>Område</dt><dd>{site.areas.join(', ')}</dd>
+          </dl>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="section--tight section">
+    <div class="wrap two">
+      <div>
+        <p class="label">Utstyr som brukes</p>
+        <h2>Det du trenger, levert dit du skal bruke det.</h2>
+        <table class="eq">
+          <tbody>
+            {d.equipment.map((e) => (
+              <tr><th scope="row">{e.name}</th><td>{e.note}</td></tr>
+            ))}
+          </tbody>
+        </table>
+        <p class="small">Du leier bare det prosjektet ditt faktisk trenger. Ikke alle trenger alt på listen.</p>
+      </div>
+      <div class="butler">
+        <p class="label label--signal">Det BoligButler gjør</p>
+        <ul>{d.butler.map((b) => <li>{b}</li>)}</ul>
+        <div class="kit">
+          <p class="label">I prosjektkassen for {d.navTitle.toLowerCase()}</p>
+          <ul>{d.kit.map((k) => <li>{k}</li>)}</ul>
+          <p class="small">I tillegg til standardkassen med {standardKit.map((g) => g.group.toLowerCase()).slice(0, 4).join(', ')} og mer.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--paper2">
+    <div class="narrow prose">
+      <Content />
+    </div>
+  </section>
+
+  {d.notDiy.length > 0 && (
+    <section class="section--tight section">
+      <div class="narrow">
+        <div class="honest">
+          <p class="label">Ærlig talt</p>
+          <h2>Når du bør overlate det til fagfolk</h2>
+          <ul>{d.notDiy.map((n) => <li>{n}</li>)}</ul>
+          <p>BoligButler sier ifra hvis prosjektet ditt havner her, også om det betyr at du ikke leier noe.</p>
+        </div>
+      </div>
+    </section>
+  )}
+
+  {guides.length > 0 && (
+    <section class="section--tight section">
+      <div class="wrap">
+        <p class="label">Guider for {d.navTitle.toLowerCase()}</p>
+        <ul class="guides">
+          {guides.map((g) => (
+            <li><a href={`/guider/${g.id}/`}><span class="g-title">{g.data.title}</span><span class="g-sum">{g.data.summary}</span></a></li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  <section class="section--tight section">
+    <div class="narrow"><Faq items={d.faq} /></div>
+  </section>
+
+  <CtaBand heading={`Skal du i gang med ${d.navTitle.toLowerCase()}?`} />
+</Base>
+
+<style>
+  .intro { padding-block: 2rem clamp(2.5rem, 2rem + 3vw, 4.5rem); border-bottom: 1px solid var(--line); }
+  .intro-grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 3rem; align-items: end; }
+  .say { font-family: var(--serif); font-style: italic; font-size: var(--step-1); color: var(--signal-ink); margin-bottom: 0.4rem; }
+  h1 { font-size: var(--step-4); max-width: 15em; }
+  .h1-sub { display: block; font-size: 0.45em; line-height: 1.3; color: var(--ink-2); margin-top: 0.4em; }
+  .actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.8rem; }
+  .facts { border-top: 1.5px solid var(--ink); padding-top: 1.25rem; }
+  .facts dl { margin: 1.25rem 0 0; display: grid; grid-template-columns: auto 1fr; gap: 0.6rem 1rem; font-size: 0.95rem; }
+  .facts dt { font-weight: 650; }
+  .facts dd { margin: 0; color: var(--ink-2); }
+
+  .two { display: grid; grid-template-columns: 1.2fr 1fr; gap: clamp(2rem, 1rem + 4vw, 5rem); }
+  h2 { font-size: var(--step-2); }
+  .eq { width: 100%; border-collapse: collapse; border-top: 1.5px solid var(--ink); }
+  .eq th, .eq td { text-align: left; padding: 0.85rem 0.5rem 0.85rem 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .eq th { font-weight: 650; width: 40%; }
+  .eq td { color: var(--ink-2); }
+  .small { font-size: var(--step--1); color: var(--ink-3); margin-top: 0.8rem; }
+  .butler ul { list-style: none; padding: 0; margin: 0.8rem 0 0; counter-reset: b; }
+  .butler > ul > li { counter-increment: b; padding: 0.7rem 0 0.7rem 2.2rem; position: relative; border-bottom: 1px solid var(--line); }
+  .butler > ul > li::before { content: counter(b, decimal-leading-zero); position: absolute; left: 0; top: 0.8rem; font-size: var(--step--1); color: var(--signal-ink); font-variant-numeric: tabular-nums; font-weight: 600; }
+  .kit { margin-top: 2rem; background: #fffdf7; border: 1px solid var(--line); border-radius: 8px; padding: 1.2rem 1.4rem; }
+  .kit ul { margin-top: 0.5rem; }
+  .kit li { padding: 0.3rem 0 0.3rem 1.2rem; position: relative; }
+  .kit li::before { content: ''; position: absolute; left: 0; top: 0.95rem; width: 8px; height: 1.5px; background: var(--signal); }
+
+  .honest { border: 1.5px solid var(--ink); padding: 1.6rem 1.8rem; }
+  .honest ul { padding-left: 1.2rem; }
+  .honest li + li { margin-top: 0.3rem; }
+  .honest p:last-child { color: var(--ink-2); margin: 1rem 0 0; }
+
+  .guides { list-style: none; padding: 0; margin: 0.8rem 0 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr)); gap: 0 2rem; }
+  .guides a { display: grid; gap: 0.4rem; padding: 1.2rem 0; border-top: 1px solid var(--ink); text-decoration: none; }
+  .g-title { font-family: var(--serif); font-size: var(--step-1); line-height: 1.25; }
+  .guides a:hover .g-title { text-decoration: underline; text-decoration-color: var(--signal); }
+  .g-sum { color: var(--ink-2); font-size: 0.95rem; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+
+  @media (max-width: 860px) { .intro-grid, .two { grid-template-columns: 1fr; } }
+</style>

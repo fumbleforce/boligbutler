@@ -1,0 +1,64 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Crumbs from '../../components/Crumbs.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { site } from '../../data/site';
+
+const projects = (await getCollection('prosjekter')).sort((a, b) => a.data.order - b.data.order);
+const guides = await getCollection('guider');
+const groups = projects
+  .map((p) => ({ project: p, items: guides.filter((g) => g.data.project === p.id).sort((a, b) => a.data.title.localeCompare(b.data.title, 'nb')) }))
+  .filter((g) => g.items.length);
+
+const jsonLd = [{
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'Guider for huseiere som gjør det selv',
+  url: `${site.url}/guider/`,
+  hasPart: guides.map((g) => ({ '@type': 'Article', headline: g.data.title, url: `${site.url}/guider/${g.id}/` })),
+}];
+---
+<Base title="Guider: slik gjør du det selv på hus, hage og tomt" description="Praktiske guider om drenering, terrasse, støttemur, plen, maling, stillas, minigraver og tilhenger. Mål, fremgangsmåter og vanlige feil, for deg som gjør jobben selv." jsonLd={jsonLd}>
+  <section class="section--tight section">
+    <div class="wrap">
+      <Crumbs items={[{ href: '', label: 'Guider' }]} />
+      <div class="section-head">
+        <h1>Guider for deg som gjør det selv</h1>
+        <p>Fremgangsmåter, mål og vanlige feil fra prosjekter på hus, hage og tomt. Skrevet slik at du kan bruke dem, også om du aldri leier noe.</p>
+      </div>
+      <p class="tool">Skal du bestille pukk, grus eller jord? <a href="/verktoy/massekalkulator/">Bruk massekalkulatoren</a>.</p>
+      {groups.map(({ project, items }) => (
+        <section class="group" aria-labelledby={`g-${project.id}`}>
+          <h2 id={`g-${project.id}`}><a href={`/prosjekter/${project.id}/`}>{project.data.navTitle}</a></h2>
+          <ul>
+            {items.map((g) => (
+              <li>
+                <a href={`/guider/${g.id}/`}>
+                  <span class="t">{g.data.title}</span>
+                  <span class="s">{g.data.description}</span>
+                  <span class="label">{g.data.difficulty}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
+    </div>
+  </section>
+  <CtaBand />
+</Base>
+<style>
+  h1 { font-size: var(--step-4); }
+  .tool { padding: 1rem 1.2rem; background: var(--card); border-left: 3px solid var(--signal); max-width: 44rem; }
+  .group { display: grid; grid-template-columns: 14rem 1fr; gap: 2rem; border-top: 1.5px solid var(--ink); padding-top: 1.3rem; margin-top: 3rem; }
+  .group h2 { font-size: var(--step-2); }
+  .group h2 a { text-decoration: none; }
+  .group ul { list-style: none; padding: 0; margin: 0; }
+  .group li a { display: grid; gap: 0.3rem; padding: 0 0 1.3rem; margin-bottom: 1.3rem; border-bottom: 1px solid var(--line); text-decoration: none; }
+  .group li:last-child a { border-bottom: 0; margin-bottom: 0; }
+  .t { font-family: var(--serif); font-size: var(--step-1); }
+  .group li a:hover .t { text-decoration: underline; text-decoration-color: var(--signal); }
+  .s { color: var(--ink-2); max-width: 40rem; }
+  @media (max-width: 760px) { .group { grid-template-columns: 1fr; gap: 0.5rem; } }
+</style>

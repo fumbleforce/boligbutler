@@ -1,0 +1,142 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Crumbs from '../../../components/Crumbs.astro';
+import CtaBand from '../../../components/CtaBand.astro';
+import { site } from '../../../data/site';
+
+// Midtverdier fra guiden «Hvor mye pukk, grus og jord trenger du?»
+const materials = [
+  { id: 'grus', name: 'Knust grus med finstoff (0–16, 0–32)', density: 1.8, factor: 1.2 },
+  { id: 'pukk', name: 'Pukk uten finstoff (8–16, 16–32)', density: 1.5, factor: 1.08 },
+  { id: 'forsterkning', name: 'Grov forsterkningspukk (22–120)', density: 1.6, factor: 1.12 },
+  { id: 'sand', name: 'Settesand (0–4, 0–8)', density: 1.6, factor: 1.08 },
+  { id: 'matjord', name: 'Matjord / plenjord', density: 1.2, factor: 1.15 },
+];
+const presets = [
+  { label: 'Bærelag under terrasse/heller', material: 'grus', depth: 20 },
+  { label: 'Plenjord', material: 'matjord', depth: 15 },
+  { label: 'Settelag', material: 'sand', depth: 4 },
+  { label: 'Forsterkningslag gårdsplass', material: 'forsterkning', depth: 40 },
+];
+const jsonLd = [{
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  name: 'Massekalkulator',
+  url: `${site.url}/verktoy/massekalkulator/`,
+  applicationCategory: 'UtilitiesApplication',
+  operatingSystem: 'Alle',
+  inLanguage: 'nb-NO',
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'NOK' },
+  description: 'Regn ut hvor mange kubikk og tonn pukk, grus, sand eller matjord du trenger, med komprimeringsfaktor.',
+}];
+---
+<Base title="Massekalkulator: hvor mye pukk, grus og jord trenger du?" description="Regn ut kubikk og tonn pukk, grus, settesand eller matjord for terrasse, plen, heller og gårdsplass. Med komprimeringsfaktor og typiske lagtykkelser." jsonLd={jsonLd}>
+  <section class="section--tight section">
+    <div class="wrap">
+      <Crumbs items={[{ href: '/guider/', label: 'Guider' }, { href: '', label: 'Massekalkulator' }]} />
+      <div class="section-head">
+        <h1>Massekalkulator</h1>
+        <p>Areal ganger ferdig tykkelse, pluss påslag for komprimering. Resultatet er et anslag. Sjekk alltid hvilken omregning leverandøren bruker.</p>
+      </div>
+
+      <div class="calc" id="calc" data-materials={JSON.stringify(materials)}>
+        <form class="inputs" onsubmit="return false">
+          <p class="label">Hurtigvalg</p>
+          <div class="presets">
+            {presets.map((p) => <button type="button" data-material={p.material} data-depth={p.depth}>{p.label}</button>)}
+          </div>
+          <label>Masse
+            <select name="material">{materials.map((m) => <option value={m.id}>{m.name}</option>)}</select>
+          </label>
+          <div class="row3">
+            <label>Lengde (m)<input name="length" type="number" inputmode="decimal" min="0" step="0.1" value="6" /></label>
+            <label>Bredde (m)<input name="width" type="number" inputmode="decimal" min="0" step="0.1" value="4" /></label>
+            <label>Tykkelse (cm)<input name="depth" type="number" inputmode="decimal" min="0" step="1" value="20" /></label>
+          </div>
+          <label class="check"><input name="compact" type="checkbox" checked /> Massen skal komprimeres</label>
+        </form>
+
+        <div class="out" aria-live="polite">
+          <div class="big"><span id="o-m3">0</span><small>m³ å bestille</small></div>
+          <div class="big"><span id="o-t">0</span><small>tonn, omtrent</small></div>
+          <dl>
+            <dt>Areal</dt><dd id="o-area">0 m²</dd>
+            <dt>Ferdig volum</dt><dd id="o-net">0 m³</dd>
+            <dt>Komprimeringsfaktor</dt><dd id="o-f">1,0</dd>
+            <dt>Vekt per m³, løs</dt><dd id="o-d">0 t</dd>
+          </dl>
+          <p class="hint" id="o-hint"></p>
+        </div>
+      </div>
+
+      <div class="after">
+        <p>Vil du forstå tallene? Les <a href="/guider/beregne-masser/">guiden om å beregne masser</a>, med typiske lagtykkelser for terrasse, plen, drenering og gårdsplass.</p>
+      </div>
+    </div>
+  </section>
+  <CtaBand heading="Skal massene flyttes når de kommer?" text="Dumper, vibroplate og tipphenger fra BoligButler, levert til tomta og med en innføring før du starter." />
+</Base>
+
+<script>
+  const root = document.getElementById('calc');
+  if (root) {
+    const materials = JSON.parse(root.dataset.materials || '[]') as { id: string; density: number; factor: number }[];
+    const f = root.querySelector('form') as HTMLFormElement;
+    const nb = (n: number, d = 1) => n.toLocaleString('nb-NO', { minimumFractionDigits: d, maximumFractionDigits: d });
+    const $ = (id: string) => document.getElementById(id) as HTMLElement;
+    const num = (name: string) => Math.max(0, parseFloat((f.elements.namedItem(name) as HTMLInputElement).value.replace(',', '.')) || 0);
+
+    const update = () => {
+      const m = materials.find((x) => x.id === (f.elements.namedItem('material') as HTMLSelectElement).value)!;
+      const compact = (f.elements.namedItem('compact') as HTMLInputElement).checked;
+      const area = num('length') * num('width');
+      const net = area * (num('depth') / 100);
+      const factor = compact ? m.factor : 1;
+      const order = net * factor;
+      $('o-area').textContent = `${nb(area)} m²`;
+      $('o-net').textContent = `${nb(net, 2)} m³`;
+      $('o-f').textContent = nb(factor, 2);
+      $('o-d').textContent = `${nb(m.density)} t`;
+      $('o-m3').textContent = nb(order);
+      $('o-t').textContent = nb(order * m.density);
+      $('o-hint').textContent = order > 0
+        ? `En liten dumper tar typisk 0,5–1 m³ per tur. Det blir rundt ${Math.ceil(order / 0.75)} turer fra lageret til der massen skal ligge.`
+        : '';
+    };
+
+    f.addEventListener('input', update);
+    root.querySelectorAll<HTMLButtonElement>('.presets button').forEach((b) =>
+      b.addEventListener('click', () => {
+        (f.elements.namedItem('material') as HTMLSelectElement).value = b.dataset.material!;
+        (f.elements.namedItem('depth') as HTMLInputElement).value = b.dataset.depth!;
+        update();
+      }),
+    );
+    update();
+  }
+</script>
+
+<style>
+  h1 { font-size: var(--step-4); }
+  .calc { display: grid; grid-template-columns: 1.2fr 1fr; border: 1.5px solid var(--ink); background: var(--card); }
+  .inputs { padding: clamp(1.25rem, 1rem + 2vw, 2.25rem); display: grid; gap: 1.1rem; align-content: start; }
+  label { display: grid; gap: 0.35rem; font-weight: 600; font-size: 0.93rem; }
+  input:not([type='checkbox']), select { font: 400 1.05rem/1.4 var(--sans); padding: 0.7rem 0.8rem; border: 1.5px solid var(--line); border-radius: var(--radius); background: #fff; color: var(--ink); width: 100%; font-variant-numeric: tabular-nums; }
+  input:focus, select:focus { border-color: var(--ink); outline: none; }
+  .row3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.8rem; }
+  .check { display: flex; align-items: center; gap: 0.6rem; font-weight: 500; }
+  .check input { width: 1.1rem; height: 1.1rem; accent-color: var(--ink); }
+  .presets { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: -0.6rem; }
+  .presets button { font: 500 0.88rem var(--sans); padding: 0.45rem 0.75rem; border: 1px solid var(--line); background: var(--paper); border-radius: 999px; cursor: pointer; color: var(--ink); }
+  .presets button:hover { border-color: var(--ink); }
+  .out { background: var(--forest); color: var(--on-forest); padding: clamp(1.25rem, 1rem + 2vw, 2.25rem); display: grid; gap: 1.25rem; align-content: start; }
+  .big span { display: block; font-family: var(--serif); font-size: var(--step-4); line-height: 1; font-variant-numeric: tabular-nums; }
+  .big small { font-size: var(--step--1); letter-spacing: 0.08em; text-transform: uppercase; color: #b9c2b4; font-weight: 600; }
+  .big:first-child span { color: #f6a27c; }
+  dl { display: grid; grid-template-columns: 1fr auto; gap: 0.4rem 1rem; margin: 0; border-top: 1px solid rgb(234 230 219 / 0.25); padding-top: 1rem; font-size: 0.93rem; }
+  dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; }
+  .hint { font-size: 0.9rem; color: #c9cfc3; margin: 0; }
+  .after { margin-top: 2rem; max-width: 44rem; }
+  @media (max-width: 820px) { .calc { grid-template-columns: 1fr; } }
+  @media (max-width: 460px) { .row3 { grid-template-columns: 1fr 1fr; } }
+</style>

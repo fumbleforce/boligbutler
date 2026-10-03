@@ -1,0 +1,117 @@
+---
+import Base from '../layouts/Base.astro';
+import Crumbs from '../components/Crumbs.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Faq from '../components/Faq.astro';
+import { packages, standardKit, beforeStart, beforeReturn } from '../data/site';
+
+const steps = [
+  { t: 'Du beskriver prosjektet', d: 'Hva skal gjøres, hvor stort er det, og når vil du starte? Et par setninger og gjerne et bilde av stedet holder.' },
+  { t: 'Forslag til oppsett', d: 'BoligButler foreslår utstyr, rekkefølge og hvilket oppsett som passer: Basis, Prosjekt eller Pluss. Du får pris før du bestemmer deg.' },
+  { t: 'Befaring ved behov', d: 'For drenering, støttemur og større gravearbeid er en befaring ofte verdt det. Da ser dere på tilkomst, grunn, masser og hvor vannet skal.' },
+  { t: 'Levering og innføring', d: 'Utstyret leveres dit det skal brukes, sammen med prosjektkassen. Du får en gjennomgang av betjening og sikkerhet før du starter.' },
+  { t: 'Du gjør jobben', d: 'Lurer du på noe underveis, ringer du. I Pluss-oppsettet kommer BoligButler på stedet i de kritiske fasene.' },
+  { t: 'Henting', d: 'Når du er ferdig, hentes utstyret. Sjekklisten «Før du leverer tilbake» gjør returen rask.' },
+];
+const faq = [
+  { q: 'Hva koster det?', a: 'Prisen avhenger av prosjektet, utstyret og hvor lenge du trenger det. Du får et konkret tilbud etter at du har beskrevet prosjektet, før du forplikter deg.' },
+  { q: 'Hva om jeg bare vil leie en maskin?', a: 'Det går fint. Basis-oppsettet er utstyret med levering, prosjektkasse og innføring. Råd får du når du spør om det.' },
+  { q: 'Hva skjer hvis noe går i stykker?', a: 'Si fra med en gang. Mye kan løses på telefon, og BoligButler kommer ut hvis det trengs. Det er bedre å stoppe enn å fortsette med utstyr som ikke fungerer som det skal.' },
+];
+---
+<Base title="Slik fungerer BoligButler" description="Fra du beskriver prosjektet til utstyret hentes igjen: forslag, befaring, levering med innføring, prosjektkasse og en rådgiver du kan ringe. Du bestemmer hvor mye hjelp du vil ha.">
+  <section class="section--tight section">
+    <div class="wrap">
+      <Crumbs items={[{ href: '', label: 'Slik fungerer det' }]} />
+      <div class="section-head">
+        <h1>Slik fungerer det</h1>
+        <p>BoligButler selger ikke maskiner. BoligButler hjelper deg med å gjennomføre et prosjekt, og utstyret er en del av det.</p>
+      </div>
+      <ol class="steps">
+        {steps.map((s, i) => (
+          <li><span class="n">{i + 1}</span><h2>{s.t}</h2><p>{s.d}</p></li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section section--paper2">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="label">Tre oppsett</p>
+        <h2>Basis, Prosjekt eller Pluss</h2>
+        <p>Velg etter hvor mye du kan fra før, og hvor mye som står på spill hvis noe blir feil.</p>
+      </div>
+      <div class="pkgs">
+        {packages.map((p) => (
+          <div class:list={['pkg', { 'pkg--featured': p.featured }]}>
+            <h3>{p.name}</h3>
+            <p>{p.for}</p>
+            <ul>{p.items.map((i) => <li>{i}</li>)}</ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap kit">
+      <div>
+        <p class="label">Prosjektkassen</p>
+        <h2>Småtingene som ellers gir en ekstra tur til butikken</h2>
+        <p class="lead">Kassen følger med alle utleier. Den inneholder det erfaring viser at folk mangler midt i en jobb. Til de største prosjektene kommer en tilleggskasse tilpasset akkurat det prosjektet.</p>
+        <p class="lead">Savner du noe, si fra. Kanskje blir det med i neste versjon.</p>
+      </div>
+      <div class="kit-list">
+        {standardKit.map((g) => (
+          <div><p class="label">{g.group}</p><ul>{g.items.map((i) => <li>{i}</li>)}</ul></div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section--tight section section--paper2">
+    <div class="wrap lists">
+      <div class="sheet">
+        <p class="label label--signal">Laminert ark 1</p>
+        <h2>Før du starter</h2>
+        <ul>{beforeStart.map((i) => <li>{i}</li>)}</ul>
+      </div>
+      <div class="sheet">
+        <p class="label label--signal">Laminert ark 2</p>
+        <h2>Før du leverer tilbake</h2>
+        <ul>{beforeReturn.map((i) => <li>{i}</li>)}</ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section"><div class="narrow"><Faq items={faq} /></div></section>
+  <CtaBand />
+</Base>
+<style>
+  h1 { font-size: var(--step-4); }
+  .steps { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.5rem 2rem; }
+  .steps li { border-top: 1.5px solid var(--ink); padding-top: 1rem; }
+  .n { font-family: var(--serif); font-size: var(--step-3); color: var(--signal-ink); line-height: 1; }
+  .steps h2 { font-size: var(--step-1); margin: 0.6rem 0 0.4rem; }
+  .steps p { color: var(--ink-2); margin: 0; }
+  .pkgs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+  .pkg { border: 1px solid var(--line); background: var(--card); padding: 1.6rem; border-radius: var(--radius); }
+  .pkg--featured { border-color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+  .pkg h3 { font-family: var(--serif); font-size: var(--step-2); font-weight: 500; }
+  .pkg > p { color: var(--ink-2); }
+  .pkg ul { padding-left: 1.1rem; margin: 0; }
+  .pkg li + li { margin-top: 0.4rem; }
+  .kit { display: grid; grid-template-columns: 1fr 1.2fr; gap: 3rem; }
+  .kit h2 { font-size: var(--step-3); }
+  .kit-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem 2rem; }
+  .kit-list > div { border-top: 1px solid var(--ink); padding-top: 0.6rem; }
+  .kit-list ul { list-style: none; padding: 0; margin: 0.4rem 0 0; color: var(--ink-2); }
+  .lists { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .sheet { background: #fffdf7; border: 1px solid var(--line); border-radius: 10px; padding: 1.6rem 1.8rem; box-shadow: 0 16px 30px -22px rgb(0 0 0 / 0.35); }
+  .sheet h2 { font-size: var(--step-2); }
+  .sheet ul { list-style: none; padding: 0; margin: 0; }
+  .sheet li { padding: 0.45rem 0 0.45rem 1.6rem; border-bottom: 1px dashed var(--line); position: relative; }
+  .sheet li::before { content: ''; position: absolute; left: 0; top: 0.75rem; width: 12px; height: 12px; border: 1.5px solid var(--ink); border-radius: 2px; }
+  @media (max-width: 860px) { .steps, .pkgs, .kit, .lists { grid-template-columns: 1fr; } }
+</style>

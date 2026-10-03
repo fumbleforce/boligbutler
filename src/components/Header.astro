@@ -1,0 +1,90 @@
+---
+import { getCollection } from 'astro:content';
+import Wordmark from './Wordmark.astro';
+import { site } from '../data/site';
+
+const projects = (await getCollection('prosjekter')).sort((a, b) => a.data.order - b.data.order);
+const path = Astro.url.pathname;
+const main = [
+  { href: '/guider/', label: 'Guider' },
+  { href: '/slik-fungerer-det/', label: 'Slik fungerer det' },
+  { href: '/utstyr/', label: 'Utstyr' },
+  { href: '/om/', label: 'Om BoligButler' },
+];
+---
+<header class="hdr">
+  <div class="wrap top">
+    <a href="/" class="home" aria-label="BoligButler, til forsiden"><Wordmark /></a>
+    <nav aria-label="Hovedmeny" class="main">
+      <ul>
+        {main.map((l) => (
+          <li><a href={l.href} aria-current={path.startsWith(l.href) ? 'page' : undefined}>{l.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+    <a class="call" href={`tel:${site.phone.replace(/\s/g, '')}`}>{site.phoneDisplay}</a>
+    <a class="btn cta" href="/kontakt/">Start et prosjekt</a>
+    <details class="mobile">
+      <summary aria-label="Meny"><span></span><span></span></summary>
+      <nav aria-label="Mobilmeny">
+        <ul>
+          <li><a href="/prosjekter/">Alle prosjekter</a></li>
+          {main.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+          <li><a href="/kontakt/">Kontakt</a></li>
+          <li><a href={`tel:${site.phone.replace(/\s/g, '')}`}>Ring {site.phoneDisplay}</a></li>
+        </ul>
+      </nav>
+    </details>
+  </div>
+  <nav class="projects" aria-label="Prosjekter">
+    <div class="wrap row">
+      <a href="/prosjekter/" class="ask">Hva skal du gjøre?</a>
+      <ul>
+        {projects.map((p) => (
+          <li><a href={`/prosjekter/${p.id}/`} aria-current={path.startsWith(`/prosjekter/${p.id}/`) ? 'page' : undefined}>{p.data.navTitle}</a></li>
+        ))}
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<style>
+  .hdr { background: var(--paper); border-bottom: 1px solid var(--line); position: relative; z-index: 10; }
+  .top { display: flex; align-items: center; gap: 1.5rem; min-height: 4.25rem; }
+  .home { text-decoration: none; color: var(--ink); margin-right: auto; }
+  .main ul, .projects ul, .mobile ul { list-style: none; margin: 0; padding: 0; }
+  .main ul { display: flex; gap: 1.5rem; }
+  .main a, .projects a { text-decoration: none; font-size: 0.95rem; font-weight: 500; }
+  .main a:hover, .main a[aria-current] { text-decoration: underline; text-decoration-color: var(--signal); }
+  .call { font-weight: 600; text-decoration: none; font-variant-numeric: tabular-nums; }
+  .cta { padding: 0.65em 1em; font-size: 0.92rem; }
+
+  .projects { border-top: 1px solid var(--line); background: var(--paper-2); }
+  .row { display: flex; align-items: center; gap: 1.25rem; min-height: 2.75rem; overflow-x: auto; scrollbar-width: none; }
+  .row::-webkit-scrollbar { display: none; }
+  .ask { font-family: var(--serif); font-style: italic; color: var(--ink-2); white-space: nowrap; font-size: 1rem !important; }
+  .projects ul { display: flex; gap: 1.25rem; }
+  .projects li a { white-space: nowrap; position: relative; padding-block: 0.7rem; display: block; }
+  .projects li a:hover, .projects li a[aria-current] { color: var(--ink); box-shadow: inset 0 -2px 0 var(--signal); }
+
+  .mobile { display: none; position: relative; }
+  .mobile summary { list-style: none; cursor: pointer; width: 2.5rem; height: 2.5rem; display: grid; place-content: center; gap: 6px; }
+  .mobile summary::-webkit-details-marker { display: none; }
+  .mobile summary span { display: block; width: 22px; height: 1.5px; background: var(--ink); transition: transform 0.15s; }
+  .mobile[open] summary span:first-child { transform: translateY(3.75px) rotate(45deg); }
+  .mobile[open] summary span:last-child { transform: translateY(-3.75px) rotate(-45deg); }
+  .mobile nav { position: absolute; right: 0; top: calc(100% + 0.6rem); background: var(--card); border: 1px solid var(--line); min-width: 15rem; padding: 0.5rem 0; box-shadow: 0 12px 30px -12px rgb(0 0 0 / 0.25); }
+  .mobile a { display: block; padding: 0.7rem 1.2rem; text-decoration: none; }
+  .mobile a:hover { background: var(--paper-2); }
+
+  @media (max-width: 960px) {
+    .main, .call { display: none; }
+  }
+  @media (max-width: 600px) {
+    .cta { display: none; }
+    .mobile { display: block; }
+  }
+  @media (min-width: 601px) and (max-width: 960px) {
+    .mobile { display: block; }
+  }
+</style>

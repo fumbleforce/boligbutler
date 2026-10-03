@@ -1,0 +1,66 @@
+---
+import Base from '../layouts/Base.astro';
+import Crumbs from '../components/Crumbs.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { site } from '../data/site';
+
+const principles = [
+  { t: 'Kunden bestemmer', d: 'Det er ditt hus og ditt prosjekt. BoligButler bidrar med utstyr, kompetanse og støtte når du ønsker eller trenger det.' },
+  { t: 'Råd når du spør, instruksjon når det trengs', d: 'BoligButler presser ikke på med råd du ikke har bedt om. Men instruksjon i trygg bruk er en plikt, fordi den hindrer skader på folk, eiendom og utstyr.' },
+  { t: 'Reell verdi, ingen unødvendige kostnader', d: 'Du skal leie det prosjektet ditt trenger, ikke mer. Hvis en jobb bør gjøres av fagfolk, får du vite det.' },
+  { t: 'Enkelt for deg, uansett hvor mye arbeid det krever bak', d: 'Jo mer BoligButler har tenkt gjennom på forhånd, desto enklere blir prosjektet for deg. Det er derfor prosjektkassen finnes.' },
+];
+const never = [
+  'En maskinutleie som konkurrerer på flest maskiner',
+  'En selger som snakker deg opp i pakker du ikke trenger',
+  'En entreprenør som tar over prosjektet ditt',
+];
+---
+<Base title="Om BoligButler" description={`${site.vision} Lokal prosjektpartner for huseiere og hytteeiere i Horten, Holmestrand, Tønsberg og Re.`}>
+  <section class="section--tight section">
+    <div class="wrap">
+      <Crumbs items={[{ href: '', label: 'Om BoligButler' }]} />
+      <div class="top">
+        <h1>Om BoligButler</h1>
+        <blockquote class="vision">
+          <p>{site.vision}</p>
+        </blockquote>
+        <div class="text">
+          <p class="lead">BoligButler startet med en erkjennelse: Folk ringer ikke fordi de trenger en vibroplate. De ringer fordi de skal drenere huset, bygge terrasse eller legge ny plen.</p>
+          <p>Derfor er BoligButler bygget rundt prosjekter. Utstyret er et virkemiddel. Det som gjør forskjellen, er at noen har tenkt gjennom jobben på forhånd, leverer det som trengs og er tilgjengelig når du står med et spørsmål midt i grøfta.</p>
+          <p>BoligButler er lokal og holder til i Vestfold, med kunder i Horten, Holmestrand, Tønsberg og Re. Målgruppen er huseiere og hytteeiere som vil gjøre jobben selv, setter kvalitet og service høyere enn laveste pris, og gjerne vil ha en lokal samarbeidspartner over tid.</p>
+          <!-- TODO: kort presentasjon av personen(e) bak BoligButler, med bilde. Det styrker tillit og lokal SEO. -->
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="section section--paper2">
+    <div class="wrap">
+      <div class="section-head"><p class="label">Forretningsfilosofi</p><h2>Prinsippene BoligButler styrer etter</h2></div>
+      <ol class="pr">{principles.map((p) => <li><h3>{p.t}</h3><p>{p.d}</p></li>)}</ol>
+    </div>
+  </section>
+  <section class="section">
+    <div class="narrow">
+      <p class="label">Det BoligButler aldri skal bli</p>
+      <ul class="never">{never.map((n) => <li>{n}</li>)}</ul>
+      <p class="q">Hver gang BoligButler vurderer noe nytt, er spørsmålet det samme: <em>Blir dette enklere for kunden, eller bare mer imponerende?</em></p>
+    </div>
+  </section>
+  <CtaBand />
+</Base>
+<style>
+  h1 { font-size: var(--step-4); }
+  .top { display: grid; grid-template-columns: 1fr 1.3fr; gap: 1rem 4rem; }
+  .top h1 { grid-column: 1 / -1; }
+  .vision { margin: 0; font-family: var(--serif); font-size: var(--step-2); line-height: 1.3; border-top: 3px solid var(--signal); padding-top: 1rem; }
+  .pr { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem 3rem; counter-reset: p; }
+  .pr li { border-top: 1.5px solid var(--ink); padding-top: 1rem; counter-increment: p; }
+  .pr li::before { content: counter(p, decimal-leading-zero); color: var(--signal-ink); font-size: var(--step--1); font-weight: 600; }
+  .pr h3 { margin-top: 0.4rem; }
+  .pr p { color: var(--ink-2); margin: 0; }
+  .never { list-style: none; padding: 0; margin: 0.8rem 0 0; }
+  .never li { font-family: var(--serif); font-size: var(--step-2); padding: 0.6rem 0; border-bottom: 1px solid var(--line); text-decoration: line-through; text-decoration-color: var(--signal); text-decoration-thickness: 2px; }
+  .q { margin-top: 2rem; font-size: var(--step-1); }
+  @media (max-width: 800px) { .top, .pr { grid-template-columns: 1fr; } }
+</style>

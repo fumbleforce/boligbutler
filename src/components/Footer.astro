@@ -1,0 +1,54 @@
+---
+import { getCollection } from 'astro:content';
+import Wordmark from './Wordmark.astro';
+import { site } from '../data/site';
+
+const projects = (await getCollection('prosjekter')).sort((a, b) => a.data.order - b.data.order);
+const year = new Date().getFullYear();
+---
+<footer class="ftr">
+  <div class="wrap">
+    <div class="ticks"></div>
+    <div class="grid">
+      <div class="about">
+        <Wordmark />
+        <p>{site.vision}</p>
+        <p class="areas">Horten · Holmestrand · Tønsberg · Re</p>
+      </div>
+      <nav aria-label="Prosjekter i bunnteksten">
+        <p class="label">Prosjekter</p>
+        <ul>{projects.map((p) => <li><a href={`/prosjekter/${p.id}/`}>{p.data.navTitle}</a></li>)}</ul>
+      </nav>
+      <nav aria-label="Mer">
+        <p class="label">BoligButler</p>
+        <ul>
+          <li><a href="/slik-fungerer-det/">Slik fungerer det</a></li>
+          <li><a href="/guider/">Guider</a></li>
+          <li><a href="/verktoy/massekalkulator/">Massekalkulator</a></li>
+          <li><a href="/utstyr/">Utstyr</a></li>
+          <li><a href="/om/">Om BoligButler</a></li>
+        </ul>
+      </nav>
+      <div>
+        <p class="label">Kontakt</p>
+        <ul>
+          <li><a href={`tel:${site.phone.replace(/\s/g, '')}`}>{site.phoneDisplay}</a></li>
+          <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
+          <li><a href="/kontakt/">Beskriv prosjektet ditt</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="legal">© {year} BoligButler · Org.nr. {site.orgnr}</p>
+  </div>
+</footer>
+<style>
+  .ftr { padding-block: 0 2rem; margin-top: 0; }
+  .grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 2rem; padding-top: 2.5rem; }
+  .about p { color: var(--ink-2); max-width: 24rem; margin-top: 1rem; }
+  .areas { font-size: var(--step--1); letter-spacing: 0.04em; }
+  ul { list-style: none; padding: 0; margin: 0.6rem 0 0; display: grid; gap: 0.4rem; }
+  a { text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .legal { margin-top: 3rem; font-size: var(--step--1); color: var(--ink-3); }
+  @media (max-width: 800px) { .grid { grid-template-columns: 1fr 1fr; } .about { grid-column: 1 / -1; } }
+</style>

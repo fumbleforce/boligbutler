@@ -1,0 +1,140 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Crumbs from '../components/Crumbs.astro';
+import { site, packages } from '../data/site';
+
+const projects = (await getCollection('prosjekter')).sort((a, b) => a.data.order - b.data.order);
+---
+<Base title="Beskriv prosjektet ditt" description="Fortell BoligButler hva du skal gjøre, så får du forslag til utstyr, oppsett og pris. Horten, Holmestrand, Tønsberg og Re.">
+  <section class="section--tight section">
+    <div class="wrap grid">
+      <div class="intro">
+        <Crumbs items={[{ href: '', label: 'Kontakt' }]} />
+        <h1>Beskriv prosjektet ditt</h1>
+        <p class="lead">Noen få opplysninger er nok. BoligButler svarer med forslag til utstyr, rekkefølge og oppsett, og pris før du bestemmer deg.</p>
+        <dl class="direct">
+          <dt>Telefon</dt><dd><a href={`tel:${site.phone.replace(/\s/g, '')}`}>{site.phoneDisplay}</a></dd>
+          <dt>E-post</dt><dd><a href={`mailto:${site.email}`}>{site.email}</a></dd>
+          <dt>Område</dt><dd>{site.areas.join(', ')}</dd>
+        </dl>
+      </div>
+
+      <!-- TODO: koble skjemaet til en skjematjeneste (f.eks. Formspree, Netlify Forms eller egen e-post-API). Nå åpner det e-postprogrammet med utfylt tekst. -->
+      <form id="plan" class="form" data-email={site.email}>
+        <fieldset>
+          <legend>1. Hva skal du gjøre?</legend>
+          <div class="chips">
+            {projects.map((p) => (
+              <label class="chip"><input type="radio" name="prosjekt" value={p.data.navTitle} data-slug={p.id} required /> <span>{p.data.navTitle}</span></label>
+            ))}
+            <label class="chip"><input type="radio" name="prosjekt" value="Annet" data-slug="annet" /> <span>Noe annet</span></label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>2. Hvor mye hjelp ønsker du?</legend>
+          <div class="opts">
+            {packages.map((p) => (
+              <label class="opt"><input type="radio" name="oppsett" value={p.name} /> <span><strong>{p.name}</strong> {p.for}</span></label>
+            ))}
+            <label class="opt"><input type="radio" name="oppsett" value="Vet ikke ennå" checked /> <span><strong>Vet ikke ennå.</strong> BoligButler foreslår.</span></label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>3. Litt om prosjektet</legend>
+          <label class="field">Beskriv kort hva som skal gjøres
+            <textarea name="beskrivelse" rows="5" placeholder="F.eks. drenere langs to sider av huset, ca. 25 meter, mye leire. Tilkomst med maskin fra innkjørselen."></textarea>
+          </label>
+          <div class="row">
+            <label class="field">Når vil du starte?
+              <select name="tid">
+                <option>Så snart som mulig</option>
+                <option>Innen en måned</option>
+                <option>Neste sesong</option>
+                <option>Jeg planlegger bare foreløpig</option>
+              </select>
+            </label>
+            <label class="field">Sted
+              <select name="kommune">
+                {site.areas.map((a) => <option>{a}</option>)}
+                <option>Annen</option>
+              </select>
+            </label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>4. Hvordan når BoligButler deg?</legend>
+          <div class="row">
+            <label class="field">Navn<input name="navn" autocomplete="name" required /></label>
+            <label class="field">Telefon<input name="telefon" type="tel" autocomplete="tel" required /></label>
+          </div>
+          <label class="field">E-post (valgfritt)<input name="epost" type="email" autocomplete="email" /></label>
+        </fieldset>
+
+        <button class="btn" type="submit">Send forespørsel <span class="arrow" aria-hidden="true">→</span></button>
+        <p class="fine">Opplysningene brukes bare til å svare deg om prosjektet.</p>
+      </form>
+    </div>
+  </section>
+</Base>
+
+<script>
+  const form = document.getElementById('plan') as HTMLFormElement | null;
+  if (form) {
+    const pre = new URLSearchParams(location.search).get('prosjekt');
+    if (pre) {
+      const r = form.querySelector<HTMLInputElement>(`input[data-slug="${CSS.escape(pre)}"]`);
+      if (r) r.checked = true;
+    }
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!form.reportValidity()) return;
+      const fd = new FormData(form);
+      const lines = [
+        `Prosjekt: ${fd.get('prosjekt')}`,
+        `Ønsket oppsett: ${fd.get('oppsett')}`,
+        `Oppstart: ${fd.get('tid')}`,
+        `Kommune: ${fd.get('kommune')}`,
+        '',
+        `${fd.get('beskrivelse') || ''}`,
+        '',
+        `Navn: ${fd.get('navn')}`,
+        `Telefon: ${fd.get('telefon')}`,
+        `E-post: ${fd.get('epost') || ''}`,
+      ];
+      const subject = `Prosjekt: ${fd.get('prosjekt')} (${fd.get('kommune')})`;
+      location.href = `mailto:${form.dataset.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join('\n'))}`;
+    });
+  }
+</script>
+
+<style>
+  .grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: clamp(2rem, 1rem + 4vw, 5rem); align-items: start; }
+  .intro { position: sticky; top: 1.5rem; }
+  h1 { font-size: var(--step-4); }
+  .direct { display: grid; grid-template-columns: auto 1fr; gap: 0.5rem 1.2rem; margin-top: 2rem; border-top: 1.5px solid var(--ink); padding-top: 1.2rem; }
+  .direct dt { font-weight: 650; }
+  .direct dd { margin: 0; }
+  .form { background: var(--card); border: 1px solid var(--line); padding: clamp(1.25rem, 1rem + 2vw, 2.5rem); border-radius: 6px; }
+  fieldset { border: 0; padding: 0; margin: 0 0 2rem; min-width: 0; }
+  legend { font-family: var(--serif); font-size: var(--step-1); margin-bottom: 0.9rem; padding: 0; }
+  .chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .chip input, .opt input { position: absolute; opacity: 0; pointer-events: none; }
+  .chip span { display: inline-block; padding: 0.55rem 0.9rem; border: 1.5px solid var(--line); border-radius: 999px; cursor: pointer; background: var(--paper); font-size: 0.95rem; }
+  .chip input:checked + span { border-color: var(--ink); background: var(--ink); color: var(--paper); }
+  .chip input:focus-visible + span, .opt input:focus-visible + span { outline: 2px solid var(--signal); outline-offset: 2px; }
+  .opts { display: grid; gap: 0.5rem; }
+  .opt span { display: block; padding: 0.8rem 1rem; border: 1.5px solid var(--line); border-radius: var(--radius); cursor: pointer; background: var(--paper); color: var(--ink-2); font-size: 0.95rem; }
+  .opt strong { color: var(--ink); }
+  .opt input:checked + span { border-color: var(--ink); box-shadow: inset 4px 0 0 var(--signal); }
+  .field { display: grid; gap: 0.35rem; font-weight: 600; font-size: 0.93rem; margin-bottom: 1rem; }
+  input:not([type='radio']), textarea, select { font: 400 1rem/1.4 var(--sans); padding: 0.7rem 0.8rem; border: 1.5px solid var(--line); border-radius: var(--radius); background: #fff; color: var(--ink); width: 100%; }
+  input:focus, textarea:focus, select:focus { border-color: var(--ink); outline: none; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .fine { font-size: var(--step--1); color: var(--ink-3); margin-top: 1rem; }
+  @media (max-width: 860px) { .grid { grid-template-columns: 1fr; } .intro { position: static; } }
+  @media (max-width: 520px) { .row { grid-template-columns: 1fr; } }
+</style>
