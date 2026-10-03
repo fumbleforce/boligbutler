@@ -17,6 +17,9 @@ export const site = {
   founder: { name: 'Navn Etternavn', role: 'Grunnlegger og rådgiver' }, // TODO: ekte navn
 };
 
+// Sett til true når eier har bekreftet innholdet i oppsettene. Da fremheves «Prosjekt».
+export const packagesConfirmed = false;
+
 export const packages = [
   {
     name: 'Basis',

@@ -5,7 +5,7 @@ import Icon from '../components/Icon.astro';
 import Photo from '../components/Photo.astro';
 import CtaBand from '../components/CtaBand.astro';
 import Faq from '../components/Faq.astro';
-import { packages, standardKit, beforeStart, beforeReturn } from '../data/site';
+import { packages, packagesConfirmed, standardKit, beforeStart, beforeReturn } from '../data/site';
 
 const steps = [
   { t: 'Du beskriver prosjektet', d: 'Hva skal gjøres, hvor stort er det, og når vil du starte? Et par setninger og gjerne et bilde av stedet holder.' },
@@ -45,7 +45,7 @@ const faq = [
       </div>
       <div class="pkgs">
         {packages.map((p) => (
-          <div class:list={['pkg', { 'pkg--featured': p.featured }]}>
+          <div class:list={['pkg', { 'pkg--featured': packagesConfirmed && p.featured }]}>
             <h3>{p.name}</h3>
             <p>{p.for}</p>
             <ul>{p.items.map((i) => <li><Icon name="check" size={18} /> <span>{i}</span></li>)}</ul>

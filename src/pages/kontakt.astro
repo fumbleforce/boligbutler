@@ -59,7 +59,8 @@ const projects = (await getCollection('prosjekter')).sort((a, b) => a.data.order
               </select>
             </label>
             <label class="field">Kommune
-              <select name="kommune">
+              <select name="kommune" required>
+                <option value="" selected disabled>Velg kommune</option>
                 {site.areas.map((a) => <option>{a}</option>)}
                 <option value="Annet">Utenfor Vestfold</option>
               </select>

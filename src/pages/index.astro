@@ -7,7 +7,7 @@ import ProjectStarter from '../components/ProjectStarter.astro';
 import VestfoldMap from '../components/VestfoldMap.astro';
 import Faq from '../components/Faq.astro';
 import CtaBand from '../components/CtaBand.astro';
-import { site, packages } from '../data/site';
+import { site, packages, packagesConfirmed } from '../data/site';
 
 const projects = (await getCollection('prosjekter')).sort((a, b) => a.data.order - b.data.order);
 const guides = await getCollection('guider');
@@ -151,7 +151,7 @@ const jsonLd = [
       </div>
       <div class="pkgs">
         {packages.map((p) => (
-          <div class:list={['pkg', { 'pkg--featured': p.featured }]}>
+          <div class:list={['pkg', { 'pkg--featured': packagesConfirmed && p.featured }]}>
                         <h3>{p.name}</h3>
             <p class="pkg-for">{p.for}</p>
             <ul>{p.items.map((i) => <li><Icon name="check" size={18} /> <span>{i}</span></li>)}</ul>
