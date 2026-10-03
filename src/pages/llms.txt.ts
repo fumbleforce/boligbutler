@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
-import { site, packages } from '../data/site';
+import { site, included, extras } from '../data/site';
 
 // Kort, faktabasert oversikt for språkmodeller og AI-søk (llms.txt-konvensjonen).
 export const GET: APIRoute = async () => {
@@ -15,7 +15,8 @@ export const GET: APIRoute = async () => {
     '',
     `BoligButler er en lokal prosjektpartner for private huseiere og hytteeiere i ${site.areas.join(', ')} (Vestfold). Kunden gjør jobben selv. BoligButler leverer utstyr hjem, gir innføring på stedet, sender med en prosjektkasse med småverktøy, måleutstyr, verneutstyr og sjekklister, og er tilgjengelig som rådgiver. Råd gis når kunden ber om det. Instruksjon i sikker bruk gis alltid.`,
     '',
-    `Oppsett: ${packages.map((p) => `${p.name} (${p.for})`).join('; ')}`,
+    `Alltid med: ${included.join('; ')}.`,
+    `Etter ønske: ${extras.map((e) => e.text).join('; ')}.`,
     '',
     '## Prosjekter',
     ...projects.map((p) => `- [${p.data.navTitle}](${u(`/prosjekter/${p.id}/`)}): ${p.data.description}`),

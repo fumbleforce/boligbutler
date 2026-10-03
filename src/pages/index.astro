@@ -7,7 +7,7 @@ import ProjectStarter from '../components/ProjectStarter.astro';
 import VestfoldMap from '../components/VestfoldMap.astro';
 import Faq from '../components/Faq.astro';
 import CtaBand from '../components/CtaBand.astro';
-import { site, packages, packagesConfirmed } from '../data/site';
+import { site, included, extras } from '../data/site';
 
 const projects = (await getCollection('prosjekter')).sort((a, b) => a.data.order - b.data.order);
 const guides = await getCollection('guider');
@@ -147,17 +147,18 @@ const jsonLd = [
   <section class="section">
     <div class="wrap">
       <div class="head">
-        <h2>Velg hvor mye hjelp du vil ha</h2>
-        <p>Alle oppsett inkluderer levering, henting og prosjektkasse. Innholdet tilpasses prosjektet ditt i samtalen, og du får pris før du bestemmer deg.</p>
+        <h2>Du bestemmer hvor mye hjelp du vil ha</h2>
+        <p>Utstyret kommer alltid med levering, innføring og prosjektkasse. Resten legger du til hvis du vil, og du får pris før du bestemmer deg.</p>
       </div>
-      <div class="pkgs">
-        {packages.map((p) => (
-          <div class:list={['pkg', { 'pkg--featured': packagesConfirmed && p.featured }]}>
-                        <h3>{p.name}</h3>
-            <p class="pkg-for">{p.for}</p>
-            <ul>{p.items.map((i) => <li><Icon name="check" size={18} /> <span>{i}</span></li>)}</ul>
-          </div>
-        ))}
+      <div class="offer">
+        <div class="offer-col offer-col--base">
+          <h3>Alltid med</h3>
+          <ul>{included.map((i) => <li><Icon name="check" size={18} /> <span>{i}</span></li>)}</ul>
+        </div>
+        <div class="offer-col">
+          <h3>Når du ønsker det</h3>
+          <ul>{extras.map((e) => <li><Icon name="person" size={18} /> <span>{e.text}</span></li>)}</ul>
+        </div>
       </div>
     </div>
   </section>
@@ -264,14 +265,13 @@ const jsonLd = [
   .local :global(.local-map .towns circle:not(.ring)) { stroke: var(--green); }
   .local :global(.local-map .towns .ring) { stroke: #fff; }
 
-  .pkgs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; align-items: start; }
-  .pkg { border: 1px solid var(--line); background: #fff; padding: 1.75rem; border-radius: 12px; position: relative; }
-  .pkg--featured { border: 2px solid var(--green); }
-    .pkg h3 { font-size: var(--step-2); margin-bottom: 0.3rem; }
-  .pkg-for { color: var(--ink-2); }
-  .pkg ul { list-style: none; padding: 0; margin: 1.25rem 0 0; display: grid; gap: 0.6rem; }
-  .pkg li { display: flex; gap: 0.55rem; align-items: flex-start; font-size: 0.97rem; line-height: 1.45; }
-  .pkg li :global(svg) { color: var(--green); flex: none; margin-top: 0.12rem; }
+  .offer { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+  .offer-col { border: 1px solid var(--line); border-radius: 12px; padding: 1.75rem; background: #fff; }
+  .offer-col--base { border: 2px solid var(--green); }
+  .offer-col h3 { font-size: var(--step-2); margin-bottom: 1rem; }
+  .offer-col ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.7rem; }
+  .offer-col li { display: flex; gap: 0.6rem; align-items: flex-start; line-height: 1.45; }
+  .offer-col li :global(svg) { color: var(--green); flex: none; margin-top: 0.12rem; }
 
   .guides { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; }
   .guides a { display: flex; flex-direction: column; gap: 0.5rem; height: 100%; padding: 1.4rem; background: #fff; border: 1px solid var(--line); border-radius: 12px; text-decoration: none; color: var(--ink); transition: border-color 0.15s ease-out, background-color 0.15s ease-out; }
@@ -302,7 +302,7 @@ const jsonLd = [
     :global(.hero-starter) { position: static; width: auto; margin: 0; }
     .hero-media :global(.hero-photo) { aspect-ratio: 16 / 10 !important; }
     .hero-media :global(.hero-photo.photo--empty) { place-content: center; justify-items: center; text-align: center; }
-    .pkgs { grid-template-columns: 1fr; gap: 1.75rem; }
+    .offer { grid-template-columns: 1fr; }
     .projects { grid-template-columns: repeat(2, 1fr); }
     .projects li, .projects li.wide, .projects li:nth-child(n + 6) { grid-column: span 1; }
     .person > :global(.photo) { max-width: 24rem; }

@@ -18,43 +18,21 @@ export const site = {
   founder: { name: 'Erling Eri', role: 'Grunnlegger og rådgiver' },
 };
 
-// Sett til true når eier har bekreftet innholdet i oppsettene. Da fremheves «Prosjekt».
-export const packagesConfirmed = false;
+// Det som alltid følger med når du leier, og hjelp kunden kan legge til etter behov.
+export const included = [
+  'Utstyret levert og hentet hjemme hos deg',
+  'Innføring i trygg bruk før du starter',
+  'Prosjektkasse med måleutstyr, oppmerking, verneutstyr og småverktøy',
+  'Sjekklistene «Før du starter» og «Før du leverer tilbake»',
+  'Noen å ringe når du lurer på noe',
+];
 
-export const packages = [
-  {
-    name: 'Basis',
-    for: 'Du vet hva du skal gjøre og trenger riktig utstyr.',
-    items: [
-      'Utstyret levert og hentet hjemme hos deg',
-      'Innføring i bruk ved levering',
-      'Standard prosjektkasse: måling, oppmerking, verneutstyr og småverktøy',
-      'Sjekklistene «Før du starter» og «Før du leverer tilbake»',
-      'Telefon når du lurer på noe',
-    ],
-  },
-  {
-    name: 'Prosjekt',
-    for: 'Du vil gjøre jobben selv, men ha en plan som holder.',
-    featured: true,
-    items: [
-      'Alt i Basis',
-      'Befaring før oppstart',
-      'Plan for rekkefølge, masser og bortkjøring',
-      'Prosjektspesifikk tilleggskasse',
-      'Utstyret samkjørt, så maskinene står der når du trenger dem',
-    ],
-  },
-  {
-    name: 'Pluss',
-    for: 'Du gjør mesteparten, men vil ha hjelp i de kritiske fasene.',
-    items: [
-      'Alt i Prosjekt',
-      'BoligButler på stedet når det gjelder mest, for eksempel ved utsetting av fall eller fundament',
-      'Praktisk bistand der det er tryggere eller raskere',
-      'Bestilling av masser og bortkjøring',
-    ],
-  },
+export const extras = [
+  { short: 'Befaring før oppstart', text: 'Befaring før oppstart, der dere ser på tilkomst, grunn og hvor vannet skal' },
+  { short: 'Plan for rekkefølge og masser', text: 'Plan for rekkefølge, masser og bortkjøring' },
+  { short: 'Hjelp på stedet', text: 'BoligButler på stedet når det gjelder mest, for eksempel ved utsetting av fall og fundament' },
+  { short: 'Praktisk bistand', text: 'Praktisk bistand der det er tryggere eller raskere at en erfaren gjør jobben' },
+  { short: 'Bestilling av masser', text: 'Bestilling av masser og bortkjøring' },
 ];
 
 export const standardKit = [

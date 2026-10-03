@@ -14,7 +14,7 @@ npm run build    # statiske filer i dist/
 |---|---|
 | `src/content/prosjekter/*.md` | Prosjektsider: utstyr, prosjektkasse, hva BoligButler gjør, når man bør bruke fagfolk, FAQ |
 | `src/content/guider/*.md` | Fagartikler (SEO/GEO). Format: `docs/FORMAT.md` |
-| `src/data/site.ts` | Kontaktinfo, oppsett (Basis/Prosjekt/Pluss), prosjektkasse, sjekklister |
+| `src/data/site.ts` | Kontaktinfo, hva som alltid er med og hjelp etter ønske, prosjektkasse, sjekklister |
 | `src/pages/verktoy/massekalkulator/` | Kalkulator for pukk, grus, sand og jord |
 | `docs/WRITING.md` | Skriveregler og stemme. Les før du skriver nytt innhold |
 | `DESIGN.md` | Designsystemet: farger, typografi, komponenter og regler |
@@ -48,7 +48,7 @@ Kartet over Vestfold er tegnet fra Kartverkets data (CC BY 4.0) og ligger i `src
 - [ ] Koble kontaktskjemaet til en skjematjeneste (nå åpner det e-postprogrammet)
 - [ ] Ekte bilder i `public/bilder/` (se listen over)
 - [ ] Faglig gjennomlesing av guidene, særlig regelverk (SAK10-grenser for terrasse/støttemur, førerkort/tilhenger) og tall
-- [ ] Bekreft innholdet i Basis / Prosjekt / Pluss og hvilket utstyr som faktisk leies ut
+- [ ] Bekreft listene «Alltid med» / «Når du ønsker det» i `src/data/site.ts` og hvilket utstyr som faktisk leies ut
 - [ ] Registrer Google Business-profil og Search Console
 
 ## Publisering (GitHub Pages)

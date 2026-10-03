@@ -20,7 +20,7 @@ BoligButler makes it simpler and safer to succeed with projects on the customer'
 
 ## Positioning
 
-A local project partner, not a machine-rental counter. Equipment arrives with a "butler": delivery, on-site introduction, a project kit with the small things people always lack, laminated checklists ("Før du starter", "Før du leverer tilbake"), and an experienced adviser available by phone or on site. Packages: Basis, Prosjekt, Pluss (contents proposed, to be confirmed by owner).
+A local project partner, not a machine-rental counter. Equipment arrives with a "butler": delivery, on-site introduction, a project kit with the small things people always lack, laminated checklists ("Før du starter", "Før du leverer tilbake"), and an experienced adviser available by phone or on site. No packages (owner declined tiers, 2026-10-03): one offer, with delivery, introduction and project kit always included, and extra help (befaring, plan, on-site help, practical assistance, ordering masses) added on request.
 
 ## Operating Context
 

@@ -2,24 +2,24 @@
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import Crumbs from '../components/Crumbs.astro';
-import { site, packages } from '../data/site';
+import { site, extras } from '../data/site';
 import Icon from '../components/Icon.astro';
 
 const projects = (await getCollection('prosjekter')).sort((a, b) => a.data.order - b.data.order);
 ---
-<Base title="Beskriv prosjektet ditt" description="Fortell BoligButler hva du skal gjøre, så får du forslag til utstyr, oppsett og pris. Levering i hele Vestfold.">
+<Base title="Beskriv prosjektet ditt" description="Fortell BoligButler hva du skal gjøre, så får du forslag til utstyr og pris. Levering i hele Vestfold.">
   <section class="section--tight section page">
     <div class="wrap grid">
       <div class="intro">
         <Crumbs items={[{ href: '', label: 'Kontakt' }]} />
         <h1>Beskriv prosjektet ditt</h1>
-        <p class="lead">Noen få opplysninger er nok. BoligButler svarer med forslag til utstyr, rekkefølge og oppsett, og pris før du bestemmer deg.</p>
+        <p class="lead">Noen få opplysninger er nok. BoligButler svarer med forslag til utstyr og rekkefølge, og pris før du bestemmer deg.</p>
         <ul class="direct">
           <li><Icon name="phone" size={22} /><div><span>Telefon</span><a href={`tel:${site.phone.replace(/\s/g, '')}`}>{site.phoneDisplay}</a></div></li>
           <li><Icon name="mail" size={22} /><div><span>E-post</span><a href={`mailto:${site.email}`}>{site.email}</a></div></li>
           <li><Icon name="pin" size={22} /><div><span>Område</span><strong>Hele Vestfold</strong><small>Base: {site.address.street}, {site.address.postalCode} {site.address.city}</small><small>{site.areas.join(', ')}</small></div></li>
         </ul>
-        <p class="promise">Du får et forslag med utstyr, oppsett og pris. Det er gratis og forplikter deg ikke til noe.</p>
+        <p class="promise">Du får et forslag med utstyr og pris. Det er gratis og forplikter deg ikke til noe.</p>
       </div>
 
       <!-- TODO: koble skjemaet til en skjematjeneste (f.eks. Formspree, Netlify Forms eller egen e-post-API). Nå åpner det e-postprogrammet med utfylt tekst. -->
@@ -35,13 +35,13 @@ const projects = (await getCollection('prosjekter')).sort((a, b) => a.data.order
         </fieldset>
 
         <fieldset>
-          <legend>2. Hvor mye hjelp ønsker du?</legend>
-          <div class="opts">
-            {packages.map((p) => (
-              <label class="opt"><input type="radio" name="oppsett" value={p.name} /> <span><strong>{p.name}</strong> {p.for}</span></label>
+          <legend>2. Ønsker du hjelp utover utstyret? <span class="opt-note">(valgfritt)</span></legend>
+          <div class="chips">
+            {extras.map((e, i) => (
+              <label class="chip"><input type="checkbox" name="hjelp" value={e.short} id={`hjelp-${i}`} /> <span>{e.short}</span></label>
             ))}
-            <label class="opt"><input type="radio" name="oppsett" value="Vet ikke ennå" checked /> <span><strong>Vet ikke ennå.</strong> BoligButler foreslår.</span></label>
           </div>
+          <p class="hint">Levering, innføring og prosjektkasse er alltid med. Er du usikker, la det stå tomt, så foreslår BoligButler.</p>
         </fieldset>
 
         <fieldset>
@@ -101,7 +101,7 @@ const projects = (await getCollection('prosjekter')).sort((a, b) => a.data.order
       const fd = new FormData(form);
       const lines = [
         `Prosjekt: ${fd.get('prosjekt')}`,
-        `Ønsket oppsett: ${fd.get('oppsett')}`,
+        `Ønsket hjelp: ${fd.getAll('hjelp').join(', ') || 'Bare utstyret / vet ikke ennå'}`,
         `Oppstart: ${fd.get('tid')}`,
         `Kommune: ${fd.get('kommune')}`,
         '',
@@ -138,6 +138,8 @@ const projects = (await getCollection('prosjekter')).sort((a, b) => a.data.order
   .chip span:hover { border-color: var(--green); }
   .chip input:checked + span { border-color: var(--green); background: var(--green); color: #fff; }
   .chip input:focus-visible + span, .opt input:focus-visible + span { outline: 2px solid var(--green); outline-offset: 2px; }
+  .opt-note { font-weight: 400; font-size: 0.9rem; color: var(--ink-3); }
+  .hint { font-size: var(--step--1); color: var(--ink-3); margin: 0.75rem 0 0; }
   .opts { display: grid; gap: 0.5rem; }
   .opt span { display: block; padding: 0.85rem 1rem; border: 1px solid var(--line-2); border-radius: var(--r); cursor: pointer; background: #fff; color: var(--ink-2); font-size: 0.95rem; }
   .opt span:hover { border-color: var(--green); }

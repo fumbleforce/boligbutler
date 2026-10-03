@@ -176,7 +176,7 @@ Mostly flat with borders. Two soft shadows exist:
 - **Photo slot** (`Photo.astro`): uses `public/bilder/<name>.(webp|jpg|png)` when present, otherwise a clearly labelled placeholder naming the file to add.
 - **Vestfold map** (`VestfoldMap.astro`): Kartverket municipality outlines (CC BY 4.0) with town markers; themable through `--map-*` custom properties (light on white, inverted on the green band).
 - **Callouts** in guides: `> **Instruksjon:**` renders amber with a warning icon; `> **Råd:**` renders spruce tint with an info icon.
-- **Cards** (guides, steps, packages): white, 1px line, 12px radius; the featured package gets a 2px spruce border.
+- **Cards** (guides, offer columns): white, 1px line, 12px radius; the "Alltid med" column gets a 2px spruce border.
 
 ## Do's and Don'ts
 
