@@ -41,7 +41,8 @@ Kartet over Vestfold er tegnet fra Kartverkets data (CC BY 4.0) og ligger i `src
 
 ## Før lansering (TODO)
 
-- [ ] Telefon, e-post, org.nr. og adresse i `src/data/site.ts`
+- [x] Telefon, org.nr. og adresse lagt inn
+- [ ] E-postadresse (nå plassholder post@boligbutler.no) i `src/data/site.ts`
 - [ ] Endelig domene i `astro.config.mjs` og `src/data/site.ts`
 - [x] Logo lagt inn (emblem i header, full logo på Om-siden)
 - [ ] Koble kontaktskjemaet til en skjematjeneste (nå åpner det e-postprogrammet)

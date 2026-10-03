@@ -17,7 +17,7 @@ const projects = (await getCollection('prosjekter')).sort((a, b) => a.data.order
         <ul class="direct">
           <li><Icon name="phone" size={22} /><div><span>Telefon</span><a href={`tel:${site.phone.replace(/\s/g, '')}`}>{site.phoneDisplay}</a></div></li>
           <li><Icon name="mail" size={22} /><div><span>E-post</span><a href={`mailto:${site.email}`}>{site.email}</a></div></li>
-          <li><Icon name="pin" size={22} /><div><span>Område</span><strong>Hele Vestfold</strong><small>{site.areas.join(', ')}</small></div></li>
+          <li><Icon name="pin" size={22} /><div><span>Område</span><strong>Hele Vestfold</strong><small>Base: {site.address.street}, {site.address.postalCode} {site.address.city}</small><small>{site.areas.join(', ')}</small></div></li>
         </ul>
         <p class="promise">Du får et forslag med utstyr, oppsett og pris. Det er gratis og forplikter deg ikke til noe.</p>
       </div>

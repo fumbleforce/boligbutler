@@ -2,23 +2,25 @@
 // Kart over kommunene i Vestfold. Kartdata: Kartverket (CC BY 4.0), via robhop/fylker-og-kommuner.
 import map from '../data/vestfold-kart.json';
 
-interface Props { class?: string; labels?: boolean }
-const { class: cls, labels = true } = Astro.props;
+interface Props { class?: string; labels?: boolean; base?: string }
+const { class: cls, labels = true, base = 'Horten' } = Astro.props;
 // Etikettplassering: noen navn står til venstre for punktet for å ikke kollidere med kysten
 const left = new Set(['Holmestrand', 'Sandefjord', 'Larvik']);
 ---
 <figure class:list={['map', cls]}>
   <svg viewBox={`-40 -20 ${map.width + 160} ${map.height + 40}`} role="img" aria-labelledby="kart-tittel">
-    <title id="kart-tittel">Kart over Vestfold med kommunene Holmestrand, Horten, Tønsberg, Færder, Sandefjord og Larvik</title>
+    <title id="kart-tittel">Kart over Vestfold med kommunene Holmestrand, Horten, Tønsberg, Færder, Sandefjord og Larvik. BoligButler har base i {base}.</title>
     <g class="land">
       {map.kommuner.map((k) => <path d={k.d}><title>{k.name}</title></path>)}
     </g>
     {labels && (
       <g class="towns">
         {Object.entries(map.towns).map(([name, [x, y]]) => (
-          <g transform={`translate(${x} ${y})`}>
+          <g transform={`translate(${x} ${y})`} class:list={{ base: name === base }}>
+            {name === base && <circle class="ring" r="17" />}
             <circle r="7" />
-            <text x={left.has(name) ? -14 : 14} y="6" text-anchor={left.has(name) ? 'end' : 'start'}>{name}</text>
+            <text x={left.has(name) ? -14 : name === base ? 24 : 14} y="6" text-anchor={left.has(name) ? 'end' : 'start'}>{name}</text>
+            {name === base && <text class="sub" x="24" y="40" text-anchor="start">Base</text>}
           </g>
         ))}
       </g>
@@ -33,5 +35,8 @@ const left = new Set(['Holmestrand', 'Sandefjord', 'Larvik']);
   .land path:hover { fill: var(--map-hover, #b3d4bd); }
   .towns circle { fill: var(--map-dot, var(--green)); stroke: #fff; stroke-width: 3; }
   .towns text { font: 650 36px var(--font); fill: var(--map-text, var(--ink)); paint-order: stroke; stroke: var(--map-halo, #fff); stroke-width: 7px; stroke-linejoin: round; }
+  .towns .ring { fill: none; stroke: var(--map-dot, var(--green)); stroke-width: 3; }
+  .towns .base > circle:not(.ring) { r: 9; }
+  .towns .sub { font-size: 24px; font-weight: 500; }
   figcaption { font-size: 0.75rem; color: var(--map-caption, var(--ink-3)); margin-top: 0.5rem; }
 </style>

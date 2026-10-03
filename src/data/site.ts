@@ -6,11 +6,12 @@ export const site = {
   vision: 'BoligButler skal gjøre det enklere og tryggere å lykkes med prosjekter på kundens egen eiendom.',
   description:
     'BoligButler leier ut utstyr med en erfaren rådgiver på kjøpet, for deg som vil gjøre drenering, terrasse, plen, maling og gravearbeid selv. Levering i hele Vestfold.',
-  phone: '+47 000 00 000', // TODO
-  phoneDisplay: '000 00 000', // TODO
+  legalName: 'Boligbutler Eri',
+  phone: '+4791800200',
+  phoneDisplay: '918 00 200',
   email: 'post@boligbutler.no', // TODO
-  orgnr: '000 000 000', // TODO
-  address: { street: '', postalCode: '', city: '', region: 'Vestfold' }, // TODO
+  orgnr: '934 181 549',
+  address: { street: 'Mullers gate 8', postalCode: '3181', city: 'Horten', region: 'Vestfold' },
   region: 'Vestfold',
   // Kommunene i Vestfold fylke (2024), nord til sør
   areas: ['Holmestrand', 'Horten', 'Tønsberg', 'Færder', 'Sandefjord', 'Larvik'],
