@@ -1,6 +1,6 @@
 # Tilbakemeldinger fra nettsiden
 
-Det finnes to innganger. Begge behandles av den samme timevise rutinen.
+Det finnes to innganger. Ingen timevis polling: Claude vekkes bare når det er noe nytt.
 
 ## 1. Tilbakemeldingssiden (for Erling)
 
@@ -19,6 +19,16 @@ https://claude.ai/artifact/HXyMJAUPpKTeFAgaTWZ4xk
 
 Issues i `fumbleforce/boligbutler` med tittel som starter med «Tilbakemelding» og som er opprettet av `fumbleforce`. Issues fra andre ignoreres.
 
-## Hva rutinen gjør
+## Hvordan Claude vekkes
+
+Når Erling sender en tilbakemelding eller svarer på et spørsmål, lagrer siden innspillet og publiserer deretter en ny versjon av seg selv. Det eneste som endres er tidsstempelet i kommentaren `<!-- sist-innsendt: … -->`. Siden bærer sin egen kildekode (konstanten `SELF`), slik at den kan gjenskape seg selv nøyaktig.
+
+Vedlikeholdsøkten «BoligButler: tilbakemeldinger fra nettsiden» abonnerer på siden med `ArtifactComments` `watch`. En ny versjon vekker økten, og selve sjekken bruker ingen tokens. Claude skriver bare status og svar i databasen og publiserer aldri siden selv, så det blir ingen vekkeløkke.
+
+Kildefil og generator for siden ligger utenfor repoet. Ved endringer i siden må `SELF` genereres på nytt fra malen, ellers publiserer siden en eldre versjon av seg selv.
+
+GitHub-issues sjekkes i samme runde, men vekker ikke Claude alene.
+
+## Hva Claude gjør
 
 Den leser `PRODUCT.md`, `DESIGN.md`, `docs/WRITING.md` og README, gjør endringen, bygger, commiter og pusher til `ccr-23e7f232-rhtwxa`, og svarer der tilbakemeldingen kom fra. Er ønsket uklart eller stort, stiller den et spørsmål i stedet for å gjette.
