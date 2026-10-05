@@ -261,9 +261,9 @@ const jsonLd = [
   .kommuner li { display: flex; gap: 0.5rem; align-items: center; font-weight: 600; font-size: 1.05rem; color: #fff; }
   .kommuner :global(svg) { color: #9fd0b2; }
   .local-note { color: var(--on-green-2); margin: 0; }
-  .local :global(.local-map) { --map-land: #1f7d48; --map-edge: var(--green); --map-hover: #2b8e56; --map-dot: #fff; --map-text: #fff; --map-halo: var(--green); --map-caption: var(--on-green-2); max-width: 26rem; justify-self: center; width: 100%; }
-  .local :global(.local-map .towns circle:not(.ring)) { stroke: var(--green); }
-  .local :global(.local-map .towns .ring) { stroke: #fff; }
+  .local :global(.local-map) { --map-area: #fff; --map-land: #1f7d48; --map-edge: var(--green); --map-hover: #2b8e56; --map-dot: #fff; --map-text: #fff; --map-halo: var(--green); --map-caption: var(--on-green-2); max-width: 26rem; justify-self: center; width: 100%; }
+  .local :global(.local-map .base .dot) { stroke: var(--green); }
+  .local :global(.local-map .base .ring) { stroke: #fff; }
 
   .offer { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
   .offer-col { border: 1px solid var(--line); border-radius: 12px; padding: 1.75rem; background: #fff; }

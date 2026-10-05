@@ -24,7 +24,7 @@ A local project partner, not a machine-rental counter. Equipment arrives with a 
 
 ## Operating Context
 
-Customers start from a project ("Jeg skal drenere huset"), not a machine. Vestfold conditions: clay soils, frost/tele, wet autumns. Service area: primarily Holmestrand in the north to the Tønsberg area in the south and east, base in Horten (owner feedback 2026-10-04; replaces the earlier "all of Vestfold").
+Customers start from a project ("Jeg skal drenere huset"), not a machine. Vestfold conditions: clay soils, frost/tele, wet autumns. Service area: primarily Holmestrand in the north to the Tønsberg area in the south and east, base in Horten (owner feedback 2026-10-04; replaces the earlier "all of Vestfold"). Keep the edges vague: the map shows a soft area around Horten, not pins per town.
 
 ## Capabilities and Constraints
 
@@ -35,7 +35,7 @@ Customers start from a project ("Jeg skal drenere huset"), not a machine. Vestfo
 
 ## Brand Commitments
 
-- Name written "BoligButler". Tone is personal and informal while staying serious and trustworthy (owner feedback 2026-10-04). Erling may speak as "jeg" about himself and the background (Om page); guides and service copy use "BoligButler" as subject, not "vi".
+- Name written "BoligButler". Tone is personal and informal while staying serious and trustworthy (owner feedback 2026-10-04). "Jeg" is used only on the Om page, where Erling speaks about himself and the background; everywhere else "BoligButler" is the subject, never "vi".
 - Owner feedback (docs/TILBAKEMELDING.md) is the authority. When it conflicts with this file, DESIGN.md or docs/WRITING.md, the feedback wins and the files are updated.
 - A logo exists (owner says it fits the direction) but has not been supplied to this repo.
 - Norwegian bokmål, calm, practical, honest tone. See docs/WRITING.md.

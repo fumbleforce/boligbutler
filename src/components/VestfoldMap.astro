@@ -1,30 +1,35 @@
 ---
-// Kart over kommunene i Vestfold. Kartdata: Kartverket (CC BY 4.0), via robhop/fylker-og-kommuner.
+// Kart over Vestfold med et mykt område rundt basen i Horten. Kartdata: Kartverket (CC BY 4.0), via robhop/fylker-og-kommuner.
 import map from '../data/vestfold-kart.json';
-import { site } from '../data/site';
 
 interface Props { class?: string; labels?: boolean; base?: string }
 const { class: cls, labels = true, base = 'Horten' } = Astro.props;
-// Etikettplassering: noen navn står til venstre for punktet for å ikke kollidere med kysten
-const left = new Set(['Holmestrand', 'Sandefjord', 'Larvik']);
-const served = new Set(site.areas);
+const [bx, by] = map.towns[base as keyof typeof map.towns];
+// Området strekker seg fra basen nordover mot Holmestrand og sørover og østover mot Tønsberg-området. Bevisst uskarpt.
+const area = { cx: bx - 65, cy: by + 70, rx: 160, ry: 300, rot: -12 };
+const id = `omr-${Math.random().toString(36).slice(2, 8)}`;
 ---
 <figure class:list={['map', cls]}>
-  <svg viewBox={`-40 -20 ${map.width + 160} ${map.height + 40}`} role="img" aria-labelledby="kart-tittel">
-    <title id="kart-tittel">Kart over Vestfold med kommunene Holmestrand, Horten, Tønsberg, Færder, Sandefjord og Larvik. BoligButler har base i {base} og leverer primært i {site.areas.join(', ')}.</title>
+  <svg viewBox={`-40 -20 ${map.width + 160} ${map.height + 40}`} role="img" aria-labelledby={`${id}-t`}>
+    <title id={`${id}-t`}>Kart over Vestfold. BoligButler har base i {base} og dekker området fra Holmestrand i nord til Tønsberg-området i sør og øst.</title>
+    <defs>
+      <radialGradient id={`${id}-g`}>
+        <stop offset="0" style="stop-color: var(--map-area, var(--green)); stop-opacity: 0.6" />
+        <stop offset="0.7" style="stop-color: var(--map-area, var(--green)); stop-opacity: 0.4" />
+        <stop offset="1" style="stop-color: var(--map-area, var(--green)); stop-opacity: 0" />
+      </radialGradient>
+      <filter id={`${id}-b`} x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="18" /></filter>
+    </defs>
     <g class="land">
-      {map.kommuner.map((k) => <path d={k.d} class:list={{ out: !served.has(k.name) }}><title>{k.name}</title></path>)}
+      {map.kommuner.map((k) => <path d={k.d}><title>{k.name}</title></path>)}
     </g>
+    <ellipse class="area" cx={area.cx} cy={area.cy} rx={area.rx} ry={area.ry} transform={`rotate(${area.rot} ${area.cx} ${area.cy})`} fill={`url(#${id}-g)`} filter={`url(#${id}-b)`} />
     {labels && (
-      <g class="towns">
-        {Object.entries(map.towns).map(([name, [x, y]]) => (
-          <g transform={`translate(${x} ${y})`} class:list={{ base: name === base, out: !served.has(name) }}>
-            {name === base && <circle class="ring" r="17" />}
-            <circle r="7" />
-            <text x={left.has(name) ? -14 : name === base ? 24 : 14} y="6" text-anchor={left.has(name) ? 'end' : 'start'}>{name}</text>
-            {name === base && <text class="sub" x="24" y="40" text-anchor="start">Base</text>}
-          </g>
-        ))}
+      <g class="base" transform={`translate(${bx} ${by})`}>
+        <circle class="ring" r="17" />
+        <circle class="dot" r="9" />
+        <text x="24" y="6">{base}</text>
+        <text class="sub" x="24" y="40">Base</text>
       </g>
     )}
   </svg>
@@ -34,13 +39,11 @@ const served = new Set(site.areas);
   .map { margin: 0; }
   svg { width: 100%; height: auto; overflow: visible; }
   .land path { fill: var(--map-land, #cfe3d4); stroke: var(--map-edge, #fff); stroke-width: 2.5; stroke-linejoin: round; transition: fill 0.15s ease-out; }
+  .area { pointer-events: none; }
   .land path:hover { fill: var(--map-hover, #b3d4bd); }
-  .land path.out { opacity: 0.45; }
-  .towns .out { opacity: 0.5; }
-  .towns circle { fill: var(--map-dot, var(--green)); stroke: #fff; stroke-width: 3; }
-  .towns text { font: 650 36px var(--font); fill: var(--map-text, var(--ink)); paint-order: stroke; stroke: var(--map-halo, #fff); stroke-width: 7px; stroke-linejoin: round; }
-  .towns .ring { fill: none; stroke: var(--map-dot, var(--green)); stroke-width: 3; }
-  .towns .base > circle:not(.ring) { r: 9; }
-  .towns .sub { font-size: 24px; font-weight: 500; }
+  .base .dot { fill: var(--map-dot, var(--green)); stroke: #fff; stroke-width: 3; }
+  .base text { font: 650 36px var(--font); fill: var(--map-text, var(--ink)); paint-order: stroke; stroke: var(--map-halo, #fff); stroke-width: 7px; stroke-linejoin: round; }
+  .base .ring { fill: none; stroke: var(--map-dot, var(--green)); stroke-width: 3; }
+  .base .sub { font-size: 24px; font-weight: 500; }
   figcaption { font-size: 0.75rem; color: var(--map-caption, var(--ink-3)); margin-top: 0.5rem; }
 </style>

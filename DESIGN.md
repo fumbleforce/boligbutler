@@ -174,7 +174,7 @@ Mostly flat with borders. Two soft shadows exist:
 
 - **Project starter** (`ProjectStarter.astro`): GET form to `/kontakt/` with `prosjekt` and `kommune`; works without JavaScript. Floating shadow, no border.
 - **Photo slot** (`Photo.astro`): uses `public/bilder/<name>.(webp|jpg|png)` when present, otherwise a clearly labelled placeholder naming the file to add.
-- **Vestfold map** (`VestfoldMap.astro`): Kartverket municipality outlines (CC BY 4.0) with town markers; themable through `--map-*` custom properties (light on white, inverted on the green band).
+- **Vestfold map** (`VestfoldMap.astro`): Kartverket municipality outlines (CC BY 4.0) with one base marker (Horten) and a soft, blurred area stretching towards Holmestrand and the Tønsberg area (no per-town pins); themable through `--map-*` custom properties (light on white, inverted on the green band).
 - **Callouts** in guides: `> **Instruksjon:**` renders amber with a warning icon; `> **Råd:**` renders spruce tint with an info icon.
 - **Cards** (guides, offer columns): white, 1px line, 12px radius; the "Alltid med" column gets a 2px spruce border.
 
