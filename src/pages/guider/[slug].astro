@@ -99,7 +99,7 @@ if (d.faq.length) {
           <div class="rent">
             <h2 class="side-h">Utstyr til denne jobben</h2>
             {d.equipment.length > 0 && <ul>{d.equipment.map((e) => <li><Icon name="check" size={16} /> {e}</li>)}</ul>}
-            <p class="small">Levert i hele Vestfold, med innføring og prosjektkasse.</p>
+            <p class="small">Levert fra Holmestrand til Tønsberg-området, med innføring og prosjektkasse.</p>
             <a class="btn" href={`/prosjekter/${project.id}/`}>Se {project.data.navTitle.toLowerCase()}</a>
           </div>
         )}
@@ -111,7 +111,7 @@ if (d.faq.length) {
 
     <div class="narrow after">
       <Faq items={d.faq} heading="Spørsmål folk stiller" />
-      <p class="by">Skrevet av BoligButler, som leier ut utstyr med veiledning til huseiere i hele Vestfold. Guiden gir generelle råd. Regelverk og forhold på tomta varierer, så sjekk alltid med kommunen ved tvil.</p>
+      <p class="by">Skrevet av BoligButler, som leier ut utstyr med veiledning til huseiere fra Holmestrand til Tønsberg-området. Guiden gir generelle råd. Regelverk og forhold på tomta varierer, så sjekk alltid med kommunen ved tvil.</p>
     </div>
   </article>
 

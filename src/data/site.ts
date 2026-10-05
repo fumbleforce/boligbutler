@@ -5,7 +5,7 @@ export const site = {
   tagline: 'Veiledning og utstyr til ditt prosjekt',
   vision: 'BoligButler skal gjøre det enklere og tryggere å lykkes med prosjekter på kundens egen eiendom.',
   description:
-    'BoligButler leier ut utstyr med en erfaren rådgiver på kjøpet, for deg som vil gjøre drenering, terrasse, plen, maling og gravearbeid selv. Levering i hele Vestfold.',
+    'BoligButler leier ut utstyr med en erfaren rådgiver på kjøpet, for deg som vil gjøre drenering, terrasse, plen, maling og gravearbeid selv. Levering fra Holmestrand til Tønsberg-området.',
   legalName: 'Boligbutler Eri',
   phone: '+4791800200',
   phoneDisplay: '918 00 200',
@@ -13,8 +13,8 @@ export const site = {
   orgnr: '934 181 549',
   address: { street: 'Mullers gate 8', postalCode: '3181', city: 'Horten', region: 'Vestfold' },
   region: 'Vestfold',
-  // Kommunene i Vestfold fylke (2024), nord til sør
-  areas: ['Holmestrand', 'Horten', 'Tønsberg', 'Færder', 'Sandefjord', 'Larvik'],
+  // Primærområdet, nord til sør (Erling, 2026-10-04): Holmestrand i nord til Tønsberg-området i sør og øst
+  areas: ['Holmestrand', 'Horten', 'Tønsberg'],
   founder: { name: 'Erling Eri', role: 'Grunnlegger og rådgiver' },
 };
 

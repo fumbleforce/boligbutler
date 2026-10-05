@@ -36,16 +36,19 @@ const jsonLd = [{
   about: { '@id': `${site.url}/#virksomhet` },
 }];
 ---
-<Base title="Om BoligButler – lokal prosjektpartner i Vestfold" description={`${site.vision} Lokal prosjektpartner for huseiere og hytteeiere i hele Vestfold.`} jsonLd={jsonLd}>
+<Base title="Om BoligButler – lokal prosjektpartner i Vestfold" description={`${site.vision} Lokal prosjektpartner for huseiere og hytteeiere fra Holmestrand til Tønsberg-området.`} jsonLd={jsonLd}>
   <section class="section--tight section intro">
     <div class="wrap">
       <Crumbs items={[{ href: '', label: 'Om BoligButler' }]} />
       <div class="top">
         <div>
           <h1>En lokal prosjektpartner i Vestfold</h1>
-          <p class="lead">BoligButler startet med en erkjennelse: Folk ringer ikke fordi de trenger en vibroplate. De ringer fordi de skal drenere huset, bygge terrasse eller legge ny plen.</p>
-          <p>Derfor er BoligButler bygget rundt prosjekter. Utstyret er et virkemiddel. Det som gjør forskjellen, er at noen har tenkt gjennom jobben på forhånd, leverer det som trengs og er tilgjengelig når du står med et spørsmål midt i grøfta.</p>
-          <p>BoligButler holder til i Horten og leverer i hele fylket, fra Holmestrand i nord til Larvik i sør. Kundene er huseiere og hytteeiere som vil gjøre jobben selv, setter kvalitet og service høyere enn laveste pris, og gjerne vil ha en lokal samarbeidspartner over tid.</p>
+          <p class="lead">Jeg har alltid likt uttrykket mestring. I et langt arbeidsliv har jeg møtt mange som søker nettopp det, gjerne i nye oppgaver utenfor det vante. Så hvorfor ikke rigge en mulighet til å bidra til noe av dette innenfor et fag jeg alltid har vært glad i?</p>
+          <p>Anleggsgartnerfaget er allsidig. Er du i tillegg litt nysgjerrig, er det mye spennende du kan få til på egen hånd, men kanskje ikke helt alene.</p>
+          <p>Utleiefirmaer får telefoner fra folk som for eksempel vil leie en maskin. Bakgrunnen kan være helt avklart, eller litt usikker fordi oppgaven som skal løses, er ny.</p>
+          <p>Tanken bak BoligButler er å anerkjenne ønsket ditt om å mestre prosjektet selv, og ut fra det gi deg det bidraget og den bistanden du trenger for å gjennomføre det trygt.</p>
+          <p>Derfor er BoligButler bygget rundt prosjekter. Utstyret er et virkemiddel. Det som gjør forskjellen, er at jobben er tenkt gjennom på forhånd, at det som trengs blir levert, og at noen er tilgjengelig når du står med et spørsmål midt i grøfta.</p>
+          <p>BoligButler holder til i Horten og er primært tilgjengelig fra Holmestrand i nord til Tønsberg-området i sør og øst. Kundene er huseiere og hytteeiere som vil gjøre jobben selv, setter kvalitet og service høyere enn laveste pris, og gjerne vil ha en lokal, allsidig samarbeidspartner over tid.</p>
         </div>
         <figure class="founder">
           <Photo name="grunnlegger" alt={`${site.founder.name}, ${site.founder.role.toLowerCase()} i BoligButler`} hint="portrett av grunnleggeren" ratio="4 / 5" eager />
@@ -83,11 +86,11 @@ const jsonLd = [{
   <section class="section">
     <div class="wrap local">
       <div>
-        <h2>Hele Vestfold</h2>
-        <p class="lead">Levering, henting og befaring i alle seks kommunene.</p>
+        <h2>Holmestrand til Tønsberg-området</h2>
+        <p class="lead">Levering, henting og befaring i Holmestrand, Horten og Tønsberg-området.</p>
         <ul class="kommuner">{site.areas.map((a) => <li><Icon name="pin" size={18} /> {a}</li>)}</ul>
         <img class="logo" src="/logo.png" alt="BoligButlers logo: en hånd som holder et hus med planter" width="669" height="552" loading="lazy" />
-        <p class="muted">Kjenner du noen utenfor fylket som trenger hjelp? Ring og spør, så finner dere en løsning.</p>
+        <p class="muted">Bor du litt utenfor området? Ring og spør, så finner dere en løsning.</p>
       </div>
       <VestfoldMap class="om-map" />
     </div>

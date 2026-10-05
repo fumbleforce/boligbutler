@@ -1,22 +1,24 @@
 ---
 // Kart over kommunene i Vestfold. Kartdata: Kartverket (CC BY 4.0), via robhop/fylker-og-kommuner.
 import map from '../data/vestfold-kart.json';
+import { site } from '../data/site';
 
 interface Props { class?: string; labels?: boolean; base?: string }
 const { class: cls, labels = true, base = 'Horten' } = Astro.props;
 // Etikettplassering: noen navn står til venstre for punktet for å ikke kollidere med kysten
 const left = new Set(['Holmestrand', 'Sandefjord', 'Larvik']);
+const served = new Set(site.areas);
 ---
 <figure class:list={['map', cls]}>
   <svg viewBox={`-40 -20 ${map.width + 160} ${map.height + 40}`} role="img" aria-labelledby="kart-tittel">
-    <title id="kart-tittel">Kart over Vestfold med kommunene Holmestrand, Horten, Tønsberg, Færder, Sandefjord og Larvik. BoligButler har base i {base}.</title>
+    <title id="kart-tittel">Kart over Vestfold med kommunene Holmestrand, Horten, Tønsberg, Færder, Sandefjord og Larvik. BoligButler har base i {base} og leverer primært i {site.areas.join(', ')}.</title>
     <g class="land">
-      {map.kommuner.map((k) => <path d={k.d}><title>{k.name}</title></path>)}
+      {map.kommuner.map((k) => <path d={k.d} class:list={{ out: !served.has(k.name) }}><title>{k.name}</title></path>)}
     </g>
     {labels && (
       <g class="towns">
         {Object.entries(map.towns).map(([name, [x, y]]) => (
-          <g transform={`translate(${x} ${y})`} class:list={{ base: name === base }}>
+          <g transform={`translate(${x} ${y})`} class:list={{ base: name === base, out: !served.has(name) }}>
             {name === base && <circle class="ring" r="17" />}
             <circle r="7" />
             <text x={left.has(name) ? -14 : name === base ? 24 : 14} y="6" text-anchor={left.has(name) ? 'end' : 'start'}>{name}</text>
@@ -33,6 +35,8 @@ const left = new Set(['Holmestrand', 'Sandefjord', 'Larvik']);
   svg { width: 100%; height: auto; overflow: visible; }
   .land path { fill: var(--map-land, #cfe3d4); stroke: var(--map-edge, #fff); stroke-width: 2.5; stroke-linejoin: round; transition: fill 0.15s ease-out; }
   .land path:hover { fill: var(--map-hover, #b3d4bd); }
+  .land path.out { opacity: 0.45; }
+  .towns .out { opacity: 0.5; }
   .towns circle { fill: var(--map-dot, var(--green)); stroke: #fff; stroke-width: 3; }
   .towns text { font: 650 36px var(--font); fill: var(--map-text, var(--ink)); paint-order: stroke; stroke: var(--map-halo, #fff); stroke-width: 7px; stroke-linejoin: round; }
   .towns .ring { fill: none; stroke: var(--map-dot, var(--green)); stroke-width: 3; }

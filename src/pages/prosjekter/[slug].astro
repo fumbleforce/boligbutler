@@ -55,7 +55,7 @@ const jsonLd = [
           <h1>{h1Main}{h1Sub && <span class="visually-hidden"> – </span><span class="h1-sub">{h1Sub.charAt(0).toUpperCase() + h1Sub.slice(1)}</span>}</h1>
           <p class="lead">{d.lead}</p>
           <dl class="facts">
-            <div><dt><Icon name="pin" size={18} /> Område</dt><dd>Hele Vestfold</dd></div>
+            <div><dt><Icon name="pin" size={18} /> Område</dt><dd>Holmestrand til Tønsberg-området</dd></div>
             <div><dt><Icon name="list" size={18} /> Sesong</dt><dd>{d.season}</dd></div>
           </dl>
           {guides[0] && <p class="read">Vil du forstå jobben først? <a href={`/guider/${guides[0].id}/`}>Les guiden: {guides[0].data.title}</a></p>}

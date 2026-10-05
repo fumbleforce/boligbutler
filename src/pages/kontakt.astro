@@ -7,7 +7,7 @@ import Icon from '../components/Icon.astro';
 
 const projects = (await getCollection('prosjekter')).sort((a, b) => a.data.order - b.data.order);
 ---
-<Base title="Beskriv prosjektet ditt" description="Fortell BoligButler hva du skal gjøre, så får du forslag til utstyr og pris. Levering i hele Vestfold.">
+<Base title="Beskriv prosjektet ditt" description="Fortell BoligButler hva du skal gjøre, så får du forslag til utstyr og pris. Levering fra Holmestrand til Tønsberg-området.">
   <section class="section--tight section page">
     <div class="wrap grid">
       <div class="intro">
@@ -17,7 +17,7 @@ const projects = (await getCollection('prosjekter')).sort((a, b) => a.data.order
         <ul class="direct">
           <li><Icon name="phone" size={22} /><div><span>Telefon</span><a href={`tel:${site.phone.replace(/\s/g, '')}`}>{site.phoneDisplay}</a></div></li>
           <li><Icon name="mail" size={22} /><div><span>E-post</span><a href={`mailto:${site.email}`}>{site.email}</a></div></li>
-          <li><Icon name="pin" size={22} /><div><span>Område</span><strong>Hele Vestfold</strong><small>Base: {site.address.street}, {site.address.postalCode} {site.address.city}</small><small>{site.areas.join(', ')}</small></div></li>
+          <li><Icon name="pin" size={22} /><div><span>Område</span><strong>Holmestrand til Tønsberg-området</strong><small>Base: {site.address.street}, {site.address.postalCode} {site.address.city}</small><small>{site.areas.join(', ')}</small></div></li>
         </ul>
         <p class="promise">Du får et forslag med utstyr og pris. Det er gratis og forplikter deg ikke til noe.</p>
       </div>

@@ -1,14 +1,18 @@
 # Skriveregler for BoligButler (gjelder alt innhold)
 
+Tilbakemeldinger fra Erling (tilbakemeldingssiden og GitHub-issues) er autoriteten. Når en tilbakemelding går mot noe her, gjelder tilbakemeldingen, og denne filen oppdateres slik at den stemmer.
+
 ## Hvem BoligButler er
-- BoligButler er en lokal prosjektpartner i Vestfold, med levering i hele fylket (Holmestrand, Horten, Tønsberg, Færder, Sandefjord og Larvik).
+- BoligButler er en lokal prosjektpartner med base i Horten. Primærområdet er Holmestrand i nord til Tønsberg-området i sør og øst (Erling, 2026-10-04).
 - BoligButler selger prosjektet, ikke utstyret: leie av utstyr (stillas, minigraver, dumper, vibroplate, tilhenger, lift, flishugger, jordfres, laser m.m.) kommer med en "butler": en kompetent rådgiver som leverer, viser, og kan komme på befaring.
 - Kunden bestemmer. Råd gis når de etterspørres, veiledning når det er naturlig, INSTRUKSJON gis alltid når det trengs for å hindre personskade, materielle skader eller feil bruk av utstyr.
 - Visjon: «BoligButler skal gjøre det enklere og tryggere å lykkes med prosjekter på kundens egen eiendom.»
 
 ## Stemme
 - Norsk bokmål. Tiltal leseren med «du».
-- Aldri «vi» eller «jeg» om virksomheten. Skriv «BoligButler» som subjekt.
+- Personlig og uformell, uten at det går på bekostning av seriøsitet, tillit og profesjonalitet (Erling, 2026-10-04).
+- Erling kan skrive i jeg-form der han forteller om seg selv, bakgrunnen og hvorfor BoligButler finnes, særlig på Om-siden. Tekst Erling har skrevet selv, beholdes nær ordrett; rett bare skrivefeil.
+- I faglige guider og tjenestetekster er «BoligButler» fortsatt subjekt. Unngå «vi».
 - Rolig, saklig, håndverkeraktig. Som en erfaren nabo som vet hva han snakker om.
 - Konkret: mål, tall, enheter, rekkefølge, typiske feil. Heller én presis setning enn tre generelle.
 - Ærlig om når noe IKKE bør gjøres selv (f.eks. fukt i kjeller med setningsskader, mur over visse høyder, trær nær strømlinjer).

@@ -24,13 +24,13 @@ const gear: { name: string; label: string; alt: string; fit?: 'cover' | 'contain
 ];
 const items = [...map.entries()].sort((a, b) => b[1].projects.length - a[1].projects.length || a[0].localeCompare(b[0], 'nb'));
 ---
-<Base title="Utstyr til leie med levering og veiledning" description="Minigraver, dumper, vibroplate, stillas, tilhenger, lift, flishugger og mer. Levert i hele Vestfold, med prosjektkasse og innføring.">
+<Base title="Utstyr til leie med levering og veiledning" description="Minigraver, dumper, vibroplate, stillas, tilhenger, lift, flishugger og mer. Levert fra Holmestrand til Tønsberg-området, med prosjektkasse og innføring.">
   <section class="section--tight section">
     <div class="wrap">
       <Crumbs items={[{ href: '', label: 'Utstyr' }]} />
             <div class="head">
         <h1>Utstyr</h1>
-        <p>Listen er kort med vilje. BoligButler har utstyr som brukes i prosjektene huseiere faktisk gjør, og som en privatperson kan bruke trygt etter en innføring. Alt leveres og hentes i hele Vestfold, med prosjektkasse.</p>
+        <p>Listen er kort med vilje. BoligButler har utstyr som brukes i prosjektene huseiere faktisk gjør, og som en privatperson kan bruke trygt etter en innføring. Alt leveres og hentes fra Holmestrand til Tønsberg-området, med prosjektkasse.</p>
       </div>
       <ul class="gear">
         {gear.map((g) => (

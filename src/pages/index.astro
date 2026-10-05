@@ -24,7 +24,7 @@ const steps = [
 
 const faq = [
   { q: 'Hva er forskjellen på BoligButler og et vanlig maskinutleie?', a: 'BoligButler tar utgangspunkt i prosjektet ditt, ikke i maskinen. Du får utstyret levert, en innføring på stedet, en prosjektkasse med det som pleier å mangle, og en rådgiver du kan ringe eller få på befaring.' },
-  { q: 'Leverer dere i hele Vestfold?', a: `Ja. BoligButler leverer og henter i alle kommunene i Vestfold: ${site.areas.join(', ')}. Bor du like utenfor fylket, ta kontakt, så finner dere en løsning.` },
+  { q: 'Hvor leverer BoligButler?', a: `Primært fra Holmestrand i nord til Tønsberg-området i sør og øst: ${site.areas.join(', ')}. Bor du litt utenfor, ta kontakt, så finner dere en løsning.` },
   { q: 'Må jeg kjøpe rådgivning for å leie utstyr?', a: 'Nei. Kunden bestemmer. Råd gir BoligButler når du spør. Instruksjon i trygg bruk av utstyret får du alltid, fordi det handler om sikkerheten din.' },
   { q: 'Hva koster det?', a: 'Prisen avhenger av prosjektet, utstyret og hvor lenge du trenger det. Du får et konkret tilbud før du bestemmer deg, og det er gratis å spørre.' },
 ];
@@ -40,7 +40,7 @@ const jsonLd = [
 ---
 <Base
   title="BoligButler – utstyr med rådgiver for hjemmeprosjekter i Vestfold"
-  description="Lei minigraver, stillas, henger og mer med levering i hele Vestfold. BoligButler gir innføring på stedet og veiledning underveis, for deg som gjør prosjektet selv."
+  description="Lei minigraver, stillas, henger og mer med levering fra Holmestrand til Tønsberg-området. BoligButler gir innføring på stedet og veiledning underveis, for deg som gjør prosjektet selv."
   jsonLd={jsonLd}
 >
   <section class="hero">
@@ -48,7 +48,7 @@ const jsonLd = [
       <div class="hero-text">
         <h1>Veiledning og utstyr til ditt prosjekt</h1>
         <p class="lead">
-          Minigraver, stillas, henger og annet utstyr levert hjem i hele Vestfold, med en erfaren rådgiver som viser deg hvordan og er tilgjengelig underveis.
+          Minigraver, stillas, henger og annet utstyr levert hjem fra Holmestrand til Tønsberg-området, med en erfaren rådgiver som viser deg hvordan og er tilgjengelig underveis.
         </p>
         <ul class="promises">
           <li><Icon name="check" size={20} /> Levert og hentet hjemme hos deg</li>
@@ -66,7 +66,7 @@ const jsonLd = [
 
   <section class="assure" aria-label="Dette får du med BoligButler">
     <ul class="wrap assure-row">
-      <li><Icon name="pin" size={26} /><div><strong>Lokal i Vestfold</strong><span>Levering fra Holmestrand til Larvik</span></div></li>
+      <li><Icon name="pin" size={26} /><div><strong>Lokal i Vestfold</strong><span>Levering fra Holmestrand til Tønsberg</span></div></li>
       <li><Icon name="person" size={26} /><div><strong>En rådgiver du kan ringe</strong><span>Råd når du spør, hjelp når du trenger det</span></div></li>
       <li><Icon name="kit" size={26} /><div><strong>Prosjektkasse følger med</strong><span>Måleutstyr, verneutstyr og småverktøy</span></div></li>
       <li><Icon name="warning" size={26} /><div><strong>Sikkerhet er ikke valgfritt</strong><span>Alltid instruksjon i trygg bruk</span></div></li>
@@ -133,12 +133,12 @@ const jsonLd = [
   <section class="section section--green local">
     <div class="wrap local-grid">
       <div class="local-text">
-        <h2>Lokal i hele Vestfold</h2>
-        <p class="local-lead">BoligButler holder til i Horten og leverer, henter og kommer på befaring i alle kommunene i fylket. Kjent med leirjorda, kystklimaet og tomtene her.</p>
+        <h2>Lokal i Horten og omegn</h2>
+        <p class="local-lead">BoligButler holder til i Horten og leverer, henter og kommer på befaring fra Holmestrand i nord til Tønsberg-området i sør og øst. Kjent med leirjorda, kystklimaet og tomtene her.</p>
         <ul class="kommuner">
           {site.areas.map((a) => <li><Icon name="check" size={18} /> {a}</li>)}
         </ul>
-        <p class="local-note">Bor du like utenfor Vestfold? <a href={tel}>Ring og spør</a>.</p>
+        <p class="local-note">Bor du litt utenfor? <a href={tel}>Ring og spør</a>.</p>
       </div>
       <VestfoldMap class="local-map" />
     </div>

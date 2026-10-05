@@ -1,6 +1,6 @@
 ---
 name: BoligButler
-description: Utstyr med rådgiver for hjemmeprosjekter i hele Vestfold
+description: Utstyr med rådgiver for hjemmeprosjekter fra Holmestrand til Tønsberg-området
 colors:
   spruce: "#00652f"
   spruce-deep: "#004a22"
@@ -101,7 +101,7 @@ components:
 
 **Creative North Star: "Den lokale fagmannen, gjort ordentlig"**
 
-The category standard for a trusted Norwegian tradesperson site, played straight and finished with care. White pages, one spruce green that carries every action, real photographs of real people and equipment, and a visible phone number. Trust comes from plainness, specificity and local proof (the Vestfold map, the six municipalities, a named person), never from decoration.
+The category standard for a trusted Norwegian tradesperson site, played straight and finished with care. White pages, one spruce green that carries every action, real photographs of real people and equipment, and a visible phone number. Trust comes from plainness, specificity and local proof (the Vestfold map with the municipalities BoligButler serves, a named person), never from decoration.
 
 Chosen by the owner on 2026-10-03 over two more expressive directions. Rejected: the warm-cream editorial look with a serif display and a clay accent (the first draft), and the high-vis yellow rental-counter look.
 

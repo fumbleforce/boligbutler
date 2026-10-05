@@ -31,4 +31,7 @@ GitHub-issues sjekkes i samme runde, men vekker ikke Claude alene.
 
 ## Hva Claude gjør
 
+Tilbakemeldingene er autoriteten. Går en tilbakemelding mot `PRODUCT.md`, `DESIGN.md` eller `docs/WRITING.md`, følger Claude tilbakemeldingen og oppdaterer reglene i samme commit.
+
+
 Den leser `PRODUCT.md`, `DESIGN.md`, `docs/WRITING.md` og README, gjør endringen, bygger, commiter og pusher til `ccr-23e7f232-rhtwxa`, og svarer der tilbakemeldingen kom fra. Er ønsket uklart eller stort, stiller den et spørsmål i stedet for å gjette.

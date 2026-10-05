@@ -140,4 +140,4 @@ Legg aldri stein på frossen grunn eller på masser som har frosset. Det setter 
 
 ## Utstyret til jobben
 
-Utgraving og massetransport er den tunge delen. BoligButler leier ut minigraver, dumper, vibroplate og tilhenger i hele Vestfold, og en rådgiver kan komme på befaring for å se på grunnforhold, fall og avrenning før du graver. Mer om hele prosjektet finner du på [prosjektsiden for belegningsstein](/prosjekter/belegningsstein/).
+Utgraving og massetransport er den tunge delen. BoligButler leier ut minigraver, dumper, vibroplate og tilhenger fra Holmestrand til Tønsberg-området, og en rådgiver kan komme på befaring for å se på grunnforhold, fall og avrenning før du graver. Mer om hele prosjektet finner du på [prosjektsiden for belegningsstein](/prosjekter/belegningsstein/).
