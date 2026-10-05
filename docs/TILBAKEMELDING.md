@@ -12,7 +12,7 @@ https://claude.ai/artifact/HXyMJAUPpKTeFAgaTWZ4xk
 - Data ligger i sidens database (`ArtifactData`-verktøyet):
   - `tilbakemeldinger/<id>`: `{tekst, side, opprettet, status, antallBilder, svar: [{fra, tekst, tid}]}`
   - `tilbakemeldinger/<id>/bilder/<nn>`: `{navn, data (data-URL, JPEG), bredde, hoyde}`
-  - `status`: `ny` → `arbeid` → `ferdig`, eller `sporsmal` når Claude trenger svar. Når Erling svarer, settes status tilbake til `ny`.
+  - `status`: `ny` → `arbeid` → `ferdig`, eller `sporsmal` når Claude venter på svar fra Jørgen (se under).
   - `svar[].fra`: `claude` eller `erling`.
 
 ## 2. GitHub-issues (for deg med GitHub-konto)
@@ -34,4 +34,6 @@ GitHub-issues sjekkes i samme runde, men vekker ikke Claude alene.
 Tilbakemeldingene er autoriteten. Går en tilbakemelding mot `PRODUCT.md`, `DESIGN.md` eller `docs/WRITING.md`, følger Claude tilbakemeldingen og oppdaterer reglene i samme commit.
 
 
-Den leser `PRODUCT.md`, `DESIGN.md`, `docs/WRITING.md` og README, gjør endringen, bygger, commiter og pusher til `ccr-23e7f232-rhtwxa`, og svarer der tilbakemeldingen kom fra. Er ønsket uklart eller stort, stiller den et spørsmål i stedet for å gjette.
+Den leser `PRODUCT.md`, `DESIGN.md`, `docs/WRITING.md` og README, gjør endringen, bygger, commiter og pusher til `ccr-23e7f232-rhtwxa`, og skriver et kort svar i `svar` som logg over hva som ble gjort.
+
+Erling leser ikke svarene; han bare sender inn skjemaer. Spørsmål skal derfor ikke stilles til ham på siden. Er ønsket uklart, stort eller mangler fakta, gjør Claude det som er tydelig, setter status `sporsmal` og stiller spørsmålet til Jørgen i vedlikeholdsøkten. Svaret derfra er like gyldig som en tilbakemelding.
