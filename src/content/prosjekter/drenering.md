@@ -8,7 +8,7 @@ customerSays: "Jeg skal drenere huset."
 season: "April til november. Unngå tele og perioder med mye nedbør når grøfta står åpen."
 equipment:
   - name: Minigraver
-    note: "1,5–3 tonn, valgt etter tilkomst og dybde"
+    note: "Fra 2–3 tonn, stor nok til å nå ned, valgt etter tilkomst og dybde"
   - name: Dumper
     note: "Flytter masser fra grøft til mellomlager"
   - name: Rotasjonslaser

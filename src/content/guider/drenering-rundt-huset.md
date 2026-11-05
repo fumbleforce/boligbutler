@@ -60,7 +60,7 @@ Bestem hvor vannet skal før du graver. Vanlige løsninger er tilkobling til kom
 
 ### Utstyr og masser
 
-En minigraver på 1,5–2,5 tonn er vanlig for dreneringsjobber. Den kommer seg rundt huset og graver dypt nok for de fleste fundamenter. En dumper sparer mye tid hvis massene skal flyttes langt. Laser gjør det enkelt å legge røret med jevnt fall. For å beregne pukk, se [beregne masser](/guider/beregne-masser/) eller [massekalkulatoren](/verktoy/massekalkulator/).
+En minigraver er vanlig til dreneringsjobber, men den må være stor nok til å nå ned og la deg grave på en god måte, for eksempel en maskin fra 2–3 tonn. Den er smidig, kommer seg rundt huset og graver dypt nok for de fleste fundamenter. En dumper sparer mye tid hvis massene skal flyttes langt. Laser gjør det enkelt å legge røret med jevnt fall. For å beregne pukk, se [beregne masser](/guider/beregne-masser/) eller [massekalkulatoren](/verktoy/massekalkulator/).
 
 ## Steg for steg
 
