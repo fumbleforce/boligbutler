@@ -8,7 +8,7 @@ import rehypeCallouts from './src/lib/rehype-callouts.mjs';
 
 // Standard: eget domene i rotmappen. For GitHub Pages uten eget domene settes
 // SITE_URL=https://fumbleforce.github.io og BASE_PATH=/boligbutler i byggejobben.
-const SITE_URL = process.env.SITE_URL || 'https://www.boligbutler.no';
+const SITE_URL = process.env.SITE_URL || 'https://boligbutler.no';
 const BASE = (process.env.BASE_PATH || '').replace(/\/$/, '');
 
 // Lenkene i koden er skrevet fra rotmappen (/guider/...). Når siden ligger i en

@@ -1,20 +1,28 @@
 ---
-// Tilbakemeldingsknapp. Vises bare i forhåndsvisningen (bygg med BASE_PATH), aldri på det offentlige domenet.
+// Tilbakemeldingsknapp. Skjult for vanlige besøkende. Åpne en side med ?tilbakemelding én gang, så vises
+// knappen i den nettleseren fra da av (lagret i localStorage). ?tilbakemelding=av skjuler den igjen.
 // Knappen åpner tilbakemeldingssiden på claude.ai (krever innlogging og deling). Siden du står på sendes
 // med som #anker (f.eks. #prosjekter.drenering), så den er forhåndsvalgt i skjemaet.
-const show = import.meta.env.BASE_URL !== '/';
 const FEEDBACK_URL = 'https://claude.ai/artifact/HXyMJAUPpKTeFAgaTWZ4xk';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const path = Astro.url.pathname.startsWith(base) ? Astro.url.pathname.slice(base.length) || '/' : Astro.url.pathname;
 const token = path === '/' ? 'forside' : path.replace(/^\/|\/$/g, '').split('/').join('.');
 const href = `${FEEDBACK_URL}#${token}`;
 ---
-{show && (
-  <a class="fb" href={href} target="_blank" rel="noopener">
+<a class="fb" href={href} target="_blank" rel="noopener" hidden>
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4V5Z" /><path d="M8 9.5h8M8 12.5h5" /></svg>
     Tilbakemelding
-  </a>
-)}
+</a>
+<script is:inline>
+  (function () {
+    try {
+      var q = new URLSearchParams(location.search).get('tilbakemelding');
+      if (q === 'av') localStorage.removeItem('bb-tilbakemelding');
+      else if (q !== null) localStorage.setItem('bb-tilbakemelding', '1');
+      if (localStorage.getItem('bb-tilbakemelding')) document.querySelector('.fb').hidden = false;
+    } catch (e) {}
+  })();
+</script>
 <style>
   .fb {
     position: fixed; right: 1rem; bottom: calc(1rem + env(safe-area-inset-bottom, 0px)); z-index: 50;
@@ -22,6 +30,7 @@ const href = `${FEEDBACK_URL}#${token}`;
     background: var(--ink); color: #fff; border-radius: 999px; font: 600 0.93rem/1 var(--font); text-decoration: none;
     box-shadow: 0 2px 4px rgb(21 32 26 / 0.12), 0 10px 24px -8px rgb(21 32 26 / 0.4);
   }
+  .fb[hidden] { display: none; }
   .fb:hover { background: var(--green); color: #fff; text-decoration: none; }
   @media print { .fb { display: none; } }
 </style>

@@ -8,7 +8,7 @@ https://claude.ai/artifact/HXyMJAUPpKTeFAgaTWZ4xk
 
 - Den er privat og krever innlogging på claude.ai. Den må deles med Erling som **Editor** (Del-menyen på siden).
 - Erling skriver hva som skal endres, velger side og legger ved bilder. Bildene gjøres mindre i nettleseren før de lagres.
-- «Tilbakemelding»-knappen i forhåndsvisningen (fumbleforce.github.io/boligbutler) går hit, med siden forhåndsvalgt.
+- «Tilbakemelding»-knappen på nettsiden går hit, med siden forhåndsvalgt. Knappen er skjult for vanlige besøkende: åpne https://boligbutler.no/?tilbakemelding én gang, så vises den i den nettleseren. `?tilbakemelding=av` skjuler den.
 - Data ligger i sidens database (`ArtifactData`-verktøyet):
   - `tilbakemeldinger/<id>`: `{tekst, side, opprettet, status, antallBilder, svar: [{fra, tekst, tid}]}`
   - `tilbakemeldinger/<id>/bilder/<nn>`: `{navn, data (data-URL, JPEG), bredde, hoyde}`

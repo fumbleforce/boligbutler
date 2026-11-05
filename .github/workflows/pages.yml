@@ -24,11 +24,8 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      # Fjern de to linjene under når eget domene (public/CNAME) er satt opp
+      # Eget domene (boligbutler.no) er satt under Settings → Pages
       - run: npm run build
-        env:
-          SITE_URL: https://fumbleforce.github.io
-          BASE_PATH: /boligbutler
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist

@@ -1,7 +1,7 @@
 // Sentral informasjon om virksomheten. Feltene merket TODO må fylles inn før lansering.
 export const site = {
   name: 'BoligButler',
-  url: 'https://www.boligbutler.no',
+  url: 'https://boligbutler.no',
   tagline: 'Veiledning og utstyr til ditt prosjekt',
   vision: 'BoligButler skal gjøre det enklere og tryggere å lykkes med prosjekter på kundens egen eiendom.',
   description:
