@@ -29,7 +29,7 @@ const faq = [
         <h1>Slik fungerer det</h1>
         <p>BoligButler selger ikke maskiner. BoligButler hjelper deg med å gjennomføre et prosjekt, og utstyret er en del av det.</p>
       </div>
-      <Photo name="levering" class="lev" alt="Tilhenger lastes med pukk fra hjullaster" hint="levering av masser" ratio="560 / 345" />
+      <figure class="lev"><Photo name="levering" alt="Tilhenger lastes med pukk fra hjullaster" hint="levering av masser" ratio="560 / 345" /><figcaption>Illustrasjonsfoto</figcaption></figure>
       <ol class="steps">
         {steps.map((s, i) => (
           <li><span class="n" aria-hidden="true">{i + 1}</span><div><h2>{s.t}</h2><p>{s.d}</p></div></li>
@@ -91,7 +91,8 @@ const faq = [
   <CtaBand />
 </Base>
 <style>
-  :global(.lev) { max-width: 36rem; margin-bottom: 2.5rem; }
+  .lev { max-width: 36rem; margin: 0 0 2.5rem; }
+  .lev figcaption { margin-top: 0.5rem; font-size: var(--step--1); color: var(--ink-3); }
   .steps { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
   .steps li { display: flex; gap: 1rem; padding: 1.5rem; border: 1px solid var(--line); border-radius: 12px; }
   .n { flex: none; display: grid; place-items: center; width: 2.25rem; height: 2.25rem; border-radius: 50%; background: var(--green); color: #fff; font-weight: 700; }
