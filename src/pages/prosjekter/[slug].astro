@@ -87,7 +87,7 @@ const jsonLd = [
           <Icon name="kit" size={28} />
           <div>
             <h3>Prosjektkassen for {d.navTitle.toLowerCase()}</h3>
-            <p>{d.kit.map((k, i) => (i ? k.charAt(0).toLowerCase() + k.slice(1) : k)).join(', ')}.</p>
+            <p>{d.kit.map((k, i) => (i ? k.charAt(0).toLowerCase() + k.slice(1) : k)).reduce((t, k, i, a) => (i === 0 ? k : i === a.length - 1 ? `${t} og ${k}` : `${t}, ${k}`), '')}.</p>
             <p class="muted small">I tillegg til standardkassen med {standardKit.slice(0, 4).map((g) => g.group.toLowerCase()).join(', ')} og mer.</p>
           </div>
         </div>

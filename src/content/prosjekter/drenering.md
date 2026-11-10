@@ -3,7 +3,7 @@ title: "Drenering rundt huset – gjør det selv med riktig utstyr og veiledning
 navTitle: Drenering
 order: 1
 description: "Skal du drenere huset selv? BoligButler leverer minigraver, dumper og laser, setter ut fallet sammen med deg og følger opp til grøfta er fylt igjen."
-lead: "Ny drenering er et av de største prosjektene en huseier kan gjøre selv. Det meste er graving og masseflytting. Det som avgjør resultatet, er noen få detaljer: fallet på røret, filterduken, massene og rekkefølgen."
+lead: "Ny drenering er kanskje et av de største prosjektene en huseier kan gjøre selv. Det meste er graving og masseflytting. Det som avgjør resultatet, er noen få detaljer: fallet på røret, filterduken, massene og rekkefølgen."
 customerSays: "Jeg skal drenere huset."
 season: "April til november. Unngå tele og perioder med mye nedbør når grøfta står åpen."
 equipment:
@@ -15,17 +15,19 @@ equipment:
     note: "For riktig fall på drensrøret"
   - name: Vibroplate
     note: "Komprimering av lagene ved tilbakefylling"
-  - name: Tipphenger
+  - name: Tipphenger / lastebil med tipp
     note: "Bortkjøring av overskuddsmasser"
 kit:
+  - Beskrivelse av oppgaver i prosjektet
+  - Kontaktinfo med telefonnummer
   - Falltabell for drensrør
-  - Merkespray og snor
-  - Høydemål og laserstang
+  - Merkespray
+  - Snor
   - Sjekkliste for åpen grøft
 butler:
-  - "Befaring: tilkomst, grunnforhold, hvor vannet skal ledes og hvor massene skal ligge"
-  - "Hjelp til å bestille kabelpåvisning før første spadetak"
-  - "Utsetting av fall og høyder sammen med deg før røret legges"
+  - "Befaring med tips om tilkomst, grunnforhold, hvor vannet skal ledes og hvor massene skal ligge"
+  - "Eventuelt hjelp til å bestille kabelpåvisning før første spadetak"
+  - "Eventuelt bidrag til utsetting av fall og høyder sammen med deg før røret legges"
   - "Instruksjon i graving nær grunnmur og sikring av grøftekant"
 notDiy:
   - "Grunnmuren har store sprekker eller setningsskader"

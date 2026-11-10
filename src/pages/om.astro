@@ -13,6 +13,16 @@ const principles = [
   { t: 'Reell verdi, ingen unødvendige kostnader', d: 'Du skal leie det prosjektet ditt trenger, ikke mer. Hvis en jobb bør gjøres av fagfolk, får du vite det.' },
   { t: 'Tenkt gjennom på forhånd', d: 'Jo mer BoligButler har forberedt, desto enklere blir prosjektet for deg. Det er derfor prosjektkassen og sjekklistene finnes.' },
 ];
+// Uttrekk av Erlings CV, slik han sendte det inn (tilbakemelding 2026-11-09)
+const cv = [
+  { år: '1981–2000', tekst: 'Avsluttet lang tjeneste som arbeidsleder for innsatte på Berg fengsel' },
+  { år: '2000–2002', tekst: 'Leder av vaktmestertjenesten, Borre/Horten kommune' },
+  { år: '2002–2006', tekst: 'Daglig leder i kommunalt aksjeselskap, Borre/Horten kommune' },
+  { år: '2006–2011', tekst: 'Teknisk sjef/kommunalsjef teknisk i Horten kommune' },
+  { år: '2011–2017', tekst: 'Daglig leder i OBOS Håndverkssenter og regiondirektør i OBOS Vestfold' },
+  { år: '2017–2024', tekst: 'Daglig leder i Lier eiendomsselskap KF' },
+];
+
 const work = [
   { name: 'arbeid-hage', alt: 'Uteområde med murte bed, trapp og beplantning', cap: 'Bed, trapp og murer ved inngangsparti' },
   { name: 'arbeid-terrasse', alt: 'Terrasse i grå royalimpregnert tre med trapp og utsikt mot fjorden', cap: 'Terrasse med trapp og fjordutsikt' },
@@ -22,7 +32,7 @@ const work = [
   { name: 'arbeid-veranda', alt: 'Innglasset veranda med teglvegg, fliser og benk', cap: 'Innglasset veranda' },
   { name: 'arbeid-terrasse-bed', alt: 'Hevet terrasse med rekkverk og nyplantet bed foran et brunt hus', cap: 'Hevet terrasse og nytt bed' },
   { name: 'arbeid-terrassetrinn', alt: 'Terrassetrinn i impregnert tre foran en dør, med rekkverk', cap: 'Trinn og rekkverk' },
-  { name: 'arbeid-pizzaovn', alt: 'Murt pizzaovn i tegl med fjordutsikt', cap: 'Murt pizzaovn ute' },
+  { name: 'arbeid-pizzaovn', alt: 'Murt pizzaovn i tegl med fjordutsikt', cap: 'Bruk av brukt teglstein til miljø for pizzaovn' },
   { name: 'arbeid-fasade', alt: 'Hus med ny, mørkebrun stående kledning og nye vinduer', cap: 'Ny kledning og vinduer', note: 'Utvendige fasadearbeider på dette huset er utført av Centrum Bygg AS i Horten.' },
   { name: 'arbeid-fundament', alt: 'Nystøpt betongplate med forskaling og drenerende pukk langs kanten', cap: 'Fundament og støpt plate' },
 ];
@@ -58,6 +68,29 @@ const jsonLd = [{
         <p>«{site.vision}»</p>
         <footer>Visjonen alle beslutninger i BoligButler testes mot</footer>
       </blockquote>
+      <section class="cv" aria-labelledby="cv-tittel">
+        <h2 id="cv-tittel">Erling Eri – bakgrunn</h2>
+        <div class="cv-grid">
+          <div>
+            <h3>Utdannelse</h3>
+            <ul>
+              <li>Praktisk utdannelse innen naturbruk og anleggsgartnerfaget</li>
+              <li>Pedagogikk, prosjektledelse og diverse høgskolestudier</li>
+            </ul>
+            <h3>Annet</h3>
+            <ul>
+              <li>En rekke styrelederverv i boligselskap og andre</li>
+              <li>Interesse og kompetanse: er en generalist</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Arbeidserfaring</h3>
+            <dl class="jobs">
+              {cv.map((j) => <div><dt>{j.år}</dt><dd>{j.tekst}</dd></div>)}
+            </dl>
+          </div>
+        </div>
+      </section>
     </div>
   </section>
 
@@ -65,7 +98,7 @@ const jsonLd = [{
     <div class="wrap">
       <div class="head">
         <h2>Fra tidligere prosjekter</h2>
-        <p>Et utvalg av jobber på hus og uteområder. Slik ser det ut når grunnarbeidet er gjort skikkelig.</p>
+        <p>Et utvalg av jobber på hus og uteområder som kanskje inspirerer.</p>
       </div>
       <ul class="work">
         {work.map((w) => (
@@ -108,6 +141,18 @@ const jsonLd = [{
   .vision { margin: clamp(2.5rem, 2rem + 2vw, 4rem) 0 0; padding: clamp(1.5rem, 1rem + 2vw, 2.5rem); background: var(--green); color: #fff; border-radius: 12px; }
   .vision p { font-size: var(--step-3); font-weight: 650; letter-spacing: -0.02em; line-height: 1.3; margin: 0 0 1rem; max-width: 26em; }
   .vision footer { color: var(--on-green-2); font-size: var(--step--1); }
+  .cv { margin-top: clamp(2.5rem, 2rem + 2vw, 4rem); padding: clamp(1.5rem, 1rem + 2vw, 2.5rem); background: #fff; border: 1px solid var(--line); border-radius: 12px; }
+  .cv h2 { margin-bottom: 1.25rem; }
+  .cv-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: clamp(1.5rem, 1rem + 3vw, 4rem); }
+  .cv h3 { font-size: var(--step-0); margin: 0 0 0.6rem; }
+  .cv ul { margin: 0 0 1.5rem; padding-left: 1.1rem; color: var(--ink-2); }
+  .cv ul li { margin-bottom: 0.35rem; }
+  .jobs { margin: 0; display: grid; gap: 0.7rem; }
+  .jobs div { display: grid; grid-template-columns: 6.5rem 1fr; gap: 1rem; }
+  .jobs dt { font-weight: 650; font-variant-numeric: tabular-nums; }
+  .jobs dd { margin: 0; color: var(--ink-2); }
+  @media (max-width: 860px) { .cv-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 480px) { .jobs div { grid-template-columns: 1fr; gap: 0.1rem; } }
   .work { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem 1.25rem; }
   .work figure { margin: 0; display: grid; gap: 0.55rem; }
   .work figcaption { font-weight: 600; font-size: 0.97rem; }
