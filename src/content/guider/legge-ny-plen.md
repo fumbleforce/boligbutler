@@ -12,7 +12,7 @@ summary: >-
 equipment: ["Jordfres", "Minigraver", "Dumper", "Tilhenger", "Laser"]
 steps:
   - name: "Fjern gammel plen"
-    text: "Skrell av gressmatta med spade eller plenskreller, eller fres den ned flere ganger med noen dagers mellomrom."
+    text: "Fjern gressmatta med spade, minigraver eller annen tilpasset maskin, eller fres den ned flere ganger med noen dagers mellomrom."
   - name: "Løsne undergrunnen"
     text: "Fres eller grav opp de øverste 15–20 cm når jorda er laget og ikke våt, og fjern stein, røtter og rotugress."
   - name: "Ta jordprøve og kalk"
@@ -52,10 +52,10 @@ Sensommeren er ofte det beste valget i Vestfold. Jorda er varm etter sommeren, o
 
 Du har i hovedsak to valg:
 
-- **Skrelle av gressmatta.** Med spade eller en leid plenskreller tar du av de øverste 3–5 cm med gress og røtter. Det gir det reneste resultatet, men gir mye masse som må kjøres bort eller komposteres.
-- **Frese den ned.** Med jordfres kverner du gress og røtter inn i jorda. Fres flere ganger med en til to ukers mellomrom, slik at gress som spirer på nytt blir frest ned igjen. Raskere, men du får med deg mer ugress i den nye plenen.
+- **Fjern gressmatta.** Med spade, minigraver eller annen tilpasset maskin tar du av de øverste 3–5 cm med gress og røtter. Det gir det reneste resultatet, men gir mye masse som må kjøres bort eller komposteres.
+- **Frese den ned.** Med jordfres kverner du gress og røtter inn i jorda. Fres flere ganger med en til to ukers mellomrom, slik at gress som spirer på nytt blir frest ned igjen. Raskere, men du får med deg mer ugress i den nye plenen. Du kan også risikere å få med mye gress, torv og tuer som blir liggende og er tørkesvake.
 
-Har du mye kveke, skvallerkål eller løvetann, er skrelling sikrest. Rotbiter som blir frest opp, gir nye planter.
+Har du mye rotugras, kveke, skvallerkål eller løvetann, er fjerning sikrest. Rotbiter som blir frest opp, gir nye planter.
 
 ## Jordfresing og undergrunn
 

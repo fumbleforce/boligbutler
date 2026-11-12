@@ -15,7 +15,7 @@ const principles = [
 ];
 // Uttrekk av Erlings CV, slik han sendte det inn (tilbakemelding 2026-11-09)
 const cv = [
-  { år: '1981–2000', tekst: 'Avsluttet lang tjeneste som arbeidsleder for innsatte på Berg fengsel' },
+  { år: '1981–2000', tekst: 'Avsluttet lang tjeneste som arbeidsleder for innsatte på Berg fengsel. Herunder 2 år som adjunkt på videregående skole, praktiske fag.' },
   { år: '2000–2002', tekst: 'Leder av vaktmestertjenesten, Borre/Horten kommune' },
   { år: '2002–2006', tekst: 'Daglig leder i kommunalt aksjeselskap, Borre/Horten kommune' },
   { år: '2006–2011', tekst: 'Teknisk sjef/kommunalsjef teknisk i Horten kommune' },
@@ -24,6 +24,7 @@ const cv = [
 ];
 
 const work = [
+  { name: 'arbeid-natursteinsmur', alt: 'Nymurt natursteinsmur i gråstein foran en skråning med lyng og furu', cap: 'Natursteinsmur', pos: '50% 75%' },
   { name: 'arbeid-hage', alt: 'Uteområde med murte bed, trapp og beplantning', cap: 'Bed, trapp og murer ved inngangsparti' },
   { name: 'arbeid-terrasse', alt: 'Terrasse i grå royalimpregnert tre med trapp og utsikt mot fjorden', cap: 'Terrasse med trapp og fjordutsikt' },
   { name: 'arbeid-benk', alt: 'Murt benk i tegl med treseter og ny terrasse', cap: 'Murt benk og terrassegulv' },
@@ -68,6 +69,32 @@ const jsonLd = [{
         <p>«{site.vision}»</p>
         <footer>Visjonen alle beslutninger i BoligButler testes mot</footer>
       </blockquote>
+    </div>
+  </section>
+
+  <section class="section--tight section">
+    <div class="wrap">
+      <div class="head">
+        <h2>Fra tidligere prosjekter</h2>
+        <p>Et utvalg av jobber på hus og uteområder som kanskje inspirerer.</p>
+      </div>
+      <ul class="work">
+        {work.map((w) => (
+          <li><figure><Photo name={w.name} alt={w.alt} hint={w.cap} ratio="4 / 3" position={w.pos ?? 'center'} /><figcaption>{w.cap}{w.note && <span class="note">{w.note}</span>}</figcaption></figure></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section--band">
+    <div class="wrap">
+      <div class="head"><h2>Slik jobber BoligButler</h2></div>
+      <ul class="pr">{principles.map((p) => <li><Icon name="check" size={22} /><div><h3>{p.t}</h3><p>{p.d}</p></div></li>)}</ul>
+    </div>
+  </section>
+
+  <section class="section--tight section">
+    <div class="wrap">
       <section class="cv" aria-labelledby="cv-tittel">
         <h2 id="cv-tittel">Erling Eri – bakgrunn</h2>
         <div class="cv-grid">
@@ -91,27 +118,6 @@ const jsonLd = [{
           </div>
         </div>
       </section>
-    </div>
-  </section>
-
-  <section class="section--tight section">
-    <div class="wrap">
-      <div class="head">
-        <h2>Fra tidligere prosjekter</h2>
-        <p>Et utvalg av jobber på hus og uteområder som kanskje inspirerer.</p>
-      </div>
-      <ul class="work">
-        {work.map((w) => (
-          <li><figure><Photo name={w.name} alt={w.alt} hint={w.cap} ratio="4 / 3" /><figcaption>{w.cap}{w.note && <span class="note">{w.note}</span>}</figcaption></figure></li>
-        ))}
-      </ul>
-    </div>
-  </section>
-
-  <section class="section section--band">
-    <div class="wrap">
-      <div class="head"><h2>Slik jobber BoligButler</h2></div>
-      <ul class="pr">{principles.map((p) => <li><Icon name="check" size={22} /><div><h3>{p.t}</h3><p>{p.d}</p></div></li>)}</ul>
     </div>
   </section>
 
@@ -141,14 +147,14 @@ const jsonLd = [{
   .vision { margin: clamp(2.5rem, 2rem + 2vw, 4rem) 0 0; padding: clamp(1.5rem, 1rem + 2vw, 2.5rem); background: var(--green); color: #fff; border-radius: 12px; }
   .vision p { font-size: var(--step-3); font-weight: 650; letter-spacing: -0.02em; line-height: 1.3; margin: 0 0 1rem; max-width: 26em; }
   .vision footer { color: var(--on-green-2); font-size: var(--step--1); }
-  .cv { margin-top: clamp(2.5rem, 2rem + 2vw, 4rem); padding: clamp(1.5rem, 1rem + 2vw, 2.5rem); background: #fff; border: 1px solid var(--line); border-radius: 12px; }
-  .cv h2 { margin-bottom: 1.25rem; }
+  .cv { font-size: var(--step--1); padding: clamp(1.25rem, 1rem + 1vw, 1.75rem); background: #fff; border: 1px solid var(--line); border-radius: 12px; }
+  .cv h2 { font-size: var(--step-1); margin-bottom: 1rem; }
   .cv-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: clamp(1.5rem, 1rem + 3vw, 4rem); }
-  .cv h3 { font-size: var(--step-0); margin: 0 0 0.6rem; }
+  .cv h3 { font-size: var(--step--1); margin: 0 0 0.5rem; }
   .cv ul { margin: 0 0 1.5rem; padding-left: 1.1rem; color: var(--ink-2); }
   .cv ul li { margin-bottom: 0.35rem; }
-  .jobs { margin: 0; display: grid; gap: 0.7rem; }
-  .jobs div { display: grid; grid-template-columns: 6.5rem 1fr; gap: 1rem; }
+  .jobs { margin: 0; display: grid; gap: 0.5rem; }
+  .jobs div { display: grid; grid-template-columns: 5.5rem 1fr; gap: 0.75rem; }
   .jobs dt { font-weight: 650; font-variant-numeric: tabular-nums; }
   .jobs dd { margin: 0; color: var(--ink-2); }
   @media (max-width: 860px) { .cv-grid { grid-template-columns: 1fr; } }
